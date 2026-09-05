@@ -32,8 +32,9 @@ nicht eingelöst wird, verfällt. Der Serienzähler steht danach wieder auf null
 ## Wirtschaft
 
 Die Kapitalmarktlage bleibt angespannt, der Ausschluss wirkt fort. Der Handelsabbruch gegen
-Europa steht. Ein Umschlag der Lage zu einer allgemeinen Weltwirtschaftskrise ist in diesem
-Jahr **ausgeblieben**.
+Europa steht. Der fünfte Umschlagtest der laufenden Zündung ist **vorbeigegangen** —
+2W10 = 11 gegen die Schwelle 5,6. Eine allgemeine Weltwirtschaftskrise ist in diesem Jahr
+**ausgeblieben**; die Zündung bleibt aktiv, der Test wiederholt sich im nächsten Jahr.
 
 Nach der revidierten Wachstumsrechnung steht die Volkswirtschaft Ende 2029 bei
 **17,2064 Bio USD** statt der bisher geführten 15,0587 — die frühere Reihe hatte einen

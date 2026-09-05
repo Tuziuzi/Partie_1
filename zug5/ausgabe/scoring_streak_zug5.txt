@@ -24,16 +24,16 @@
     "wars_won_gesamt": 1
   },
   "streaks_nach": {
-    "CHN": 0,
     "USA": 0,
+    "CHN": 0,
     "EU": 0,
     "IND": 0,
     "RUS": 0,
     "REST": 0
   },
   "warsWon_nach": {
-    "CHN": 1,
     "USA": 0,
+    "CHN": 1,
     "EU": 0,
     "IND": 0,
     "RUS": 0,

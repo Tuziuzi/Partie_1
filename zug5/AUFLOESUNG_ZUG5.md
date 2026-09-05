@@ -2,7 +2,15 @@
 
 **Stand: 05.09.2026 · Delta V + ERDE-01 · Spielleitung**
 
-> **Kopfvermerk zur Quellenlage.** Aufgelöst wurde aus `UEBERGABE_ZUG5.md` §4, den sechs
+> ### ⚠ Nachtrag vom 05.09.2026 — Spielstand eingespielt
+> Das Paket `SCHWARZE_SEE_spielstand_zug5.zip` liegt inzwischen vor. Pfade neu gepinnt
+> (**18 Engines**), `zh01.py pruefe` **18/18 BESTANDEN**, `wn01_validator.py`
+> **BESTANDEN**. Alle Würfe sind aus der echten Seed-Registry neu gefallen.
+> **Der Ausgang ist unverändert** — China gewinnt den Krieg —, aber acht Einzelwerte
+> haben sich geändert, darunter ein Wurf, den ich gar nicht gemacht hatte.
+> **Maßgeblich ist ab hier `KORREKTUREN_NACH_SPIELSTAND.md`.**
+>
+> **Kopfvermerk zur Quellenlage (Stand vor dem Nachtrag).** Aufgelöst wurde aus `UEBERGABE_ZUG5.md` §4, den sechs
 > abgegebenen Blättern, den beiden Word-Dokumenten und `KB-02_WACHSTUMSBUCH.md`.
 > Das in §8 der Übergabe genannte Paket `SCHWARZE_SEE_spielstand_zug5.zip`
 > (`gamestate.json`, `erde01_state_schwarzesee.json`, `journal.jsonl`, `config.json`,
