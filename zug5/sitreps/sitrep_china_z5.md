@@ -11,9 +11,9 @@ bis GEO** auf; in keiner Zone ist ein fremdes Gerät aufgelaufen, das um dieselb
 gespielt hätte.
 
 Die Vereinigten Staaten halten unverändert die Erdoberfläche. Ihr konventionelles Gewicht
-bleibt das größte der Welt — nach eigener Auswertung führen sie bei den konventionellen
-Stärkepunkten mit deutlichem Abstand, obwohl drei unserer vier Teilstreitkräfte
-(Heer, Luftabwehr, Marine) auf **future** stehen und die amerikanischen nicht.
+bleibt das größte der Welt: **678 Stärkepunkte gegen unsere 440**. Gezählt werden rohe
+Punkte — dass drei unserer vier Teilstreitkräfte auf **future** stehen und die
+amerikanischen nicht, schlägt im Gefecht durch, nicht in dieser Zeile.
 
 ## Ergebnis der Runde
 

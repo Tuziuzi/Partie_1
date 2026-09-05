@@ -159,3 +159,74 @@ Die EU spürt den Druck, darf aber noch **nicht** innenpolitisch darauf reagiere
 |---|---|
 | **B-32** | `erde01_engine.py wurf` nimmt in der Kommandozeile **weder `--seed` noch `--akteur`** entgegen — anders als `coup`, `kampf`, `schicksal`, `kipp`, die `(zug, akt, sd)` durchreichen. Zwei verschiedene Operationen desselben Zuges würfeln damit identisch; genau der Fehler, vor dem das Modul unter P4-05 selbst warnt. Die Funktion `wurf(..., seed=, zug=, nonce=)` kann es, die CLI reicht es nicht durch. Ich habe die Funktion deshalb direkt aufgerufen. |
 | **B-33** | Die Würfe der Züge 2–4 (`work/sv01/ops_zug*.json`, Seeds `5160 3x 0xx`) sind aus dem Material **nicht reproduzierbar**: weder `random.Random(seed)` noch der dokumentierte Generator `_gen(seed, stufe, zug, nonce)` trifft die protokollierten Ergebnisse. Die Replay-Pflicht (WN-01 Pflicht 5) ist für diese Würfe damit nicht erfüllt. Das erzeugende Skript liegt nicht im Paket. |
+
+---
+
+## Nachtrag aus dem Regelwerk-Durchlauf (13 Module)
+
+### K-16 · Militärpunkte zählen rohe Stärkepunkte, nicht qualitätsgewichtete
+
+`scoring.md` Zeile 27, wörtlich: »**Militärpunkte**: Wer mehr konventionelle
+**Stärkepunkte** hat«. Kein Qualitätsfaktor. Ich hatte die BD-01-§8-Faktoren
+(future 1,40) angesetzt — die gehören in den Gefechtswert für ERDE-01s
+Kräfteverhältnis R, nicht in diese Zeile. Zwei Leser sind unabhängig darauf gestoßen.
+
+| | roh (gültig) | gewichtet (mein Fehler) |
+|---|---:|---:|
+| USA | **678** | 678,00 |
+| China | **440** | 574,00 |
+| REST | **400** | 400,00 |
+| EU | **370** | 370,00 |
+| Russland | **293** | 324,60 |
+| Indien | **219** | 244,60 |
+
+**Sieger in beiden Lesarten: USA.** Der Ausgang steht, die Zahlen für China, Russland
+und Indien waren zu hoch.
+
+### K-17 · C-9 IST aktiv — Romans Ausbaubefehl ist buchbar
+
+Ich hatte gemeldet, »Startkapazitäten ausbauen« habe nach C-9 §9 mitten in einer
+laufenden Kampagne keinen Regelweg. Der Spielstand widerlegt das:
+
+```
+state.houseRules[0] = {"regel": "C-9 Raumfahrtquote", "rev": "B",
+  "geltung": "ab Setup — §9.3 (Zug 1 ungespielt; vier der fünf §9-Einwände entfallen)",
+  "q_raum_2026": {"USA": 0.0025, "CHN": 0.001, "EU": 0.0005, ...},
+  "kap_2026_t_a": {"USA": 2000.0, "CHN": 400.0, "EU": 45.0, ...},
+  "rampendeckel": "aufwärts ×1,25 je Zug (§3.1), abwärts sofort, Hysterese <50 % Peak"}
+```
+
+C-9 wurde beim Setup aktiviert. Die EU steht auf **R1 = 0,05 %**. Der Sprungdeckel
+lässt eine Stufe je Zug, also auf **R2 = 0,10 %**. Preis nach `ob01.py quote`:
+
+```
+{"mechanik": "C-9.2", "delta_pp": 0.05, "wachstumsabzug_pp": 0.042,
+ "semantik": "Uebergangsmechanik: Anheben kostet, Halten neutral, Absenken schreibt gut"}
+```
+
+**0,042 Prozentpunkte Wachstum, einmalig.** Der Rampendeckel hebt die Startkapazität
+höchstens auf 45 × 1,25 = **56,25 t/a**.
+
+> **Am Zug-5-Ausgang ändert das nichts:** Die Kapazität wirkt auf *Starts*, und die
+> Startprüfung läuft nach `launch_c2.md` »im Jahr der Fertigstellung (Phase 7 /
+> BZ-01-Abschluss)«. Ein in Zug 5 freigegebener Entwurf fliegt in Zug 5 nicht.
+> Die EU scored weiterhin keine Zone. **Aber der Befehl ist buchbar** und hätte
+> gebucht werden müssen — er ist Romans einzige Weichenstellung gegen China im Orbit.
+> Blatt 1 hat dafür kein Feld (C-9 offener Punkt O-15: der sechste Regler fehlt).
+
+### K-18 · Die EU bucht in Zug 5 null Tonnen
+
+ZH-01-Befund zu Romans Blatt 3: außer der zurückgewiesenen Transferzeile steht dort
+**kein einziger Einsatz und keine einzige Stückzahl**. Nach Z-1.4 (»Was im Zug nicht
+gebucht ist, verfällt«) verfällt damit das **gesamte Bodenkonto von 1 660,5 t** samt
+der Tranche von 249,1 t. Das ist keine Strafe, sondern die Haushaltslogik — aber es
+gehört Roman vor der Buchung gesagt.
+
+### Offen geblieben: wie viele Operationen sind »alle Slots«?
+
+Der PB-01-Leser liest Jakobs »mit allen Slots« als **acht** Operationen (Slots = 8 laut
+`zeughaus.fraktionen.IND.dienste.slots`). Die Kampagnenpraxis der Züge 2–4 ist eine
+andere: `work/sv01/ops_zug*.json` führt je Zug **zwei** indische Operationen, nicht acht.
+Ich habe nach der Praxis aufgelöst (eine Sabotage Umfang 5 plus zwei Spionagevektoren).
+Bei acht Operationen vervielfachte sich der Druckzufluss und Indien stünde statt bei
+G2 möglicherweise bei G3. **Rückfrage an Jakob, keine GM-Setzung.**

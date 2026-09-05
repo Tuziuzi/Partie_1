@@ -61,10 +61,11 @@ Die USA halten die Erdoberfläche.
   (90 t aus der Tranche) bleiben **17,9 t** frei. Auf dem alten Konto wäre die Rechnung auf
   0,1 t genau aufgegangen.
 - Das Heer steht damit dauerhaft auf **future** (Qualitätsfaktor 1,40).
-- Bei den konventionellen Stärkepunkten liegt Indien mit **244,60** an letzter Stelle
-  aller sechs Mächte (USA 678, China 574, Rest 400, Union 370, Russland 324,6). Die neun
-  Future-Stärkepunkte **erhalten** die Kategorie, sie addieren keine Punkte — das war in
-  Zug 4 schon so.
+- Bei den konventionellen Stärkepunkten liegt Indien mit **219** an letzter Stelle aller
+  sechs Mächte (USA 678, China 440, Rest 400, Union 370, Russland 293). Gezählt werden
+  rohe Stärkepunkte; die Qualitätsstufe *future* schlägt im Gefecht durch, nicht in dieser
+  Zeile. Die neun Future-Stärkepunkte **erhalten** die Kategorie, sie addieren keine
+  Punkte — das war in Zug 4 schon so.
 - Der Tonnenvergleich bei den Geheimdiensten geht mit 746,4 t **an die USA**; Indien liegt
   mit 611,4 t auf Platz zwei, vor China (280,7), Russland (151,2) und der Union (0).
 
