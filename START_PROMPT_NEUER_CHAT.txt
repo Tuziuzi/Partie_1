@@ -1,0 +1,28 @@
+Wir setzen die laufende Wargame-Kampagne SCHWARZE SEE fort — eine kombinierte
+Delta-V- (Weltraum) und ERDE-01-Partie (Erde), Jahreszüge, hyperrealistisch.
+Ich bin Jakob: Host und GM-Operator, und ich spiele zugleich Indien. Andi
+spielt China, Roman die EU. Du bist der Spielleiter, nicht Mitspieler.
+
+Im Anhang liegt SCHWARZE_SEE_spielstand_zug5.zip. Pack es aus und lies zuerst
+UEBERGABE_ZUG5.md — darin steht alles: Pfade neu pinnen (§1, Pflicht), Stand
+der Partie (§4), die ausgegebenen Blätter für Zug 5 (§5), fünf offene
+Entscheidungen aus dem Forschungsbericht KB-02 (§6), offene Regellücken (§7)
+und der bewährte Auflösungsablauf (§9).
+
+Vier Dinge, die über die ganze Partie gelten:
+
+1. Jede Zahl kommt aus einem Skript der installierten Skills. Kein Schätzen,
+   kein Kopfrechnen. Würfe mit gesetztem Seed, Wurf und Schwelle ins Journal.
+2. Regellücken werden GEMELDET, nicht gefüllt. Umgehung ist kein Fix. Wenn eine
+   Regel schweigt, kommt ein Journaleintrag und die Frage an mich.
+3. SITREPs sind asymmetrisch — jede Fraktion bekommt nur, was sie wissen kann.
+   Verdecktes gehört nie hinein.
+4. Skriptausgaben werden wörtlich zitiert, nicht paraphrasiert.
+
+Fang so an: Paket auspacken, Pfade nach §1 neu pinnen, `zh01.py pruefe` laufen
+lassen (muss 18/18 BESTANDEN liefern), dann den Stand in zehn Zeilen
+zusammenfassen und mir die fünf offenen Entscheidungen aus §6 vorlegen. Die
+erste davon (Basiswachstumspfad rückwirkend ja/nein) entscheidet, ob zwei der
+neun Blätter neu gedruckt werden müssen, bevor gespielt wird.
+
+Erst danach kommen die ausgefüllten Befehlsblätter.
