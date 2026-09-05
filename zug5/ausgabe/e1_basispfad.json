@@ -1,0 +1,35 @@
+{
+  "china": {
+    "bip_2029_ist": 15.0587,
+    "bip_2029_retro": 17.2064,
+    "tafelrate_pct": 4.3,
+    "konto_t_ist": 2232.5,
+    "konto_t_neu": 2503.1,
+    "tranche_t_ist": 334.9,
+    "tranche_t_neu": 375.5,
+    "wirtschaftsfaktor": 1.142625,
+    "vortrag_t_impliziert": 335.2
+  },
+  "eu": {
+    "bip_2029_ist": 19.1162,
+    "bip_2029_retro": 19.8234,
+    "tafelrate_pct": 1.2,
+    "konto_t_ist": 1602.6,
+    "konto_t_neu": 1660.5,
+    "tranche_t_ist": 240.4,
+    "tranche_t_neu": 249.1,
+    "wirtschaftsfaktor": 1.036997,
+    "vortrag_t_impliziert": 37.6
+  },
+  "indien": {
+    "bip_2029_ist": 4.087,
+    "bip_2029_retro": 4.9524,
+    "tafelrate_pct": 6.5,
+    "konto_t_ist": 601.0,
+    "konto_t_neu": 719.3,
+    "tranche_t_ist": 90.2,
+    "tranche_t_neu": 107.9,
+    "wirtschaftsfaktor": 1.211737,
+    "vortrag_t_impliziert": 42.3
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "scoring": {
+    "zones": {
+      "earthSurface": {
+        "controller": "USA"
+      },
+      "LEO": {
+        "controller": "CHN"
+      },
+      "MEO": {
+        "controller": "CHN"
+      },
+      "HEO": {
+        "controller": "CHN"
+      },
+      "SSO": {
+        "controller": "CHN"
+      },
+      "GEO_GSO": {
+        "controller": "CHN"
+      },
+      "lunaNRHO": {
+        "controller": null
+      },
+      "lunarSurface": {
+        "controller": null
+      }
+    },
+    "streaks": {
+      "CHN": 0,
+      "USA": 0,
+      "EU": 0,
+      "IND": 0,
+      "RUS": 0,
+      "REST": 0
+    },
+    "warsWon": {
+      "CHN": 1,
+      "USA": 0,
+      "EU": 0,
+      "IND": 0,
+      "RUS": 0,
+      "REST": 0
+    }
+  }
+}
