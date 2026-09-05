@@ -1,0 +1,8 @@
+{
+  "_quelle": "UEBERGABE_ZUG5.md §4 'Stand je Fraktion' — nur die belegten Qualitaetsstufen je Teilstreitkraft. Kein rekonstruierter Spielstand, keine erfundenen Felder.",
+  "factions": {
+    "CHN": {"bd01": {"qualitaet": {"heer": "future", "luft": "legacy", "sam": "future", "see": "future"}}},
+    "EU":  {"bd01": {"qualitaet": {"heer": "legacy", "luft": "legacy", "sam": "legacy", "see": "legacy"}}},
+    "IND": {"bd01": {"qualitaet": {"heer": "future", "luft": "legacy", "sam": "legacy", "see": "legacy"}}}
+  }
+}
