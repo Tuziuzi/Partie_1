@@ -26,18 +26,19 @@ Aufruf: python3 blatt_freitext_reiter.py <datei.html> [...]
 """
 import sys, re
 
-NAV_NEU = ('<a href="#blatt5"><span>5 &nbsp;<b>Freitext</b></span></a>\n</div></nav>')
+def nav_neu(n):
+    return ('<a href="#blatt%d"><span>%d &nbsp;<b>Freitext</b></span></a>\n</div></nav>' % (n, n))
 
 ABSCHNITT = '''
-<section class="blatt" id="blatt5"><div class="h"><div class="blattkopf">\
-<div class="nr">BLATT 5 VON 5</div><h2>FREITEXT</h2>\
+<section class="blatt" id="blatt{n}"><div class="h"><div class="blattkopf">\
+<div class="nr">BLATT {n} VON {n}</div><h2>FREITEXT</h2>\
 <div class="quelle">Hausblatt · ein Feld fuer den ganzen Zug</div></div>\
 <div class="band gruen"><b>Hier steht, was in kein Feld passt.</b>Absichten, \
 Begruendungen, Absprachen, Bedingungen, Reden, Drohungen, alles, was die Zahlen \
 auf den Blaettern 1 bis 4 nicht ausdruecken. Der Text reist mit dem Knopf \
 &raquo;Zug kopieren&laquo; als <code>felder.freitext</code> mit und wird vom \
 Leser unveraendert uebernommen &mdash; der GM kuerzt ihn nicht.</div>\
-<div class="band gelb"><b>Dieser Reiter ist offen, nicht verdeckt.</b>Er gehoert \
+<div class="band rot"><b>Dieser Reiter ist offen, nicht verdeckt.</b>Er gehoert \
 zum BLATT: bei einer Demokratie werden Blattwerte im Folgezug bekannt (Z-8.2). \
 Was niemand ausser dem GM lesen soll &mdash; Taeuschung, verdeckte Absicht, das \
 Ziel einer Operation &mdash; gehoert weiterhin in das <b>Geheimschreiben</b> auf \
@@ -53,18 +54,23 @@ Bedingungen (&raquo;falls X, dann Y&laquo;) bitte mit dem Zug nennen, in dem sie
 
 def patch(pfad):
     s = open(pfad, encoding="utf-8").read()
-    if 'id="blatt5"' in s:
+    # Wie viele Blaetter hat dieses Exemplar? Ohne DW-01 sind es nur drei.
+    vorhanden = sorted(int(m) for m in re.findall(r'<section class="blatt" id="blatt(\d+)"', s))
+    if not vorhanden:
+        print(f"  {pfad}: keine Blattabschnitte gefunden — NICHT angefasst."); return False
+    n = vorhanden[-1] + 1
+    if f'id="blatt{n}"' in s or 'FREITEXT</h2>' in s:
         print(f"  {pfad}: Reiter ist schon da — nichts getan."); return False
-    if "</div></nav>" not in s or 'id="blatt4"' not in s:
-        print(f"  {pfad}: Rahmen unbekannt (kein </div></nav> oder kein blatt4) — NICHT angefasst."); return False
-    s = s.replace("</div></nav>", NAV_NEU, 1)
+    if "</div></nav>" not in s:
+        print(f"  {pfad}: Rahmen unbekannt (kein </div></nav>) — NICHT angefasst."); return False
+    s = s.replace("</div></nav>", nav_neu(n), 1)
     # Der Abschnitt kommt hinter das letzte </section> der Blattkette.
     i = s.rfind("</section>")
-    s = s[:i + len("</section>")] + ABSCHNITT + s[i + len("</section>"):]
+    s = s[:i + len("</section>")] + ABSCHNITT.replace("{n}", str(n)) + s[i + len("</section>"):]
     # Blattzaehler mitziehen: "BLATT n VON 4" -> "VON 5"
-    s = re.sub(r"(BLATT \d+ VON )4", r"\g<1>5", s)
+    s = re.sub(r"(BLATT \d+ VON )\d+", lambda m: m.group(1) + str(n), s)
     open(pfad, "w", encoding="utf-8").write(s)
-    print(f"  {pfad}: Reiter 5 »Freitext« eingefuegt (textarea id=f_freitext).")
+    print(f"  {pfad}: Reiter {n} »Freitext« eingefuegt (textarea id=f_freitext).")
     return True
 
 if __name__ == "__main__":
