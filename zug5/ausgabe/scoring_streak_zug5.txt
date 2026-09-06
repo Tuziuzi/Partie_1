@@ -1,0 +1,46 @@
+{
+  "rundenscore": {
+    "CHN": 5,
+    "USA": 1,
+    "EU": 0,
+    "IND": 0,
+    "RUS": 0,
+    "REST": 0
+  },
+  "hoechstwert": 5,
+  "spitze": [
+    "CHN"
+  ],
+  "ausgang": "Eindeutiger Rundensieger CHN (+1), alle anderen auf 0",
+  "sieger": "CHN",
+  "krieg_gewonnen": {
+    "fraktion": "CHN",
+    "auszahlung": "1x gratis forschen auf L1",
+    "stufe": "L1",
+    "sofort_timelinefrei": true,
+    "zusaetzlich_zur_jahresration": true,
+    "ansparbar": false,
+    "serie_zurueckgesetzt_auf": 0,
+    "wars_won_gesamt": 1
+  },
+  "streaks_nach": {
+    "USA": 0,
+    "CHN": 0,
+    "EU": 0,
+    "IND": 0,
+    "RUS": 0,
+    "REST": 0
+  },
+  "warsWon_nach": {
+    "USA": 0,
+    "CHN": 1,
+    "EU": 0,
+    "IND": 0,
+    "RUS": 0,
+    "REST": 0
+  },
+  "jahr": "2030",
+  "regel": "references/scoring.md §Siegbedingung (v3.4)",
+  "l2_beruecksichtigt": []
+}
+TROCKENLAUF — nichts geschrieben (--schreiben fehlt)

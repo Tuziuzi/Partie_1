@@ -1,0 +1,80 @@
+{
+  "militaerpunkte_nach_kauf": {
+    "USA": 678.0,
+    "CHN": 574.0,
+    "EU": 370.0,
+    "RUS": 324.6,
+    "IND": 257.2
+  },
+  "sp_basis": {
+    "USA": {
+      "heer": 159,
+      "luft": 177,
+      "sam": 157,
+      "see": 185
+    },
+    "CHN": {
+      "heer": 105,
+      "luft": 105,
+      "sam": 116,
+      "see": 114
+    },
+    "EU": {
+      "heer": 93,
+      "luft": 97,
+      "sam": 86,
+      "see": 94
+    },
+    "RUS": {
+      "heer": 79,
+      "luft": 67,
+      "sam": 90,
+      "see": 57
+    },
+    "IND": {
+      "heer": 64,
+      "luft": 54,
+      "sam": 51,
+      "see": 50
+    }
+  },
+  "qualitaet": {
+    "USA": {
+      "heer": "legacy",
+      "luft": "legacy",
+      "sam": "modern",
+      "see": "legacy"
+    },
+    "CHN": {
+      "heer": "future",
+      "luft": "legacy",
+      "sam": "future",
+      "see": "future"
+    },
+    "EU": {
+      "heer": "legacy",
+      "luft": "legacy",
+      "sam": "legacy",
+      "see": "legacy"
+    },
+    "RUS": {
+      "heer": "future",
+      "luft": "legacy",
+      "sam": "legacy",
+      "see": "legacy"
+    },
+    "IND": {
+      "heer": "future",
+      "luft": "legacy",
+      "sam": "legacy",
+      "see": "legacy"
+    }
+  },
+  "q_faktoren": {
+    "legacy": 1.0,
+    "modern": 1.0,
+    "advanced": 1.15,
+    "future": 1.4
+  },
+  "omega": 0
+}
