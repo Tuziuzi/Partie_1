@@ -1,0 +1,3664 @@
+{
+ "meta": {
+  "gameName": "SCHWARZE SEE",
+  "version": "3.3",
+  "createdDate": null,
+  "lastModified": "2026-09-02T07:18:41",
+  "shipyardVersion": "5.22",
+  "orbitalMechanicsVersion": "1.0",
+  "controller": "dv-gmc/1.2"
+ },
+ "state": {
+  "currentYear": 2031,
+  "currentPhase": "setup",
+  "turnNumber": 5,
+  "singularityPath": {
+   "praemisse": null,
+   "schwellenjahr": null,
+   "takeoff": null,
+   "stark": null,
+   "ausgang": null
+  },
+  "level2Tech": false,
+  "fermiResult": null,
+  "americaStance": null,
+  "nukesUsedLastTurn": 0,
+  "annihilationBasePct": 1,
+  "houseRules": [
+   {
+    "regel": "C-9 Raumfahrtquote",
+    "rev": "B",
+    "geltung": "ab Setup — §9.3 (Zug 1 ungespielt; vier der fünf §9-Einwände entfallen)",
+    "q_raum_2026": {
+     "USA": 0.0025,
+     "CHN": 0.001,
+     "EU": 0.0005,
+     "IND": 0.0005,
+     "RUS": 0.0015,
+     "REST": 0.0002
+    },
+    "kap_2026_t_a": {
+     "USA": 2000.0,
+     "CHN": 400.0,
+     "EU": 45.0,
+     "IND": 40.0,
+     "RUS": 100.0,
+     "REST": null
+    },
+    "rampendeckel": "aufwärts ×1,25 je Zug (§3.1), abwärts sofort, Hysterese <50 % Peak",
+    "balancelauf": "OFFEN — n ≥ 1200 vor dem ersten scharfen Zug (§9.2); Regel bislang unkalibriert",
+    "beleg": "C-9 §1.1 [S] Güte C / §9.3"
+   }
+  ],
+  "kessler": {
+   "_hinweis": "Debris Index je Orbitalband. Start-DI nach kessler.md; Aufloesung nach kessler_v3.md §5 (Reihenfolge bindend).",
+   "debrisIndex": {
+    "leo_low": 0,
+    "leo_high": 1,
+    "meo": 0,
+    "geo": 0
+   },
+   "yieldPool": {
+    "leo_low": 0,
+    "leo_high": 0,
+    "meo": 0,
+    "geo": 0
+   },
+   "fragmentiertVorjahr": {
+    "leo_low": false,
+    "leo_high": false,
+    "meo": false,
+    "geo": false
+   },
+   "kesslerFaktor": {
+    "_hinweis": "Stationkeeping-Tabelle kessler.md: Pol besiedelt 3, kreuz-und-quer 10",
+    "leo_low": 1,
+    "leo_high": 1,
+    "meo": 1,
+    "geo": 1
+   },
+   "lockedInSeit": {
+    "_hinweis": "Jahr, seit dem DI >= 4 haelt — ab 5 Jahren gilt Locked-In (kessler.md)",
+    "leo_low": null,
+    "leo_high": null,
+    "meo": null,
+    "geo": null
+   },
+   "solar": {
+    "_hinweis": "11-Jahres-Takt, OEFFENTLICH (Sonnenphysik ist keine Fog-of-War-Groesse). kessler_v3.md K-Z3 / offener Punkt K-P2.",
+    "phase": "mittel",
+    "zyklusStartJahr": 2025,
+    "naechstesMaximum": 2036
+   },
+   "mitigation": {
+    "_hinweis": "je Fraktion in economy fuehren; hier nur der Bandzustand",
+    "adrNebenwirkungAktiv": {
+     "leo_low": false,
+     "leo_high": false,
+     "meo": false,
+     "geo": false
+    },
+    "laserJahre": {
+     "leo_low": 0,
+     "leo_high": 0
+    }
+   },
+   "pmdQuote": {
+    "_hinweis": "je Fraktion: 0.90 Vorwahl / 0.95 Minimum / 0.99 Ziel (kessler_v3.md §4.3)",
+    "_default": 0.9
+   }
+  },
+  "leistungsbuch": {
+   "_hinweis": "L-6 Startbestand = Messung mit Beleg SETUP. L-1 (P = M_kraftwerk x sigma) gilt fuer Neubauten: p_raum_watt = p_raum_startbestand_W + Summe(leistungsposten). factions[*].omega.p_raum_watt NIE freihaendig setzen. Werkzeug: scripts/leistungsbuch.py buchen|bedarf|startlage.",
+   "lesart": 2,
+   "lesart_text": "Omega0 ist Referenzwert der Stufe, nicht Mindestbestand",
+   "p_raum_welt_startlage_W": 58190000.0,
+   "k_raum_welt_startlage": 0.176,
+   "startlage_guete": "C — Satellitenzahlen L (Tracking Juli 2026), Busleistungen D",
+   "techstand_default": "basis",
+   "_techstaende": [
+    "basis",
+    "sk3",
+    "sk3_sk6",
+    "sk6",
+    "l2"
+   ],
+   "_kraftwerksanteile": {
+    "comsat": 0.03,
+    "satellit": 0.035,
+    "habitat": 0.0025,
+    "schiff": 0.08,
+    "werft": 0.2,
+    "fabrik": 0.2,
+    "kraftwerk": 0.85
+   }
+  },
+  "skala": "orbital",
+  "welt_compute_rp": 100.0,
+  "welt_daten": {
+   "allmende_qp": 30.0,
+   "verwaesserung": 0.05,
+   "lizenzen_vergeben_qp": 0.0,
+   "z3_irgendwo": false,
+   "marke": "A/I",
+   "_hinweis": "QD-19: 300e12 effektive Token = 30 QP; v 5 % Maschinentext 2026 [I]. Exklusiv-Summe der Bloecke 6,8 QP = grober Anteil der Frontier-relevanten Plattform-/Verlagsdaten [I]; privater Weltbestand insgesamt 300 QP als Lizenzdeckel."
+  }
+ },
+ "scoring": {
+  "zones": {
+   "earthSurface": {
+    "controller": null,
+    "contested": false
+   },
+   "LEO": {
+    "controller": null,
+    "contested": false
+   },
+   "MEO": {
+    "controller": null,
+    "contested": false
+   },
+   "HEO": {
+    "controller": null,
+    "contested": false
+   },
+   "SSO": {
+    "controller": null,
+    "contested": false
+   },
+   "GEO_GSO": {
+    "controller": null,
+    "contested": false
+   },
+   "lunaNRHO": {
+    "controller": null,
+    "contested": false
+   },
+   "lunarSurface": {
+    "controller": null,
+    "contested": false
+   }
+  },
+  "streaks": {
+   "USA": 0,
+   "CHN": 0,
+   "EU": 0,
+   "IND": 0,
+   "RUS": 0,
+   "REST": 0
+  },
+  "warsWon": {
+   "USA": 0,
+   "CHN": 1,
+   "EU": 0,
+   "IND": 0,
+   "RUS": 0,
+   "REST": 0
+  },
+  "zonen_controller": {
+   "LEO": "CHN",
+   "MEO": "CHN",
+   "HEO": "CHN",
+   "SSO": "CHN",
+   "GEO_GSO": "CHN",
+   "earthSurface": "USA"
+  }
+ },
+ "factions": {
+  "USA": {
+   "id": "USA",
+   "name": "USA",
+   "template": "usaWackel",
+   "originalTemplate": "usaWackel",
+   "isHuman": false,
+   "hasNukes": true,
+   "dependsOn": null,
+   "regime": "democracy",
+   "initialRegime": "democracy",
+   "regimeFlipMultiplier": 1,
+   "attitude": -2,
+   "personality": "statusQuo",
+   "daredNukes": false,
+   "nukeUsesTotal": 0,
+   "forbiddenBreaksTotal": 0,
+   "convertedFromDemToAuto": false,
+   "notes": [
+    "SETUP: angelegt durch gm_core setup, Kampagne SCHWARZE SEE"
+   ],
+   "research": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "inProgress": null,
+    "cyberLevel": 0
+   },
+   "economy": {
+    "factories": [],
+    "tankstellen": [],
+    "vonNeumann": [],
+    "yearlyProduction_t": 0,
+    "upkeep_t": 0,
+    "kriegswirtschaft": {
+     "steps_max": 2,
+     "steps_bound": 1,
+     "steps_used": 0,
+     "steps_herkunft": [],
+     "rolle": "patron",
+     "patron": null,
+     "nachforschung_offen": [],
+     "c2_stufe": "NORMATIV"
+    },
+    "resources": {
+     "industrial": {
+      "capacity_t_year": 200.0,
+      "available_t": 200.0,
+      "committed_t": 0,
+      "stockpile_t": 500.0
+     },
+     "propellant": {
+      "lh2": {
+       "stored_t": 32.2237,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0012,
+       "committed_t": 0
+      },
+      "lox": {
+       "stored_t": 215.9902,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0003,
+       "committed_t": 0
+      },
+      "ch4": {
+       "stored_t": 80.964,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0005,
+       "committed_t": 0
+      },
+      "inert": {
+       "stored_t": 40.0,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0,
+       "committed_t": 0
+      }
+     },
+     "coolant": {
+      "lh2_coolant_t": 0,
+      "lhe_coolant_t": 0,
+      "production_t_year": 0
+     },
+     "ammunition": {},
+     "consumables": {
+      "stored_t": 100.0,
+      "production_t_year": 0,
+      "consumption_rate_t_year": 0
+     },
+     "launch": {
+      "capacity_t_year": 2000.0,
+      "committed_t": 0.0,
+      "boost_multiplier": 1,
+      "restraum_vortrag_t": 2000.0,
+      "_vortrag_beleg": {
+       "gilt_fuer_jahr": 2030,
+       "herkunftsjahr": 2029,
+       "gestartet_gewichtet_t_2029": 0.0,
+       "regelref": "launch_c2.md §5.6 (B-16)"
+      }
+     },
+     "c2": {
+      "slots_total": 24.0,
+      "slots_committed": 0,
+      "surge_available": true,
+      "ground_stations": 0,
+      "geo_relays": 0,
+      "deep_space_relays": 0,
+      "autonomy_research": false
+     },
+     "compute": {
+      "stock_rp": 55.0,
+      "standorte": 12,
+      "haertung": {
+       "H0": 11,
+       "H1": 1,
+       "H2": 0,
+       "H3": 0
+      },
+      "ck_rp_year": 5.0,
+      "ck_quelle": "Import Spitzenkante + eigener Zubau",
+      "marke": "I",
+      "daten": {
+       "exklusiv_qp": 3.0,
+       "pruefer": "P0",
+       "pruefer_bezahlt_bis": 2026,
+       "_hinweis": "Plattform- und Suchdaten, Frontier-Labore mit RL-Umgebungen im Bau",
+       "marke": "I",
+       "pruefer_verfall": {
+        "regelref": "denkwerk-compute §9.1 Unterhalt",
+        "bezahlt_bis": 2026,
+        "unbezahlte_jahre": [
+         2027,
+         2028,
+         2029,
+         2030
+        ],
+        "kette": "P2 -> P1 -> P0 -> P0 -> P0",
+        "gebucht_zug": 5,
+        "hausentscheidung": "HE-23"
+       }
+      },
+      "generation": 1,
+      "zuteilung": {
+       "T": 10,
+       "F": 8.8,
+       "O": 0.5,
+       "Z": 27.7,
+       "D": 8.0
+      },
+      "kumuliert_T_rp_jahre": 0,
+      "karten_bezahlt": [],
+      "ausfall": [],
+      "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+      "zug3": {
+       "g_T": 1.414,
+       "F_stufe": 3,
+       "Z_stufe": 5,
+       "bip_bonus_pct_a": 1.5,
+       "x_risk": 0.0057,
+       "qp_synth": 2.64,
+       "pruefer": "P2"
+      },
+      "_adapter": "HAUSFIX B-37: gespiegelt aus factions.USA.computeConfig; kein Wert geaendert"
+     }
+    }
+   },
+   "fleet": {},
+   "swarms": {},
+   "designs": {},
+   "intel": {
+    "detected": {
+     "gruppen": [],
+     "einzeln": {}
+    }
+   },
+   "groundForces": {
+    "heer": 159,
+    "luft": 177,
+    "sam": 157,
+    "see": 185,
+    "asat": 10,
+    "_beleg": "SETUP: bodenlage.py (BL-01: SIPRI 2024 · k · Schlüssel, α=0,5, Hare-Niemeyer), Teilnehmer USA,CHN,EU,IND,RUS"
+   },
+   "omega": {
+    "p_raum_startbestand_W": 52380000.00000001,
+    "p_raum_watt": 52380000.00000001,
+    "p_raum_beleg": "SETUP: leistungsbuch §6.1, USA-Zeile (Startbestand Juli 2026, Güte C)",
+    "leistungsposten": [],
+    "p_orbital_ansaessig_W": 0.0,
+    "schluesseltechs": {
+     "SK-1": "offen",
+     "SK-2": "offen",
+     "SK-3": "offen"
+    },
+    "gutschrift_wahl": [],
+    "brennglas_genutzt_diese_runde": false
+   },
+   "_nukes_vor_zh01": null,
+   "nukes": 3700,
+   "computeConfig": {
+    "stock_rp": 55.0,
+    "standorte": 12,
+    "haertung": {
+     "H0": 11,
+     "H1": 1,
+     "H2": 0,
+     "H3": 0
+    },
+    "ck_rp_year": 5.0,
+    "ck_quelle": "Import Spitzenkante + eigener Zubau",
+    "marke": "I",
+    "daten": {
+     "exklusiv_qp": 3.0,
+     "pruefer": "P0",
+     "pruefer_bezahlt_bis": 2026,
+     "_hinweis": "Plattform- und Suchdaten, Frontier-Labore mit RL-Umgebungen im Bau",
+     "marke": "I",
+     "pruefer_verfall": {
+      "regelref": "denkwerk-compute §9.1 Unterhalt",
+      "bezahlt_bis": 2026,
+      "unbezahlte_jahre": [
+       2027,
+       2028,
+       2029,
+       2030
+      ],
+      "kette": "P2 -> P1 -> P0 -> P0 -> P0",
+      "gebucht_zug": 5,
+      "hausentscheidung": "HE-23"
+     }
+    },
+    "generation": 1,
+    "zuteilung": {
+     "T": 10,
+     "F": 8.8,
+     "O": 0.5,
+     "Z": 27.7,
+     "D": 8.0
+    },
+    "kumuliert_T_rp_jahre": 0,
+    "karten_bezahlt": [],
+    "ausfall": [],
+    "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+    "zug3": {
+     "g_T": 1.414,
+     "F_stufe": 3,
+     "Z_stufe": 5,
+     "bip_bonus_pct_a": 1.5,
+     "x_risk": 0.0057,
+     "qp_synth": 2.64,
+     "pruefer": "P2"
+    }
+   },
+   "realsatelliten": {
+    "KH-11/Enhanced Crystal": {
+     "rolle": "Optische Aufklaerung",
+     "count": 4,
+     "zone": "LEO",
+     "orbit_km": 300,
+     "masse_t_je_stueck": 17.0,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "AEHF": {
+     "rolle": "Gehaertete Kommunikation",
+     "count": 6,
+     "zone": "GEO",
+     "orbit_km": 35786,
+     "masse_t_je_stueck": 6.2,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "GPS III": {
+     "rolle": "Navigation",
+     "count": 31,
+     "zone": "MEO",
+     "orbit_km": 20180,
+     "masse_t_je_stueck": 3.9,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "SBIRS/Next-Gen OPIR": {
+     "rolle": "Fruehwarnung",
+     "count": 6,
+     "zone": "GEO",
+     "orbit_km": 35786,
+     "masse_t_je_stueck": 4.5,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    }
+   },
+   "bd01": {
+    "qualitaet": {
+     "heer": "legacy",
+     "luft": "legacy",
+     "sam": "modern",
+     "see": "legacy"
+    }
+   }
+  },
+  "CHN": {
+   "id": "CHN",
+   "name": "CHN",
+   "template": "chinaAuto",
+   "originalTemplate": "chinaAuto",
+   "isHuman": true,
+   "hasNukes": true,
+   "dependsOn": null,
+   "regime": "autocracy",
+   "initialRegime": "autocracy",
+   "regimeFlipMultiplier": 1,
+   "attitude": 0,
+   "personality": "opportunist",
+   "daredNukes": false,
+   "nukeUsesTotal": 0,
+   "forbiddenBreaksTotal": 0,
+   "convertedFromDemToAuto": false,
+   "notes": [
+    "SETUP: angelegt durch gm_core setup, Kampagne SCHWARZE SEE"
+   ],
+   "research": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "inProgress": null,
+    "cyberLevel": 0
+   },
+   "economy": {
+    "factories": [],
+    "tankstellen": [],
+    "vonNeumann": [],
+    "yearlyProduction_t": 0,
+    "upkeep_t": 0,
+    "kriegswirtschaft": {
+     "steps_max": 2,
+     "steps_bound": 1,
+     "steps_used": 0,
+     "steps_herkunft": [],
+     "rolle": "patron",
+     "patron": null,
+     "nachforschung_offen": [],
+     "c2_stufe": "NORMATIV"
+    },
+    "resources": {
+     "industrial": {
+      "capacity_t_year": 40.0,
+      "available_t": 40.0,
+      "committed_t": 0,
+      "stockpile_t": 44.0
+     },
+     "propellant": {
+      "lh2": {
+       "stored_t": 6.4447,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0012,
+       "committed_t": 0
+      },
+      "lox": {
+       "stored_t": 43.198,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0003,
+       "committed_t": 0
+      },
+      "ch4": {
+       "stored_t": 16.1928,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0005,
+       "committed_t": 0
+      },
+      "inert": {
+       "stored_t": 8.0,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0,
+       "committed_t": 0
+      }
+     },
+     "coolant": {
+      "lh2_coolant_t": 0,
+      "lhe_coolant_t": 0,
+      "production_t_year": 0
+     },
+     "ammunition": {},
+     "consumables": {
+      "stored_t": 20.0,
+      "production_t_year": 0,
+      "consumption_rate_t_year": 0
+     },
+     "launch": {
+      "capacity_t_year": 400.0,
+      "committed_t": 0.0,
+      "boost_multiplier": 1,
+      "restraum_vortrag_t": 334.0,
+      "_vortrag_beleg": {
+       "gilt_fuer_jahr": 2030,
+       "herkunftsjahr": 2029,
+       "gestartet_gewichtet_t_2029": 66.0,
+       "regelref": "launch_c2.md §5.6 (B-16)",
+       "korrektur": "B-25: resolve_round hatte 44,0 t gerechnet — die fuenf Scorer fielen aus der Summe, weil ihre Sammelzone keinen Zonenfaktor hat. Richtig sind 66,0 t (4,0 Aufklaerer + 22,0 Scorer + 40,0 GEO-Relais)."
+      }
+     },
+     "c2": {
+      "slots_total": 14.0,
+      "slots_committed": 0,
+      "surge_available": true,
+      "ground_stations": 0,
+      "geo_relays": 0,
+      "deep_space_relays": 0,
+      "autonomy_research": false
+     },
+     "compute": {
+      "stock_rp": 20.0,
+      "standorte": 9,
+      "haertung": {
+       "H0": 7,
+       "H1": 1,
+       "H2": 1,
+       "H3": 0
+      },
+      "ck_rp_year": 3.0,
+      "ck_sperre": true,
+      "autarkie_pfad": true,
+      "ck_quelle": "ohne EUV, ausbeutebegrenzt",
+      "marke": "I",
+      "daten": {
+       "exklusiv_qp": 2.0,
+       "pruefer": "P0",
+       "pruefer_bezahlt_bis": 2026,
+       "_hinweis": "Plattformdaten, RLVR-Programme; Sprachraum-Allmende kleiner",
+       "marke": "I",
+       "pruefer_verfall": {
+        "regelref": "denkwerk-compute §9.1 Unterhalt",
+        "bezahlt_bis": 2026,
+        "unbezahlte_jahre": [
+         2027,
+         2028,
+         2029,
+         2030
+        ],
+        "kette": "P3 -> P2 -> P1 -> P0 -> P0",
+        "gebucht_zug": 5,
+        "hausentscheidung": "HE-23"
+       }
+      },
+      "generation": 1,
+      "zuteilung": {
+       "T": 4,
+       "F": 4,
+       "O": 4,
+       "Z": 4,
+       "D": 4
+      },
+      "kumuliert_T_rp_jahre": 0,
+      "karten_bezahlt": [],
+      "ausfall": [],
+      "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+      "zug2": {
+       "g_T": 1.673,
+       "F_stufe": 2,
+       "O_deckung": 4.17,
+       "Z_stufe": 2,
+       "bip_bonus_pct_a": 0.6,
+       "x_risk_je_zug": 0.0067,
+       "quelle": "GM-AUSLEGUNG (Blatt 4 CHN ohne Zuteilung; abgeleitet aus Blatt 1/2 O-china-01/-06). Andi kann in Zug 3 widersprechen."
+      },
+      "zug3": {
+       "g_T": 0.894,
+       "F_stufe": 2,
+       "Z_stufe": 2,
+       "x_risk": 0.0036,
+       "qp_synth": 1.68,
+       "hinweis": "T von 14 auf 4 gesenkt — KI-Fuehrung an die USA abgegeben",
+       "pruefer": "P3"
+      },
+      "_adapter": "HAUSFIX B-37: gespiegelt aus factions.CHN.computeConfig; kein Wert geaendert"
+     }
+    }
+   },
+   "fleet": {},
+   "swarms": {
+    "CHN_AUFKL_LEO": {
+     "design": "CHN_aufklaerer",
+     "count": 2,
+     "zone": "LEO",
+     "orbit_km": 600,
+     "dv_kms": 0.0,
+     "status": "aktiv",
+     "bewaffnet": false,
+     "rolle": "Aufklaerung bis GEO"
+    },
+    "CHN_SCORE_LEO": {
+     "design": "CHN_scorer",
+     "count": 1,
+     "zone": "LEO",
+     "orbit_km": 600,
+     "dv_kms": 1.0,
+     "status": "aktiv",
+     "bewaffnet": false
+    },
+    "CHN_SCORE_MEO": {
+     "design": "CHN_scorer",
+     "count": 1,
+     "zone": "MEO",
+     "orbit_km": 20000,
+     "dv_kms": 1.0,
+     "status": "aktiv",
+     "bewaffnet": false
+    },
+    "CHN_SCORE_HEO": {
+     "design": "CHN_scorer",
+     "count": 1,
+     "zone": "HEO",
+     "orbit_km": 39000,
+     "dv_kms": 1.0,
+     "status": "aktiv",
+     "bewaffnet": false
+    },
+    "CHN_SCORE_SSO": {
+     "design": "CHN_scorer",
+     "count": 1,
+     "zone": "SSO",
+     "orbit_km": 700,
+     "dv_kms": 1.0,
+     "status": "aktiv",
+     "bewaffnet": false
+    },
+    "CHN_SCORE_GEO": {
+     "design": "CHN_scorer",
+     "count": 1,
+     "zone": "GEO",
+     "orbit_km": 35786,
+     "dv_kms": 1.0,
+     "status": "aktiv",
+     "bewaffnet": false
+    },
+    "CHN_RELAIS_GEO": {
+     "design": "CHN_geo_relais",
+     "count": 2,
+     "zone": "GEO",
+     "orbit_km": 35786,
+     "dv_kms": 0.0,
+     "status": "aktiv",
+     "bewaffnet": false,
+     "rolle": "+1 C2-Slot je Stueck (launch_c2 §2.1)"
+    }
+   },
+   "designs": {
+    "CHN_aufklaerer": {
+     "name": "Aufklaerungssatellit",
+     "klasse": "satellit",
+     "masse_t": 2,
+     "aufbau": "Sensor 'bis GEO alles aufdecken' 1 t (construction.md §2) + Struktur 1 t",
+     "bewaffnung": "keine"
+    },
+    "CHN_scorer": {
+     "name": "Scoring-Raumschiff",
+     "klasse": "satellit",
+     "masse_t": 2,
+     "aufbau": "Struktur 1 t + 1 t Treibstoff (dv-Reserve fuer Scoring, 1 km/s je Versuch)",
+     "bewaffnung": "keine"
+    },
+    "CHN_geo_relais": {
+     "name": "GEO-Relais",
+     "klasse": "satellit",
+     "masse_t": 5,
+     "aufbau": "launch_c2.md §2.1: GEO-Relais = +1 C2-Slot fuer 5 t nach GEO",
+     "bewaffnung": "keine"
+    }
+   },
+   "intel": {
+    "detected": {
+     "gruppen": [],
+     "einzeln": {}
+    }
+   },
+   "groundForces": {
+    "heer": 105,
+    "luft": 105,
+    "sam": 116,
+    "see": 114,
+    "asat": 10,
+    "_beleg": "SETUP: bodenlage.py (BL-01: SIPRI 2024 · k · Schlüssel, α=0,5, Hare-Niemeyer), Teilnehmer USA,CHN,EU,IND,RUS"
+   },
+   "omega": {
+    "p_raum_startbestand_W": 1500000.0,
+    "p_raum_watt": 1500000.0,
+    "p_raum_beleg": "SETUP: leistungsbuch §6.1, CHN-Zeile (Startbestand Juli 2026, Güte C)",
+    "leistungsposten": [],
+    "p_orbital_ansaessig_W": 0.0,
+    "schluesseltechs": {
+     "SK-1": "offen",
+     "SK-2": "offen",
+     "SK-3": "offen"
+    },
+    "gutschrift_wahl": [],
+    "brennglas_genutzt_diese_runde": false
+   },
+   "_nukes_vor_zh01": null,
+   "nukes": 700,
+   "computeConfig": {
+    "stock_rp": 20.0,
+    "standorte": 9,
+    "haertung": {
+     "H0": 7,
+     "H1": 1,
+     "H2": 1,
+     "H3": 0
+    },
+    "ck_rp_year": 3.0,
+    "ck_sperre": true,
+    "autarkie_pfad": true,
+    "ck_quelle": "ohne EUV, ausbeutebegrenzt",
+    "marke": "I",
+    "daten": {
+     "exklusiv_qp": 2.0,
+     "pruefer": "P0",
+     "pruefer_bezahlt_bis": 2026,
+     "_hinweis": "Plattformdaten, RLVR-Programme; Sprachraum-Allmende kleiner",
+     "marke": "I",
+     "pruefer_verfall": {
+      "regelref": "denkwerk-compute §9.1 Unterhalt",
+      "bezahlt_bis": 2026,
+      "unbezahlte_jahre": [
+       2027,
+       2028,
+       2029,
+       2030
+      ],
+      "kette": "P3 -> P2 -> P1 -> P0 -> P0",
+      "gebucht_zug": 5,
+      "hausentscheidung": "HE-23"
+     }
+    },
+    "generation": 1,
+    "zuteilung": {
+     "T": 4,
+     "F": 4,
+     "O": 4,
+     "Z": 4,
+     "D": 4
+    },
+    "kumuliert_T_rp_jahre": 0,
+    "karten_bezahlt": [],
+    "ausfall": [],
+    "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+    "zug2": {
+     "g_T": 1.673,
+     "F_stufe": 2,
+     "O_deckung": 4.17,
+     "Z_stufe": 2,
+     "bip_bonus_pct_a": 0.6,
+     "x_risk_je_zug": 0.0067,
+     "quelle": "GM-AUSLEGUNG (Blatt 4 CHN ohne Zuteilung; abgeleitet aus Blatt 1/2 O-china-01/-06). Andi kann in Zug 3 widersprechen."
+    },
+    "zug3": {
+     "g_T": 0.894,
+     "F_stufe": 2,
+     "Z_stufe": 2,
+     "x_risk": 0.0036,
+     "qp_synth": 1.68,
+     "hinweis": "T von 14 auf 4 gesenkt — KI-Fuehrung an die USA abgegeben",
+     "pruefer": "P3"
+    }
+   },
+   "bd01": {
+    "qualitaet": {
+     "heer": "future",
+     "luft": "legacy",
+     "sam": "future",
+     "see": "future"
+    }
+   },
+   "sprengkoepfe_zulauf_2028": 26,
+   "realsatelliten": {
+    "Yaogan": {
+     "rolle": "Aufklaerung",
+     "count": 60,
+     "zone": "LEO",
+     "orbit_km": 600,
+     "masse_t_je_stueck": 2.5,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "Beidou-3": {
+     "rolle": "Navigation",
+     "count": 30,
+     "zone": "MEO",
+     "orbit_km": 21500,
+     "masse_t_je_stueck": 1.0,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "Tianlian": {
+     "rolle": "Datenrelais",
+     "count": 5,
+     "zone": "GEO",
+     "orbit_km": 35786,
+     "masse_t_je_stueck": 2.3,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    }
+   },
+   "klima": {
+    "anpassung": {
+     "aktiv": true,
+     "seit_zug": 5,
+     "quelle": "Kuestenschutz L1 (CHN Siegpraemie, IND Lizenz)",
+     "wirkung": "Grenzschaden halbiert (G-2 / QG-13)"
+    }
+   }
+  },
+  "EU": {
+   "id": "EU",
+   "name": "EU",
+   "template": "euLike",
+   "originalTemplate": "euLike",
+   "isHuman": true,
+   "hasNukes": true,
+   "dependsOn": "USA",
+   "regime": "democracy",
+   "initialRegime": "democracy",
+   "regimeFlipMultiplier": 1,
+   "attitude": 0,
+   "personality": "opportunist",
+   "daredNukes": false,
+   "nukeUsesTotal": 0,
+   "forbiddenBreaksTotal": 0,
+   "convertedFromDemToAuto": false,
+   "notes": [
+    "SETUP: angelegt durch gm_core setup, Kampagne SCHWARZE SEE",
+    "SPIELER: Roman (Spieler 3), ab Zug 1 menschlich gefuehrt.",
+    "ERZAEHLRAHMEN (Hausentscheidung 2, keine Mechanik): Die EU wird aus deutscher Perspektive gefuehrt. SITREPs und Lagebilder erscheinen aus Berliner Sicht; EU-Entscheidungen werden als deutsche Koalitionspolitik erzaehlt. Es entsteht KEINE neue Regel, keine Kohaesionsleiste, kein zusaetzlicher Wurf. ERDE-01 kennt nur den Staat 'eu' — Deutschland ist Erzaehlperspektive, nicht Spielobjekt.",
+    "KANON BESTAETIGT (Hausentscheidung 3): dependsOn=USA bleibt bestehen. EU startet als Vasall der KI-gefuehrten USA, bindet 1 Kriegswirtschaftsschritt. Emanzipation ueber kriegswirtschaft.md §4.1/§4.2 oder Verrat (KW-02) ist ausdruecklich Romans Spielziel."
+   ],
+   "research": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "inProgress": null,
+    "cyberLevel": 0
+   },
+   "economy": {
+    "factories": [],
+    "tankstellen": [],
+    "vonNeumann": [],
+    "yearlyProduction_t": 0,
+    "upkeep_t": 0,
+    "kriegswirtschaft": {
+     "steps_max": 2,
+     "steps_bound": 1,
+     "steps_used": 0,
+     "steps_herkunft": [],
+     "rolle": "vasall",
+     "patron": "USA",
+     "nachforschung_offen": [],
+     "c2_stufe": "NORMATIV"
+    },
+    "resources": {
+     "industrial": {
+      "capacity_t_year": 5.0,
+      "available_t": 5.0,
+      "committed_t": 0,
+      "stockpile_t": 11.0
+     },
+     "propellant": {
+      "lh2": {
+       "stored_t": 0.8056,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0012,
+       "committed_t": 0
+      },
+      "lox": {
+       "stored_t": 5.0398,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0003,
+       "committed_t": 0
+      },
+      "ch4": {
+       "stored_t": 1.7349,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0005,
+       "committed_t": 0
+      },
+      "inert": {
+       "stored_t": 1.0,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0,
+       "committed_t": 0
+      }
+     },
+     "coolant": {
+      "lh2_coolant_t": 0,
+      "lhe_coolant_t": 0,
+      "production_t_year": 0
+     },
+     "ammunition": {},
+     "consumables": {
+      "stored_t": 2.0,
+      "production_t_year": 0,
+      "consumption_rate_t_year": 0
+     },
+     "launch": {
+      "capacity_t_year": 45.0,
+      "committed_t": 0.0,
+      "boost_multiplier": 1,
+      "restraum_vortrag_t": 45.0,
+      "_vortrag_beleg": {
+       "gilt_fuer_jahr": 2030,
+       "herkunftsjahr": 2029,
+       "gestartet_gewichtet_t_2029": 0.0,
+       "regelref": "launch_c2.md §5.6 (B-16)"
+      }
+     },
+     "c2": {
+      "slots_total": 8.0,
+      "slots_committed": 0,
+      "surge_available": true,
+      "ground_stations": 0,
+      "geo_relays": 0,
+      "deep_space_relays": 0,
+      "autonomy_research": false
+     },
+     "compute": {
+      "stock_rp": 8.0,
+      "standorte": 7,
+      "haertung": {
+       "H0": 7,
+       "H1": 0,
+       "H2": 0,
+       "H3": 0
+      },
+      "ck_rp_year": 1.0,
+      "ck_quelle": "Werkzeugbau ja, Fertigung der Spitzenkante nein",
+      "marke": "I",
+      "daten": {
+       "exklusiv_qp": 0.5,
+       "pruefer": "P0",
+       "pruefer_bezahlt_bis": 2026,
+       "_hinweis": "Verlage und Industrie-Prozessdaten, kaum Plattformen",
+       "marke": "I",
+       "pruefer_verfall": {
+        "regelref": "denkwerk-compute §9.1 Unterhalt",
+        "bezahlt_bis": 2026,
+        "unbezahlte_jahre": [
+         2027,
+         2028,
+         2029,
+         2030
+        ],
+        "kette": "P0 -> P0 -> P0 -> P0 -> P0",
+        "gebucht_zug": 5,
+        "hausentscheidung": "HE-23"
+       }
+      },
+      "generation": 1,
+      "zuteilung": {
+       "T": 0,
+       "F": 3,
+       "O": 1,
+       "Z": 4,
+       "D": 0
+      },
+      "kumuliert_T_rp_jahre": 0,
+      "karten_bezahlt": [],
+      "ausfall": [],
+      "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+      "zug3": {
+       "g_T": 0.0,
+       "F_stufe": 2,
+       "Z_stufe": 2,
+       "x_risk": 0.0,
+       "quelle": "A1-abgeleitet (defensiv-oekonomisch), kein Compute-Feld im Doktrinbaum",
+       "pruefer": "P0"
+      },
+      "zuteilung_zug5": {
+       "T": 0,
+       "F": 3,
+       "O": 1,
+       "Z": 4,
+       "D": 0,
+       "beleg": "HE-26: Blatt 4 trug keine Zuteilung; Zug-4-Verteilung fortgeschrieben, Rueckfrage an Roman (RG-Z5-10: leeres Feld = 0 oder unveraendert?)"
+      },
+      "_adapter": "HAUSFIX B-37: gespiegelt aus factions.EU.computeConfig; kein Wert geaendert"
+     }
+    }
+   },
+   "fleet": {},
+   "swarms": {},
+   "designs": {},
+   "intel": {
+    "detected": {
+     "gruppen": [],
+     "einzeln": {}
+    }
+   },
+   "groundForces": {
+    "heer": 93,
+    "luft": 97,
+    "sam": 86,
+    "see": 94,
+    "asat": 2,
+    "_beleg": "SETUP: bodenlage.py (BL-01: SIPRI 2024 · k · Schlüssel, α=0,5, Hare-Niemeyer), Teilnehmer USA,CHN,EU,IND,RUS"
+   },
+   "omega": {
+    "p_raum_startbestand_W": 1000000.0,
+    "p_raum_watt": 1000000.0,
+    "p_raum_beleg": "SETUP: leistungsbuch §6.1, EU-Zeile (Startbestand Juli 2026, Güte C)",
+    "leistungsposten": [],
+    "p_orbital_ansaessig_W": 0.0,
+    "schluesseltechs": {
+     "SK-1": "offen",
+     "SK-2": "offen",
+     "SK-3": "offen"
+    },
+    "gutschrift_wahl": [],
+    "brennglas_genutzt_diese_runde": false
+   },
+   "_nukes_vor_zh01": null,
+   "nukes": 290,
+   "computeConfig": {
+    "stock_rp": 8.0,
+    "standorte": 7,
+    "haertung": {
+     "H0": 7,
+     "H1": 0,
+     "H2": 0,
+     "H3": 0
+    },
+    "ck_rp_year": 1.0,
+    "ck_quelle": "Werkzeugbau ja, Fertigung der Spitzenkante nein",
+    "marke": "I",
+    "daten": {
+     "exklusiv_qp": 0.5,
+     "pruefer": "P0",
+     "pruefer_bezahlt_bis": 2026,
+     "_hinweis": "Verlage und Industrie-Prozessdaten, kaum Plattformen",
+     "marke": "I",
+     "pruefer_verfall": {
+      "regelref": "denkwerk-compute §9.1 Unterhalt",
+      "bezahlt_bis": 2026,
+      "unbezahlte_jahre": [
+       2027,
+       2028,
+       2029,
+       2030
+      ],
+      "kette": "P0 -> P0 -> P0 -> P0 -> P0",
+      "gebucht_zug": 5,
+      "hausentscheidung": "HE-23"
+     }
+    },
+    "generation": 1,
+    "zuteilung": {
+     "T": 0,
+     "F": 3,
+     "O": 1,
+     "Z": 4,
+     "D": 0
+    },
+    "kumuliert_T_rp_jahre": 0,
+    "karten_bezahlt": [],
+    "ausfall": [],
+    "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+    "zug3": {
+     "g_T": 0.0,
+     "F_stufe": 2,
+     "Z_stufe": 2,
+     "x_risk": 0.0,
+     "quelle": "A1-abgeleitet (defensiv-oekonomisch), kein Compute-Feld im Doktrinbaum",
+     "pruefer": "P0"
+    },
+    "zuteilung_zug5": {
+     "T": 0,
+     "F": 3,
+     "O": 1,
+     "Z": 4,
+     "D": 0,
+     "beleg": "HE-26: Blatt 4 trug keine Zuteilung; Zug-4-Verteilung fortgeschrieben, Rueckfrage an Roman (RG-Z5-10: leeres Feld = 0 oder unveraendert?)"
+    }
+   },
+   "realsatelliten": {
+    "SARLupe/SARah": {
+     "rolle": "Radaraufklaerung",
+     "count": 5,
+     "zone": "LEO",
+     "orbit_km": 500,
+     "masse_t_je_stueck": 0.77,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "SatComBw": {
+     "rolle": "Militaerkommunikation",
+     "count": 2,
+     "zone": "GEO",
+     "orbit_km": 35786,
+     "masse_t_je_stueck": 2.5,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "Galileo": {
+     "rolle": "Navigation",
+     "count": 24,
+     "zone": "MEO",
+     "orbit_km": 23222,
+     "masse_t_je_stueck": 0.7,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    }
+   },
+   "bd01": {
+    "qualitaet": {
+     "heer": "legacy",
+     "luft": "legacy",
+     "sam": "legacy",
+     "see": "legacy"
+    }
+   }
+  },
+  "IND": {
+   "id": "IND",
+   "name": "IND",
+   "template": "euLike",
+   "originalTemplate": "euLike",
+   "isHuman": true,
+   "hasNukes": true,
+   "dependsOn": "CHN",
+   "regime": "democracy",
+   "initialRegime": "democracy",
+   "regimeFlipMultiplier": 1,
+   "attitude": 0,
+   "personality": "opportunist",
+   "daredNukes": false,
+   "nukeUsesTotal": 0,
+   "forbiddenBreaksTotal": 0,
+   "convertedFromDemToAuto": false,
+   "notes": [
+    "SETUP: angelegt durch gm_core setup, Kampagne SCHWARZE SEE"
+   ],
+   "research": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "inProgress": null,
+    "cyberLevel": 0
+   },
+   "economy": {
+    "factories": [],
+    "tankstellen": [],
+    "vonNeumann": [],
+    "yearlyProduction_t": 0,
+    "upkeep_t": 0,
+    "kriegswirtschaft": {
+     "steps_max": 2,
+     "steps_bound": 1,
+     "steps_used": 0,
+     "steps_herkunft": [],
+     "rolle": "vasall",
+     "patron": "CHN",
+     "nachforschung_offen": [],
+     "c2_stufe": "NORMATIV"
+    },
+    "resources": {
+     "industrial": {
+      "capacity_t_year": 4.0,
+      "available_t": 4.0,
+      "committed_t": 0,
+      "stockpile_t": 10.0
+     },
+     "propellant": {
+      "lh2": {
+       "stored_t": 0.537,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0012,
+       "committed_t": 0
+      },
+      "lox": {
+       "stored_t": 4.3198,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0003,
+       "committed_t": 0
+      },
+      "ch4": {
+       "stored_t": 1.7349,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0005,
+       "committed_t": 0
+      },
+      "inert": {
+       "stored_t": 1.0,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0,
+       "committed_t": 0
+      }
+     },
+     "coolant": {
+      "lh2_coolant_t": 0,
+      "lhe_coolant_t": 0,
+      "production_t_year": 0
+     },
+     "ammunition": {},
+     "consumables": {
+      "stored_t": 2.0,
+      "production_t_year": 0,
+      "consumption_rate_t_year": 0
+     },
+     "launch": {
+      "capacity_t_year": 40.0,
+      "committed_t": 0.0,
+      "boost_multiplier": 1,
+      "restraum_vortrag_t": 40.0,
+      "_vortrag_beleg": {
+       "gilt_fuer_jahr": 2030,
+       "herkunftsjahr": 2029,
+       "gestartet_gewichtet_t_2029": 0.0,
+       "regelref": "launch_c2.md §5.6 (B-16)"
+      }
+     },
+     "c2": {
+      "slots_total": 3.0,
+      "slots_committed": 0,
+      "surge_available": true,
+      "ground_stations": 0,
+      "geo_relays": 0,
+      "deep_space_relays": 0,
+      "autonomy_research": false
+     },
+     "compute": {
+      "stock_rp": 3.0,
+      "standorte": 3,
+      "haertung": {
+       "H0": 3,
+       "H1": 0,
+       "H2": 0,
+       "H3": 0
+      },
+      "ck_rp_year": 0.2,
+      "marke": "I",
+      "daten": {
+       "exklusiv_qp": 0.2,
+       "pruefer": "P0",
+       "pruefer_bezahlt_bis": 2026,
+       "_hinweis": "Digitalisierte Verwaltung, IT-Dienstleister",
+       "marke": "I",
+       "pruefer_verfall": {
+        "regelref": "denkwerk-compute §9.1 Unterhalt",
+        "bezahlt_bis": 2026,
+        "unbezahlte_jahre": [
+         2027,
+         2028,
+         2029,
+         2030
+        ],
+        "kette": "P0 -> P0 -> P0 -> P0 -> P0",
+        "gebucht_zug": 5,
+        "hausentscheidung": "HE-23"
+       }
+      },
+      "generation": 1,
+      "zuteilung": {
+       "T": 3,
+       "F": 0,
+       "O": 0,
+       "Z": 0,
+       "D": 0
+      },
+      "kumuliert_T_rp_jahre": 0,
+      "karten_bezahlt": [],
+      "ausfall": [],
+      "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+      "zug2": {
+       "g_T": 0.775,
+       "F_stufe": 0,
+       "O_deckung": 0.0,
+       "Z_stufe": 0,
+       "x_risk_je_zug": 0.0031,
+       "warnung": "O=0: -1 Initiative, -1 auf Duelle je 2 fehlende Slots (launch_c2 §3.2)",
+       "quelle": "Blatt 4 IND, bf_d_konto_T=3"
+      },
+      "zug3": {
+       "g_T": 0.775,
+       "F_stufe": 0,
+       "Z_stufe": 0,
+       "x_risk": 0.0031,
+       "warnung": "O=0 zum zweiten Mal: -1 Initiative, -1 auf Duelle je 2 fehlende Slots",
+       "pruefer": "P0"
+      },
+      "_adapter": "HAUSFIX B-37: gespiegelt aus factions.IND.computeConfig; kein Wert geaendert"
+     }
+    }
+   },
+   "fleet": {},
+   "swarms": {
+    "SDX-LEO": {
+     "design": "IND_SPADEX",
+     "count": 2,
+     "zone": "LEO",
+     "orbit_km": 460,
+     "dv_kms": 0.15,
+     "status": "aktiv",
+     "bewaffnet": false
+    },
+    "SDX-SSO": {
+     "design": "IND_SPADEX",
+     "count": 2,
+     "zone": "LEO",
+     "orbit_km": 500,
+     "dv_kms": 0.096,
+     "status": "aktiv",
+     "bewaffnet": false,
+     "notiz": "Perigaeum 700->500 km abgesenkt fuer den Rammversuch gegen SARah (JW-01, beide Fehlschuesse). Rest 96 m/s je Rumpf."
+    }
+   },
+   "designs": {
+    "IND_SPADEX": {
+     "name": "SPADEX Zwillingsbund",
+     "klasse": "kleingeraet",
+     "quelle": "OW-01 systemkatalog.md",
+     "dryMass_t": 0.2403,
+     "propellantMass_t": 0.0173,
+     "nassMasse_t": 0.258,
+     "isp_s": 220,
+     "dv_total_kms": 0.15,
+     "bewaffnung": "keine",
+     "faehigkeiten": [
+      "autonomes Docking",
+      "Lidar",
+      "Strahlungshaertung"
+     ]
+    }
+   },
+   "intel": {
+    "detected": {
+     "gruppen": [],
+     "einzeln": {}
+    }
+   },
+   "groundForces": {
+    "heer": 64,
+    "luft": 54,
+    "sam": 51,
+    "see": 50,
+    "asat": 5,
+    "_beleg": "SETUP: bodenlage.py (BL-01: SIPRI 2024 · k · Schlüssel, α=0,5, Hare-Niemeyer), Teilnehmer USA,CHN,EU,IND,RUS"
+   },
+   "omega": {
+    "p_raum_startbestand_W": 210000.0,
+    "p_raum_watt": 210000.0,
+    "p_raum_beleg": "SETUP: leistungsbuch §6.1, IND-Zeile (Startbestand Juli 2026, Güte C)",
+    "leistungsposten": [],
+    "p_orbital_ansaessig_W": 0.0,
+    "schluesseltechs": {
+     "SK-1": "offen",
+     "SK-2": "offen",
+     "SK-3": "offen"
+    },
+    "gutschrift_wahl": [],
+    "brennglas_genutzt_diese_runde": false
+   },
+   "_nukes_vor_zh01": null,
+   "nukes": 190,
+   "computeConfig": {
+    "stock_rp": 3.0,
+    "standorte": 3,
+    "haertung": {
+     "H0": 3,
+     "H1": 0,
+     "H2": 0,
+     "H3": 0
+    },
+    "ck_rp_year": 0.2,
+    "marke": "I",
+    "daten": {
+     "exklusiv_qp": 0.2,
+     "pruefer": "P0",
+     "pruefer_bezahlt_bis": 2026,
+     "_hinweis": "Digitalisierte Verwaltung, IT-Dienstleister",
+     "marke": "I",
+     "pruefer_verfall": {
+      "regelref": "denkwerk-compute §9.1 Unterhalt",
+      "bezahlt_bis": 2026,
+      "unbezahlte_jahre": [
+       2027,
+       2028,
+       2029,
+       2030
+      ],
+      "kette": "P0 -> P0 -> P0 -> P0 -> P0",
+      "gebucht_zug": 5,
+      "hausentscheidung": "HE-23"
+     }
+    },
+    "generation": 1,
+    "zuteilung": {
+     "T": 3,
+     "F": 0,
+     "O": 0,
+     "Z": 0,
+     "D": 0
+    },
+    "kumuliert_T_rp_jahre": 0,
+    "karten_bezahlt": [],
+    "ausfall": [],
+    "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+    "zug2": {
+     "g_T": 0.775,
+     "F_stufe": 0,
+     "O_deckung": 0.0,
+     "Z_stufe": 0,
+     "x_risk_je_zug": 0.0031,
+     "warnung": "O=0: -1 Initiative, -1 auf Duelle je 2 fehlende Slots (launch_c2 §3.2)",
+     "quelle": "Blatt 4 IND, bf_d_konto_T=3"
+    },
+    "zug3": {
+     "g_T": 0.775,
+     "F_stufe": 0,
+     "Z_stufe": 0,
+     "x_risk": 0.0031,
+     "warnung": "O=0 zum zweiten Mal: -1 Initiative, -1 auf Duelle je 2 fehlende Slots",
+     "pruefer": "P0"
+    }
+   },
+   "bd01": {
+    "qualitaet": {
+     "heer": "future",
+     "luft": "legacy",
+     "sam": "legacy",
+     "see": "legacy"
+    }
+   },
+   "realsatelliten": {
+    "RISAT/EMISAT": {
+     "rolle": "Radar- und Signalaufklaerung",
+     "count": 6,
+     "zone": "SSO",
+     "orbit_km": 600,
+     "masse_t_je_stueck": 1.9,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "GSAT-7/7A": {
+     "rolle": "Militaerkommunikation",
+     "count": 2,
+     "zone": "GEO",
+     "orbit_km": 35786,
+     "masse_t_je_stueck": 2.3,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "NavIC/IRNSS": {
+     "rolle": "Navigation",
+     "count": 7,
+     "zone": "GEO/GSO",
+     "orbit_km": 35786,
+     "masse_t_je_stueck": 1.4,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    }
+   },
+   "klima": {
+    "anpassung": {
+     "aktiv": true,
+     "seit_zug": 5,
+     "quelle": "Kuestenschutz L1 (CHN Siegpraemie, IND Lizenz)",
+     "wirkung": "Grenzschaden halbiert (G-2 / QG-13)"
+    }
+   }
+  },
+  "RUS": {
+   "id": "RUS",
+   "name": "RUS",
+   "template": "russiaLike",
+   "originalTemplate": "russiaLike",
+   "isHuman": false,
+   "hasNukes": true,
+   "dependsOn": "CHN",
+   "regime": "autocracy",
+   "initialRegime": "autocracy",
+   "regimeFlipMultiplier": 1,
+   "attitude": 3,
+   "personality": "statusQuo",
+   "daredNukes": false,
+   "nukeUsesTotal": 0,
+   "forbiddenBreaksTotal": 0,
+   "convertedFromDemToAuto": false,
+   "notes": [
+    "SETUP: angelegt durch gm_core setup, Kampagne SCHWARZE SEE"
+   ],
+   "research": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "inProgress": null,
+    "cyberLevel": 0
+   },
+   "economy": {
+    "factories": [],
+    "tankstellen": [],
+    "vonNeumann": [],
+    "yearlyProduction_t": 0,
+    "upkeep_t": 0,
+    "kriegswirtschaft": {
+     "steps_max": 2,
+     "steps_bound": 1,
+     "steps_used": 1,
+     "steps_herkunft": [
+      "startquote"
+     ],
+     "rolle": "vasall",
+     "patron": "CHN",
+     "nachforschung_offen": [],
+     "c2_stufe": "KRIEGSWIRTSCHAFT"
+    },
+    "resources": {
+     "industrial": {
+      "capacity_t_year": 10.0,
+      "available_t": 10.0,
+      "committed_t": 0,
+      "stockpile_t": 25.0
+     },
+     "propellant": {
+      "lh2": {
+       "stored_t": 1.6111,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0012,
+       "committed_t": 0
+      },
+      "lox": {
+       "stored_t": 10.7995,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0003,
+       "committed_t": 0
+      },
+      "ch4": {
+       "stored_t": 4.0482,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0005,
+       "committed_t": 0
+      },
+      "inert": {
+       "stored_t": 2.0,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0,
+       "committed_t": 0
+      }
+     },
+     "coolant": {
+      "lh2_coolant_t": 0,
+      "lhe_coolant_t": 0,
+      "production_t_year": 0
+     },
+     "ammunition": {},
+     "consumables": {
+      "stored_t": 5.0,
+      "production_t_year": 0,
+      "consumption_rate_t_year": 0
+     },
+     "launch": {
+      "capacity_t_year": 100.0,
+      "committed_t": 0.0,
+      "boost_multiplier": 1,
+      "restraum_vortrag_t": 100.0,
+      "_vortrag_beleg": {
+       "gilt_fuer_jahr": 2030,
+       "herkunftsjahr": 2029,
+       "gestartet_gewichtet_t_2029": 0.0,
+       "regelref": "launch_c2.md §5.6 (B-16)"
+      }
+     },
+     "c2": {
+      "slots_total": 5.0,
+      "slots_committed": 0,
+      "surge_available": true,
+      "ground_stations": 0,
+      "geo_relays": 0,
+      "deep_space_relays": 0,
+      "autonomy_research": false
+     },
+     "compute": {
+      "stock_rp": 1.0,
+      "standorte": 2,
+      "haertung": {
+       "H0": 1,
+       "H1": 1,
+       "H2": 0,
+       "H3": 0
+      },
+      "ck_rp_year": 0.1,
+      "ck_sperre": true,
+      "marke": "I",
+      "daten": {
+       "exklusiv_qp": 0.1,
+       "pruefer": "P0",
+       "pruefer_bezahlt_bis": 2026,
+       "_hinweis": "abgeschottet, Sprachraum klein",
+       "marke": "I",
+       "pruefer_verfall": {
+        "regelref": "denkwerk-compute §9.1 Unterhalt",
+        "bezahlt_bis": 2026,
+        "unbezahlte_jahre": [
+         2027,
+         2028,
+         2029,
+         2030
+        ],
+        "kette": "P0 -> P0 -> P0 -> P0 -> P0",
+        "gebucht_zug": 5,
+        "hausentscheidung": "HE-23"
+       }
+      },
+      "generation": 1,
+      "zuteilung": {
+       "T": 0,
+       "F": 0,
+       "O": 0,
+       "Z": 1,
+       "D": 0
+      },
+      "kumuliert_T_rp_jahre": 0,
+      "karten_bezahlt": [],
+      "ausfall": [],
+      "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+      "zug3": {
+       "g_T": 0.0,
+       "Z_stufe": 1,
+       "x_risk": 0.0,
+       "pruefer": "P0"
+      },
+      "_adapter": "HAUSFIX B-37: gespiegelt aus factions.RUS.computeConfig; kein Wert geaendert"
+     }
+    }
+   },
+   "fleet": {},
+   "swarms": {},
+   "designs": {},
+   "intel": {
+    "detected": {
+     "gruppen": [],
+     "einzeln": {}
+    }
+   },
+   "groundForces": {
+    "heer": 79,
+    "luft": 67,
+    "sam": 90,
+    "see": 57,
+    "asat": 10,
+    "_beleg": "SETUP: bodenlage.py (BL-01: SIPRI 2024 · k · Schlüssel, α=0,5, Hare-Niemeyer), Teilnehmer USA,CHN,EU,IND,RUS"
+   },
+   "omega": {
+    "p_raum_startbestand_W": 270000.0,
+    "p_raum_watt": 270000.0,
+    "p_raum_beleg": "SETUP: leistungsbuch §6.1, RUS-Zeile (Startbestand Juli 2026, Güte C)",
+    "leistungsposten": [],
+    "p_orbital_ansaessig_W": 0.0,
+    "schluesseltechs": {
+     "SK-1": "offen",
+     "SK-2": "offen",
+     "SK-3": "offen"
+    },
+    "gutschrift_wahl": [],
+    "brennglas_genutzt_diese_runde": false
+   },
+   "_nukes_vor_zh01": null,
+   "nukes": 4309,
+   "computeConfig": {
+    "stock_rp": 1.0,
+    "standorte": 2,
+    "haertung": {
+     "H0": 1,
+     "H1": 1,
+     "H2": 0,
+     "H3": 0
+    },
+    "ck_rp_year": 0.1,
+    "ck_sperre": true,
+    "marke": "I",
+    "daten": {
+     "exklusiv_qp": 0.1,
+     "pruefer": "P0",
+     "pruefer_bezahlt_bis": 2026,
+     "_hinweis": "abgeschottet, Sprachraum klein",
+     "marke": "I",
+     "pruefer_verfall": {
+      "regelref": "denkwerk-compute §9.1 Unterhalt",
+      "bezahlt_bis": 2026,
+      "unbezahlte_jahre": [
+       2027,
+       2028,
+       2029,
+       2030
+      ],
+      "kette": "P0 -> P0 -> P0 -> P0 -> P0",
+      "gebucht_zug": 5,
+      "hausentscheidung": "HE-23"
+     }
+    },
+    "generation": 1,
+    "zuteilung": {
+     "T": 0,
+     "F": 0,
+     "O": 0,
+     "Z": 1,
+     "D": 0
+    },
+    "kumuliert_T_rp_jahre": 0,
+    "karten_bezahlt": [],
+    "ausfall": [],
+    "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+    "zug3": {
+     "g_T": 0.0,
+     "Z_stufe": 1,
+     "x_risk": 0.0,
+     "pruefer": "P0"
+    }
+   },
+   "realsatelliten": {
+    "Bars-M / Persona": {
+     "rolle": "Aufklaerung",
+     "count": 5,
+     "zone": "LEO",
+     "orbit_km": 700,
+     "masse_t_je_stueck": 4.0,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "Meridian/Blagovest": {
+     "rolle": "Kommunikation",
+     "count": 6,
+     "zone": "HEO",
+     "orbit_km": 39000,
+     "masse_t_je_stueck": 3.2,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "GLONASS-K": {
+     "rolle": "Navigation",
+     "count": 24,
+     "zone": "MEO",
+     "orbit_km": 19100,
+     "masse_t_je_stueck": 0.94,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    },
+    "Kupol/Tundra": {
+     "rolle": "Fruehwarnung",
+     "count": 5,
+     "zone": "HEO",
+     "orbit_km": 39000,
+     "masse_t_je_stueck": 1.6,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    }
+   },
+   "bd01": {
+    "qualitaet": {
+     "heer": "future",
+     "luft": "legacy",
+     "sam": "legacy",
+     "see": "legacy"
+    }
+   }
+  },
+  "REST": {
+   "id": "REST",
+   "name": "REST",
+   "template": "euLike",
+   "originalTemplate": "euLike",
+   "isHuman": false,
+   "hasNukes": false,
+   "dependsOn": null,
+   "regime": "autocracy",
+   "initialRegime": "autocracy",
+   "regimeFlipMultiplier": 1,
+   "attitude": -2,
+   "personality": "statusQuo",
+   "daredNukes": false,
+   "nukeUsesTotal": 0,
+   "forbiddenBreaksTotal": 0,
+   "convertedFromDemToAuto": false,
+   "notes": [
+    "SETUP: angelegt durch gm_core setup, Kampagne SCHWARZE SEE"
+   ],
+   "research": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "inProgress": null,
+    "cyberLevel": 0
+   },
+   "economy": {
+    "factories": [],
+    "tankstellen": [],
+    "vonNeumann": [],
+    "yearlyProduction_t": 0,
+    "upkeep_t": 0,
+    "kriegswirtschaft": {
+     "steps_max": 2,
+     "steps_bound": 0,
+     "steps_used": 0,
+     "steps_herkunft": [],
+     "rolle": "ungebunden",
+     "patron": null,
+     "nachforschung_offen": [],
+     "c2_stufe": "NORMATIV"
+    },
+    "resources": {
+     "industrial": {
+      "capacity_t_year": 0,
+      "available_t": 0.0,
+      "committed_t": 0,
+      "stockpile_t": 0
+     },
+     "propellant": {
+      "lh2": {
+       "stored_t": 0,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0012,
+       "committed_t": 0
+      },
+      "lox": {
+       "stored_t": 0,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0003,
+       "committed_t": 0
+      },
+      "ch4": {
+       "stored_t": 0,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0.0005,
+       "committed_t": 0
+      },
+      "inert": {
+       "stored_t": 0,
+       "production_t_year": 0,
+       "boiloff_rate_daily": 0,
+       "committed_t": 0
+      }
+     },
+     "coolant": {
+      "lh2_coolant_t": 0,
+      "lhe_coolant_t": 0,
+      "production_t_year": 0
+     },
+     "ammunition": {},
+     "consumables": {
+      "stored_t": 0,
+      "production_t_year": 0,
+      "consumption_rate_t_year": 0
+     },
+     "launch": {
+      "capacity_t_year": 64.5,
+      "committed_t": 0.0,
+      "boost_multiplier": 1,
+      "restraum_vortrag_t": 64.5,
+      "_vortrag_beleg": {
+       "gilt_fuer_jahr": 2030,
+       "herkunftsjahr": 2029,
+       "gestartet_gewichtet_t_2029": 0.0,
+       "regelref": "launch_c2.md §5.6 (B-16)"
+      }
+     },
+     "c2": {
+      "slots_total": 20.0,
+      "slots_committed": 0,
+      "surge_available": true,
+      "ground_stations": 0,
+      "geo_relays": 0,
+      "deep_space_relays": 0,
+      "autonomy_research": false
+     },
+     "compute": {
+      "stock_rp": 13.0,
+      "standorte": 15,
+      "ck_rp_year": 5.5,
+      "haertung": {
+       "H0": 15,
+       "H1": 0,
+       "H2": 0,
+       "H3": 0
+      },
+      "_sb1": "SB-1: Summe der Bloecke JPN_KOR + REST",
+      "generation": 1,
+      "zuteilung": {
+       "T": 0,
+       "F": 0,
+       "O": 0,
+       "Z": 0,
+       "D": 0
+      },
+      "kumuliert_T_rp_jahre": 0,
+      "karten_bezahlt": [],
+      "ausfall": [],
+      "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)",
+      "_adapter": "HAUSFIX B-37: gespiegelt aus factions.REST.computeConfig; kein Wert geaendert"
+     }
+    }
+   },
+   "fleet": {},
+   "swarms": {},
+   "designs": {},
+   "intel": {
+    "detected": {
+     "gruppen": [],
+     "einzeln": {}
+    }
+   },
+   "groundForces": {
+    "heer": 100,
+    "luft": 100,
+    "sam": 100,
+    "see": 100,
+    "asat": 10,
+    "_beleg": "BL-01 references/bodenlage.md"
+   },
+   "omega": {
+    "p_raum_startbestand_W": 2826100.0,
+    "p_raum_watt": 2826100.0,
+    "p_raum_beleg": "SETUP: leistungsbuch.md §6.1 — Summe aller Zeilen ausserhalb USA/CHN/EU/RUS/IND (RFW 1,500e6 + UK 9,450e5 + JPN 3,150e5 + KOR 4,000e4 + ISR 2,250e4 + IRN 3,000e3 + NK 6,000e2); NZ/AUS/TUR/PAK/SAF/ROGUE stehen dort auf 0.",
+    "leistungsposten": [],
+    "p_orbital_ansaessig_W": 0.0,
+    "schluesseltechs": {
+     "SK-1": "offen",
+     "SK-2": "offen",
+     "SK-3": "offen"
+    },
+    "gutschrift_wahl": [],
+    "brennglas_genutzt_diese_runde": false
+   },
+   "computeConfig": {
+    "stock_rp": 13.0,
+    "standorte": 15,
+    "ck_rp_year": 5.5,
+    "haertung": {
+     "H0": 15,
+     "H1": 0,
+     "H2": 0,
+     "H3": 0
+    },
+    "_sb1": "SB-1: Summe der Bloecke JPN_KOR + REST",
+    "generation": 1,
+    "zuteilung": {
+     "T": 0,
+     "F": 0,
+     "O": 0,
+     "Z": 0,
+     "D": 0
+    },
+    "kumuliert_T_rp_jahre": 0,
+    "karten_bezahlt": [],
+    "ausfall": [],
+    "_beleg": "SETUP DW-01 — assets/dw01_startlage_2026.json (Weltbestand 100 RP, QD-13)"
+   },
+   "realsatelliten": {
+    "Diverse (JPN IGS, KOR, ISR, TUR)": {
+     "rolle": "Aufklaerung und Kommunikation",
+     "count": 25,
+     "zone": "LEO/GEO",
+     "orbit_km": 600,
+     "masse_t_je_stueck": 2.0,
+     "herkunft": "real",
+     "delta_v_kms": 0.05,
+     "bewaffnet": false,
+     "beleg": "HE-21 — reale Konstellation, GM-Bemessung [S] nach oeffentlichen Angaben"
+    }
+   }
+  }
+ },
+ "_schema_notes": {
+  "swarms_e13": "v3.3: factions[*].swarms = Schwarm-Kompression als ZUSTANDSFORM (Hausregel E13, references/schwarm.md). count zaehlt alle Ruempfe inkl. exceptions. Bewaffnete Einheiten nie im Schwarm. Negative counts/dv werden von swarm.py und resolve_round.py abgelehnt.",
+  "designs_katalog": "v3.3: factions[*].designs = ein Design-Block je Bauserie; Schiffe/Schwaerme tragen nur design_ref.",
+  "graveyard": "v3.3: tote Schiffe liegen in graveyard.json (Kaltspeicher, scripts/graveyard.py bestatten); im State nur state.graveyard = {count, masse_t, letzter_eintrag, sha256, datei}. Zugriff nur bei AUDIT.",
+  "intel_detected": "v3.3: Kontaktlisten gruppiert ({gruppen, einzeln}) — nie n Einzelkontakte gleicher Art.",
+  "orbit_fields": "Classical orbital elements for precise tracking. central_body references BODIES dict in orbital_mechanics.py.",
+  "transit_fields": "Tracks ships en route between zones. transfer_type: 'hohmann', 'lambert', 'bielliptic', 'plane_change'. transfer_orbit: {a, e, i, raan, argp, nu} of the transfer ellipse.",
+  "dv_remaining": "Decremented by every maneuver. When 0, ship is stranded on current orbit.",
+  "zone_vs_orbit": "zone is the simplified scoring category. orbit holds precise Keplerian elements. Both are maintained; orbit is authoritative for physics.",
+  "epoch": "The game year + phase when these elements were last updated. GM propagates via orbital_mechanics.py when needed.",
+  "omega_block": "WN-02 »SKALENSCHNITT«. stufe 0-6 (Anker P_Raum = 10^(9+stufe) W, K = (log10(P)-6)/10). modus 'leiter' = Standardpfad, 'custom' = von den Spielern beschlossene Abweichung (§5) — dann ist custom_ziel zwingend inkl. konsens_aller_menschen=true. Dieser Skill traegt Ω0-Ω2 als Standardpfad; ab Ω3 Export (dv_export) als Empfehlung, KI-GM-Fortfuehrung bis Ω6 nur per §5b-Konsens (SK-7…SK-18, Rev. B). Global ist nur der Referenzwert; P_Raum und Schluesseltech-Status je Fraktion stehen unter factions[*].omega (WN-01-Namensraum, Fog of War).",
+  "omega_renormierung": "Beim Schnitt: extensive Groessen ÷10 mit Integer-Trunkierung, Rest verfaellt ersatzlos; 1 neue Einheit = 10 alte. Intensive Groessen (Δv, Isp, Raten, Anteile, Leisten, Orbitalelemente, Zone, Vertraege, Diplomatie, DP/Eskalation, Kessler-DI, Score) bleiben 1:1. Aufklaerungsalter wird auf den neuen Zeittakt umgerechnet, nicht geteilt.",
+  "omega_gutschrift": "gutschrift_wahl: vom Spieler VOR dem Schnitt benannte Zaehlkategorien; Zahl = Zahl der gehaltenen Schluesseltechs. In diesen Kategorien wird kaufmaennisch gerundet (Rest >= 5 auf) statt trunkiert.",
+  "launch_c2": "Pro Fraktion economy.resources.launch/.c2 — Startkapazität, C2-Slots, Missionskomplexität: siehe references/launch_c2.md (Tabellen 1+2 bei Spielstart PFLICHT)",
+  "scoring_streaks": "v3.4: scoring.streaks[F] = laufende Serie an Runden mit eindeutig hoechstem Rundenscore; scoring.warsWon[F] = eingeloeste Siege. Buchung NUR via scripts/scoring_streak.py runde (references/scoring.md §Siegbedingung): eindeutiger Sieger +1 und alle anderen auf 0; Remis an der Spitze laesst ALLE Serien unveraendert (Pause, kein Bruch); bei Serie 3 Auszahlung (1x gratis forschen, sofort, timelinefrei, nicht ansparbar), dann streaks[F]=0 und warsWon[F]+=1."
+ },
+ "omega": {
+  "stufe": 0,
+  "modus": "leiter",
+  "takt_jahre_pro_zug": 1,
+  "p_raum_referenz_w": 1000000000.0,
+  "k_sagan": 0.3,
+  "diffusionsfenster": {
+   "aktiv": false,
+   "verbleibende_zuege": 0,
+   "ausloeser_fraktion": null
+  },
+  "custom_ziel": null,
+  "verbandsbildung": "je (Klasse, Zone)",
+  "schnittprotokolle": []
+ },
+ "kessler": {},
+ "notizen": [
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "SETUP: IND ohne Kanon-Template in diplomacy.md — Vorlage (euLike) bleibt; bei Bedarf per dv-diplomatie setzen"
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "SETUP: REST ohne Zeile in launch_c2.md — Startkapazität/C2 bleiben 0 (REGELLÜCKE-Konvention)"
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "SETUP: REST ohne Kanon-Template in diplomacy.md — Vorlage (euLike) bleibt; bei Bedarf per dv-diplomatie setzen"
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "SETUP: REST ohne Zeile in leistungsbuch §6.1 — Ω-Startbestand 0, beim ersten Ω-Schnitt erheben"
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "SETUP: REST ohne Zeile in der BL-01-Tafel — groundForces bleibt Template-Rückfall 100/100/100/100/10"
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "HAUSENTSCHEIDUNG 1 (Spielerentscheid, Zug 0): IND erhaelt dependsOn=CHN. Grund: kriegswirtschaft.md §2.2 fuehrt Indien in der Standard-Fraktionsliste als Vasall (RUS/CHN); das Setup-Skript verdrahtet nur EU->USA und RUS->CHN und hatte IND als ungebunden angelegt. Die Abweichung wurde als REGELLUECKE gemeldet und vom Spielleiter zugunsten des Kanons entschieden. Folge: IND bindet 1 Kriegswirtschaftsschritt (steps_bound), 1 Schritt bleibt frei. Abstreifbar nach kriegswirtschaft.md §4.1 (L1 'Umbau der heimischen Wirtschaft') oder §4.2, sowie durch Verrat des Klienten (KW-02)."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "TISCH Zug 1: Jakob = IND (Demokratie, blockfrei bis Zug 0, ab jetzt Vasall CHN), Andi = CHN (Einparteien, Patron RUS+IND), Roman = EU (Demokratie, Vasall USA, deutsche Perspektive). NPC: USA, RUS, REST."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "SETUP-NACHTRAG (Zug 0): economy.kriegswirtschaft je Fraktion nach references/kriegswirtschaft.md §2.2 gebucht — Werkzeug scripts/kriegswirtschaft.py startlage --schreiben (deltav-Skill, kanonischer Kompilierer). Vorher stand bei allen sechs Fraktionen rolle=ungebunden/steps_bound=0, was der Vasallentafel §2.2 widersprach. Ergebnis: USA patron 1/2 · CHN patron 1/2 · EU vasall(USA) 1/2 · IND vasall(CHN) 1/2 · RUS vasall(CHN) 0/2 (1 Schritt durch Startquote §1 verbraucht, c2_stufe KRIEGSWIRTSCHAFT) · REST ungebunden 2/2. Deckt sich mit Hausentscheidung 1 (IND dependsOn=CHN)."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "HAUSENTSCHEIDUNG 4 (Spielerentscheid, Zug 0): Alle drei NPC-Fraktionen (USA, RUS, REST) werden auf personality=statusQuo gesetzt. Der Wurf nach diplomacy.md 'Persoenlichkeiten (1W6 bei Spielstart)' entfaellt bewusst; vorher stand bei allen der Vorlagenwert 'opportunist', der keiner Entscheidung entsprang. Wirkung nach diplomacy.md 'NPC-Entscheidungslogik': Verteidigungsflotten bauen, defensiv forschen, Kernwaffen nur bei existenzieller Bedrohung, Allianz mit dem Staerksten. Kaum Expansion. Buchung wirkt auf deltav_engine.py npc_action, das je Runde ueber resolve_round.py fuer jeden NPC einen Handlungswurf zieht."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "HAUSENTSCHEIDUNG 5 (Spielerentscheid, Zug 0) — RUSSLAND-ZUSATZ zur statusQuo-Haltung. statusQuo beschreibt bei RUS die STRATEGISCHE Ebene, nicht den Ist-Zustand: (a) Der laufende Krieg in der Ukraine ist Teil der Startlage 2026 und wird durch die statusQuo-Einstellung NICHT beendet — Beleg: staaten_2026.json fuehrt russland mit ruestungsquote 0.071 und dem Vermerk 'startet 2026 mit 7.1 % BIP-Ruestungsquote bereits in Stufe KRIEGSWIRTSCHAFT [QC-15] — das ist SIPRI, keine Setzung'; economy.kriegswirtschaft.c2_stufe steht entsprechend auf KRIEGSWIRTSCHAFT mit 0 freien Schritten. (b) RUS betreibt weiter Stoerung unterhalb der Kriegsschwelle: verdeckte Operationen, Sabotage, Desinformation, Jamming — abzubilden ueber die ERDE-01-Domaene intel bzw. PB-01 Netze N1-N3, NICHT ueber neue Kriegsstufen. (c) RUS eroeffnet KEINEN neuen grossen Konflikt aus eigenem Antrieb; Eskalation auf W3 und hoeher nur als REAKTION auf einen Angriff oder eine unmittelbare Bedrohung. (d) Doktrin de_eskalationsschlag (Stufe 4 der Doktrinleiter) bleibt unveraendert — sie ist reaktiv definiert und widerspricht (c) nicht. (e) Diese Sonderregel gilt nur fuer RUS; USA und REST folgen statusQuo ohne Zusatz."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "HAUSENTSCHEIDUNG 6 (Spielerentscheid, Zug 0): Das Feld faction.attitude laeuft ueber die Partie mit. Start 0 (neutral) bei allen sechs Fraktionen. Es verschiebt sich als Folge von Spielerhandlungen (Angriff, Buendnis, Buendnisbruch, Verrat am Patron nach kriegswirtschaft.md KW-02, Attribution eines verdeckten Schlags) und geht als Eingabe in deltav_engine.py npc_action ein. Die Verschiebung wird je Runde im Journal mit Anlass gebucht; kein stiller Drift."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "SETUP-NACHTRAG (Zug 0): Startpools nach economics.md §9 gebucht. Das setup-Skript hatte launch.capacity_t_year, c2.slots_total, Omega und groundForces gesetzt, aber den Startpool nach §9.1/§9.2 NICHT — industrial.capacity_t_year, stockpile, Treibstoff und Verbrauchsgueter standen bei allen sechs Fraktionen auf 0. §9.5 fuehrt das ausdruecklich als GM-Pruefpunkt ('Kein Startpool ohne Eintrag in launch_c2.md Tabelle 1'). Werte woertlich aus der Tabelle §9.2 uebernommen, nicht nachgerechnet. REST hat keine Zeile in launch_c2.md Tab. 1 und damit nach §9.2 KEINEN Startpool ('Fraktionen mit Startkapazitaet 0 haben keinen Startpool. Sie kaufen beim Patron zu ... und zwar ab Zug 1, nicht vorher.'). Zehnprozentregel ist eine Setzung [S] des Regelwerks."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "HAUSENTSCHEIDUNG 7 (Spielerentscheid, Zug 0): Companion-Modul BZ-01 »WERKBUCH« wird VOLL eingesetzt. Konfiguration: Hardcore (jede Fraktion klettert die P-Leiter je design_ref selbst, kein globaler Katalogvorteil), Vollausbau (Raumsegment + Flugkoerper + E-5-Neubauten + Future-Truppen), Masse-Serienzaehler (Omega-schnittfest), kontinuierliche Beschleunigungskurve kosten = beta^(-1.373). Takt 1 Jahr je Zug (Aera I). Wirkung: BZ-01 ersetzt 'Standard-Bauzeit = Zeitintervall' aus economics.md durch echte Bauzeiten, Kostenmultiplikatoren und eine Bau-Queue — gekauft ist nicht mehr gebaut. Top-Level-Block 'bz01' nach regeln.md §10 in gamestate.json gemergt (bauplan, serienzaehler je Fraktion, linien, e5_baustellen, klassen_erstbau), Engine bz01_calc.py mit sha256 in config.json registriert. selftest: PASS."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "INTEGRATIONSLUECKE BZ-01 (gemeldet, nicht umgangen): regeln.md §10 sieht einen Resolver-Hook vor ('resolve_round.py phase_bau_forschung prueft Kapazitaet, bucht Fertigstellungen im Phase-7-Jahresabschluss, erhoeht Serienzaehler'). Die installierte resolve_round.py des deltav-Skills kennt bz01 NICHT — Suche nach 'bz01/bauplan/serienzaehler' in resolve_round.py und resolver.md ergab keinen Treffer. Folge: BZ-01 laeuft in dieser Kampagne als GM-Handprozedur nach SKILL.md 'GM-Prozedur in der Bauphase (Phase 2)': je Bauauftrag GENAU EIN Aufruf bz01_calc.py bau (Ausgabe woertlich ins Journal), Eintrag in bz01.bauplan mit fertig_zug, Kostenmultiplikator auf den Kaufladen-Massepreis; in Phase 7 Fertigstellungen aktivieren, serienzaehler += gebaute Masse, Ramp-Zuege fortschreiben. Keine Zahl im Kopf, keine Formel im Text — Regelinstanz ist das Skript."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "BZ-01 Abgrenzung bestaetigt: RW-01-ISRU-Anlagen behalten Gen-1/2/3-Logik; VASTITAS/LAN-02 behaelt build_months; OB-01/C-9-Kapazitaetsrampe (x1,25 je Zug, Hysterese <50 % Peak) gilt unveraendert — BZ-01 ergaenzt nur Queue und Modifier, keine Doppelbuchung. Forschungszeiten bleiben bei research.md."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "INTEGRATIONSLUECKE BZ-01 GESCHLOSSEN (Zug 0, Spielerauftrag): Der in werkbuch-bauzeiten:references/regeln.md §10 beschriebene Resolver-Hook ist jetzt in resolve_round.py implementiert. run: strukturierte Bauauftraege (Pflichtfelder klasse + stueck_masse_t) laufen durch genau EINEN bz01_calc.py-bau-Aufruf je Auftrag, rohe Ausgabe woertlich ins Journal, fertiger bauplan_eintrag als Vorschlag ins Bau-Worksheet; Freitextauftraege werden NICHT gerechnet, sondern als bz01_freitext_auftraege gemeldet. Neue Phase bz01_abschluss mit Worksheet WS-bz01-fertig. finalize: Statusflip, Serienzaehler (in Masse, §8 Omega-schnittfest) und Ramp (§5) werden nach den Deltas und VOR dem Validator gebucht; Journalzeilen erst nach bestandenem Validator. set_path akzeptiert Append an Listen (Pfadsuffix '-'). Rueckwaertskompatibel: ohne Block bz01 im Gamestate sind die Worksheets bit-identisch zur Vorfassung (A/B geprueft). Abnahme: resolve_round.py selftest gruen, inkl. neun BZ-01-Pruefungen gegen die Prosa-Fundstellen §1-§8."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "KAMPAGNE ZEIGT AUF DIE GEPATCHTE FASSUNG: config.skill_verzeichnisse.deltav = /root/kampagne/dv_skill/deltav-game-master; Engines deltav_engine, orbital, bz01 und neu resolve_round mit sha256 gepinnt; gamestate.bz01.calc_pfad gesetzt. Der synced-Skillordner bleibt unveraendert — die gepatchte Fassung wurde dem Spieler zusaetzlich als installierbares Skillpaket zugestellt."
+  },
+  {
+   "runde": 2026,
+   "phase": "setup",
+   "text": "SETUP-NACHTRAG (Zug 1, vor dem ersten finalize): REST hatte p_raum_watt 0, weil launch_c2.md Tab.1 keine REST-Zeile fuehrt. Der WN-02-Validator verlangt fuer JEDE Fraktion p_raum_watt > 0 und lehnte die Rundenbuchung ab (FEHLER 'factions.REST.omega.p_raum_watt muss Zahl > 0 sein'). Aufgeloest nicht durch eine Setzung, sondern durch Aggregation der EIGENEN Quelle: REST ist im Fraktionszuschnitt dieser Kampagne der Sammelblock aller uebrigen Staaten, also die Summe der uebrigen Zeilen von leistungsbuch.md §6.1 = 2,8261e6 W. Guete C wie die Tabelle."
+  },
+  {
+   "runde": 2027,
+   "phase": "setup",
+   "text": "SKILL-HAERTUNG (Spielerauftrag): Die Postfach-Luecke ist jetzt fest in erde01-gm eingebaut statt als Konvention gefuehrt. (1) wn01_validator.py bekommt Pruefung V12 'Postfach-Vollstaendigkeit': der Zug faellt durch, solange eine Order des laufenden Zuges weder aufgeloest noch mit Befund zurueckgewiesen ist. Erledigt = Feld aufgeloest true ODER ein Befund nennt die Order-id ODER die Domaene steht unter module.<ns>.daten.domaenen_* mit status 'aufgeloest'. (2) erde01_engine.py resolve druckt jetzt checkliste, offene_domaenen und eine pflicht-Zeile mit dem Buchungsweg — vorher nur die Reihenfolge. (3) blattlesen.py schreibt jede Order mit 'aufgeloest': false, damit die Marke von Anfang an existiert. (4) SKILL.md Betriebsregel 5 verlangt zusaetzlich die Domaenen-Checkliste in jedem SITREP. Abnahme: Positivtest gegen den vollstaendigen Stand BESTANDEN mit V12-Hinweis; Negativtest (Domaenenprotokoll entfernt) DURCHGEFALLEN mit 7 V12-Fehlern, die exakt die in Zug 1 vergessenen Domaenen benennen. Kampagne zeigt auf /root/kampagne/dv_skill/erde01-gm, Engines erde01_engine, eh01 und wn01_validator neu mit sha256 gepinnt."
+  },
+  {
+   "runde": 2027,
+   "phase": "setup",
+   "text": "SKILL-REPARATUR (Spielerauftrag): Alle verbliebenen Befunde geschlossen. deltav-gm-controller: B-1 BL-01-Entpackfehler, B-2 Kriegswirtschaft-Startlage als eigener Setup-Schritt ueber den kanonischen Kompilierer kriegswirtschaft.py startlage --schreiben, B-3 Patron je Fraktion aus PATRON_VON des deltav-Skills statt aus dem Template (Indien wird jetzt korrekt Vasall), B-7 p_pl_W-Startbestand mit Buchung, B-8 Sammelbloecke erben die Summe der uebrigen leistungsbuch-Zeilen, B-8b Summenzeile WELT wird nicht mehr als Pseudo-Fraktion gelesen. erde01-gm: B-6 eh01-Zugdauer-Fallback dreistufig statt auf einen nicht existenten Key, B-11 Sanktionstyp einzelsanktion ergaenzt, B-9 vollstaendige 2W10-Ereignistafel (Zuordnung [S], Wirkungen belegte Mechaniken; O-14 Pandemie bleibt offen). implosion-wirtschaftswaffe: B-10 Schalter --stufen, reine I1-Zuendung rechenbar, Vorwahl rueckwaertskompatibel. Abnahme: kompletter setup-Lauf mit sechs Fraktionen, 25 Schritte, 0 nicht-OK; REST-Omega 2,8261e6 W wie handgerechnet; laufende Kampagne weiterhin BESTANDEN."
+  },
+  {
+   "runde": 2027,
+   "phase": "setup",
+   "text": "SB-1 NACHGEZOGEN (Zug 2, vor der Auflösung): Der Skillverbund wurde upstream aktualisiert; diplomacy.md fuehrt jetzt die Regel SB-1 »SAMMELBLOCK« — ein Sammelblock erbt die Summe aller Zeilen, die keiner Mitfraktion gehoeren, verbindlich fuer JEDE Kanontafel. Die Regel geht auf die Befunde B-8/B-8b dieser Kampagne zurueck und nennt sie im Wortlaut (Summenzeilen sind keine Fraktionen; Null ist ein Wert; ein Sammelblock braucht > 0). REST hatte Startkapazitaet 0 und 0 C2-Slots — nach SB-1 sind es 64,5 t/a und 20 Slots (Kanonbeispiel der Fuenf-Spieler-Aufstellung, deckungsgleich mit unserer). Omega war mit 2,8261e6 W bereits SB-1-konform gebucht. NICHT nachgezogen: groundForces. BL-01 normiert per Hare-Niemeyer auf n x 100 ueber die Teilnehmer — REST nachtraeglich aufzunehmen wuerde ALLE sechs Fraktionen neu normieren und mitten in der Partie die Bodenlage aller Spieler aendern. REST behaelt den Template-Rueckfall 100/100/100/100/10; als offener Punkt in die Uebergabe."
+  },
+  {
+   "runde": 2027,
+   "phase": "setup",
+   "text": "MODULERWEITERUNG (Spielerauftrag »maximaler Realismus«, vor Zug 2): Der Skillverbund ist um vier Module gewachsen, drei davon greifen in diese Kampagne. (1) ZH-01 »ZEUGHAUS« Rev. C eingebunden: zh01.py setup hat die Nukleararsenale aus LW-01 gebucht (USA 3700, RUS 4309, CHN 700, EU 290/FRA, IND 190) und den Block zeughaus mit Latenzstufen, Sprengkopflagern und Konstanten angelegt (Erdpreis 10 t je Kopf, kappa 27,4 t/Mrd USD, g_geraet 0,2). Bodenkonto Zug 2: CHN 2570,9 t, EU 1675,3 t, IND 628,8 t; Hochtechnologie-Deckel bei C-2 NORMATIV 15 Prozent, also 385,6 / 251,3 / 94,3 t. Pruefpass ZH1-ZH13 BESTANDEN. ZH-01 bringt das ZWEITE Befehlsblatt: Blatt 3 »BODEN« ersetzt das nie genutzte Modulblatt. (2) DW-01 »DENKWERK« eingebunden: computeConfig je Fraktion aus dw01_startlage_2026.json, Weltbestand 100 RP — USA 55, CHN 20, REST 13, EU 8, IND 3, RUS 1. REST nach SB-1 als Summe der Bloecke JPN_KOR und REST. Damit bekommt Chinas Zug-1-Befehl O-china-01 (KI und Rechenzentren foerdern) endlich ein Konto. (3) EW-01 »EICHWERK« Rev. D im Betriebsmodus STILL: verdecktes Hauptbuch angelegt, Doktrin aller Fraktionen LAUT (Vorwahl 2026, niemand hat Funkstille angeordnet). Signaturfront und Kontaktwuerfe laufen ab Zug 2 verdeckt mit. (4) NZ-01, BD-01 Rev. B, FO-01 und GE-01 als Engines registriert, aber noch nicht scharfgestellt. OFFEN und dem Spielleiter vorgelegt: FO-01 wuerde die Forschung von Muenzwurf auf Rate umstellen — das aendert eine bereits gespielte Mechanik und braucht eine Entscheidung. Ebenso zh01_patch.py, das elf Verweisbloecke in Partnerskills schreiben will (Regeltreue 5: nur nach Freigabe)."
+  },
+  "HE-19 (01.09.): ZH-01-Bodenkonten werden ab Zug 4 fuer ALLE sechs Fraktionen gefuehrt, auch fuer A0/A1/A2-gefuehrte. Zug 2 und 3 bleiben stehen. Die Budgetvergleiche (Geheimdienste, Force Projection, Modernisierung) laufen ab Zug 4 ueber das volle Feld.",
+  "HE-20 (01.09.): Force Projection OHNE Anwendung von Gewalt liegt UNTER der Stufe Incursion; der Ukrainekrieg ist selbst eine Incursion. Die Bedingung 'bei Eskalation <= Incursion' (scoring.md Bodenkampf-Budget-Scoring) ist damit in der laufenden Weltlage ERFUELLT. Wer am meisten Force Projection zahlt, scored automatisch auf der Erde.",
+  "HE-21 (01.09.2026, Spielerentscheid): Die realen Militaer- und Dual-Use-Satelliten aller sechs Fraktionen sind ab Zug 4 Bahnobjekte im Spielstand (factions.<F>.realsatelliten). Sie sind ZIELE fuer Rammversuche, ASAT und Stoerung, und sie tragen Aufklaerungs-, Kommunikations- und Navigationsleistung. Sie sind KEINE Delta-V-Bauobjekte: sie scoren nicht, binden keine Startkapazitaet und erscheinen nicht im BZ-01-Bauplan. Zerstoerung erzeugt Kessler-Yield wie jedes andere Objekt. Die Tuer geht in ALLE Richtungen auf."
+ ],
+ "bz01": {
+  "schema": "bz01/1.0",
+  "konfiguration": {
+   "modus": "Hardcore",
+   "ausbau": "Vollausbau (Raumsegment + Flugkoerper + E-5-Neubauten + Future-Truppen)",
+   "serienzaehler": "Masse (Omega-schnittfest)",
+   "beschleunigung": "kontinuierliche Kurve, kosten = beta^(-1.373)",
+   "takt_a_je_zug": 1,
+   "aktiviert": "Zug 0 / Jahr 2026, vor dem ersten gespielten Zug",
+   "regelinstanz": "scripts/bz01_calc.py — jede Zahl aus genau einem Aufruf, nie im Kopf",
+   "resolver_hook": "implementiert in resolve_round.py (BZ-01-Hook, resolver.md §4a) — run rechnet je strukturiertem Auftrag, finalize bucht den Jahresabschluss"
+  },
+  "bauplan": [
+   {
+    "id": "R1-BAU-IND-1",
+    "fraktion": "IND",
+    "design_ref": "IND_SPADEX",
+    "klasse": "kleingeraet",
+    "count": 4,
+    "stueck_masse_t": 0.258,
+    "design": "katalog",
+    "gestartet_zug": 2026,
+    "fertig_zug": 2026,
+    "beta": 1.0,
+    "kosten_mult": 2.5,
+    "p_stufe": "P0k",
+    "zone": "LEO/SSO",
+    "status": "fertig",
+    "fertig_gebucht_runde": 1
+   },
+   {
+    "id": "R1-BAU-CHN-1",
+    "fraktion": "CHN",
+    "design_ref": "CHN_aufklaerer",
+    "klasse": "satellit",
+    "count": 2,
+    "stueck_masse_t": 2.0,
+    "design": "neu",
+    "gestartet_zug": 2026,
+    "fertig_zug": 2029,
+    "beta": 1.0,
+    "kosten_mult": 4.0,
+    "p_stufe": "P0n",
+    "zone": "LEO",
+    "status": "fertig",
+    "fertig_gebucht_runde": 4
+   },
+   {
+    "id": "R1-BAU-CHN-2a",
+    "fraktion": "CHN",
+    "design_ref": "CHN_scorer",
+    "klasse": "satellit",
+    "count": 1,
+    "stueck_masse_t": 2.0,
+    "design": "neu",
+    "gestartet_zug": 2026,
+    "fertig_zug": 2029,
+    "beta": 1.0,
+    "kosten_mult": 4.0,
+    "p_stufe": "P0n",
+    "zone": "LEO",
+    "status": "fertig",
+    "fertig_gebucht_runde": 4,
+    "_aufteilung": "B-25: Sammelzone 'LEO/MEO/HEO/SSO/GEO' aufgeteilt, sonst kein Zonenfaktor bestimmbar"
+   },
+   {
+    "id": "R1-BAU-CHN-2b",
+    "fraktion": "CHN",
+    "design_ref": "CHN_scorer",
+    "klasse": "satellit",
+    "count": 1,
+    "stueck_masse_t": 2.0,
+    "design": "neu",
+    "gestartet_zug": 2026,
+    "fertig_zug": 2029,
+    "beta": 1.0,
+    "kosten_mult": 4.0,
+    "p_stufe": "P0n",
+    "zone": "MEO",
+    "status": "fertig",
+    "fertig_gebucht_runde": 4,
+    "_aufteilung": "B-25: Sammelzone 'LEO/MEO/HEO/SSO/GEO' aufgeteilt, sonst kein Zonenfaktor bestimmbar"
+   },
+   {
+    "id": "R1-BAU-CHN-2c",
+    "fraktion": "CHN",
+    "design_ref": "CHN_scorer",
+    "klasse": "satellit",
+    "count": 1,
+    "stueck_masse_t": 2.0,
+    "design": "neu",
+    "gestartet_zug": 2026,
+    "fertig_zug": 2029,
+    "beta": 1.0,
+    "kosten_mult": 4.0,
+    "p_stufe": "P0n",
+    "zone": "HEO",
+    "status": "fertig",
+    "fertig_gebucht_runde": 4,
+    "_aufteilung": "B-25: Sammelzone 'LEO/MEO/HEO/SSO/GEO' aufgeteilt, sonst kein Zonenfaktor bestimmbar"
+   },
+   {
+    "id": "R1-BAU-CHN-2d",
+    "fraktion": "CHN",
+    "design_ref": "CHN_scorer",
+    "klasse": "satellit",
+    "count": 1,
+    "stueck_masse_t": 2.0,
+    "design": "neu",
+    "gestartet_zug": 2026,
+    "fertig_zug": 2029,
+    "beta": 1.0,
+    "kosten_mult": 4.0,
+    "p_stufe": "P0n",
+    "zone": "SSO",
+    "status": "fertig",
+    "fertig_gebucht_runde": 4,
+    "_aufteilung": "B-25: Sammelzone 'LEO/MEO/HEO/SSO/GEO' aufgeteilt, sonst kein Zonenfaktor bestimmbar"
+   },
+   {
+    "id": "R1-BAU-CHN-2e",
+    "fraktion": "CHN",
+    "design_ref": "CHN_scorer",
+    "klasse": "satellit",
+    "count": 1,
+    "stueck_masse_t": 2.0,
+    "design": "neu",
+    "gestartet_zug": 2026,
+    "fertig_zug": 2029,
+    "beta": 1.0,
+    "kosten_mult": 4.0,
+    "p_stufe": "P0n",
+    "zone": "GEO",
+    "status": "fertig",
+    "fertig_gebucht_runde": 4,
+    "_aufteilung": "B-25: Sammelzone 'LEO/MEO/HEO/SSO/GEO' aufgeteilt, sonst kein Zonenfaktor bestimmbar"
+   },
+   {
+    "id": "R1-BAU-CHN-3",
+    "fraktion": "CHN",
+    "design_ref": "CHN_geo_relais",
+    "klasse": "satellit",
+    "count": 2,
+    "stueck_masse_t": 5.0,
+    "design": "neu",
+    "gestartet_zug": 2026,
+    "fertig_zug": 2029,
+    "beta": 1.0,
+    "kosten_mult": 4.0,
+    "p_stufe": "P0n",
+    "zone": "GEO",
+    "status": "fertig",
+    "fertig_gebucht_runde": 4
+   }
+  ],
+  "serienzaehler": {
+   "USA": {},
+   "CHN": {
+    "CHN_aufklaerer": 4.0,
+    "CHN_scorer": 10.0,
+    "CHN_geo_relais": 10.0
+   },
+   "EU": {},
+   "IND": {
+    "IND_SPADEX": 1.032
+   },
+   "RUS": {},
+   "REST": {}
+  },
+  "linien": [],
+  "e5_baustellen": [],
+  "klassen_erstbau": {
+   "USA": [],
+   "CHN": [],
+   "EU": [],
+   "IND": [],
+   "RUS": [],
+   "REST": []
+  },
+  "calc_pfad": "/root/.claude/skills/synced/2c0e114f-f980-4879-be59-84347099c9f5_db129feb-ec7e-452e-ac0f-412f398c1773/werkbuch-bauzeiten/scripts/bz01_calc.py"
+ },
+ "zeughaus": {
+  "_norm": "ZH-01 Rev. C",
+  "_writer": "zh01",
+  "_erzeugt": "2026-08-18",
+  "konstanten": {
+   "kappa_t_je_mrd_usd": 27.4,
+   "g_geraet": 0.2,
+   "stueckmasse_sprengkopf_t": 10.0
+  },
+  "fraktionen": {
+   "USA": {
+    "latenz": "L3",
+    "lw01": "USA",
+    "sprengkoepfe": {
+     "lager": 3700,
+     "disloziert": 1770,
+     "kum_masse_t": 37000.0,
+     "pause_zuege": 2,
+     "massenlinie": false,
+     "ramp_fertig": false,
+     "geteilt_von": null,
+     "teilhabe_an": {}
+    },
+    "programm": null,
+    "bodenkonto": {
+     "h_vorzug": null,
+     "hilfe_t": 0.0,
+     "letzter_zug": 5,
+     "konto_t_zug4": 7463.6,
+     "tranche_t_zug4": 1119.5,
+     "ausgaben_mrd_usd_zug5": 997.0,
+     "konto_t_zug5": 7463.6,
+     "tranche_t_zug5": 1119.5
+    },
+    "boden": {
+     "advanced_punkte_jahr": 0,
+     "future_sp": 0,
+     "asat_schuss": 0
+    },
+    "schwerpunkt": false,
+    "marke": "S",
+    "beleg": "LEP-Linie warm (W76-1, B61-12), Pit-Neufertigung seit 1989 kalt (erste WR-Pit 2024): Mitte 2 Pausenzüge; P4 erst mit Pit-Werk (Massenlinie).",
+    "datenblatt_id": "USA",
+    "dienste": {
+     "pct": null,
+     "kosten_t": 746.4,
+     "slots": 7
+    },
+    "force_projection": {
+     "kosten_t": 447.8
+    },
+    "aufwertung_zug4": {
+     "ziel_tsk": "sam",
+     "modernisierung_t": 746.4,
+     "advanced_t": 0.0,
+     "hochtechnologie": {},
+     "tranche_rest_verfallen_t": 1119.5
+    }
+   },
+   "CHN": {
+    "latenz": "L3",
+    "lw01": "CHN",
+    "sprengkoepfe": {
+     "lager": 726,
+     "disloziert": 40,
+     "kum_masse_t": 7260.0,
+     "pause_zuege": 0,
+     "massenlinie": true,
+     "ramp_fertig": true,
+     "geteilt_von": null,
+     "teilhabe_an": {
+      "IND": 50
+     },
+     "im_bau_zug2": {
+      "stueck": 20,
+      "kosten_t": 100.0,
+      "p_stufe": "P4",
+      "fertig_zug": 2027
+     },
+     "im_bau_zug3": {
+      "gewuenscht": 99,
+      "genehmigt": 26,
+      "kosten_t": 130.0,
+      "p_stufe": "P4",
+      "fertig_zug": 2028,
+      "kuerzung": "Z-3.1 Hochtechnologie-Deckel — Blattreihenfolge: SotA 30 t, Future 200 t, Rest 132,6 t fuer Koepfe"
+     }
+    },
+    "programm": null,
+    "bodenkonto": {
+     "h_vorzug": null,
+     "hilfe_t": 0.0,
+     "letzter_zug": 5,
+     "konto_t_zug2": 2636.9,
+     "tranche_t_zug2": 395.5,
+     "ausgaben_mrd_usd_zug3": 283.2,
+     "konto_t_zug3": 2417.5,
+     "tranche_t_zug3": 362.6,
+     "skalierung": "HE-15 BIP-Kopplung",
+     "ausgaben_mrd_usd_zug4": 272.2,
+     "konto_t_zug4": 2339.2,
+     "tranche_t_zug4": 350.9,
+     "ausgaben_mrd_usd_zug5": 266.5,
+     "konto_t_zug5": 2232.5,
+     "tranche_t_zug5": 334.9,
+     "zug5_t": 2503.1,
+     "zug5_tranche_t": 375.5,
+     "zug5_quelle": "HE-24 (E-1 rueckwirkend), Blatt 3 neu gedruckt",
+     "zug6_t": 2659.0,
+     "zug6_tranche_t": 398.9,
+     "zug6_ausgaben_mrd": 317.1,
+     "zug6_vortrag_t": 400,
+     "zug6_beleg": "zh01.py konto --ausgaben <a> --restraum-vortrag <v>; Quote unveraendert gegen Zug 5, BIP 2030 aus truth.ressourcen"
+    },
+    "boden": {
+     "advanced_punkte_jahr": 99,
+     "future_sp": 30,
+     "asat_schuss": 0
+    },
+    "schwerpunkt": false,
+    "marke": "B",
+    "beleg": "DoD China Military Power 2024: Zuwachs ~100/a, ~600 → 1 000 bis 2030; neue Silos/Werke → Massenlinie.",
+    "datenblatt_id": "CHN",
+    "dienste": {
+     "pct": null,
+     "kosten_t": 280.7,
+     "slots": 8
+    },
+    "force_projection": {
+     "kosten_t": 280.7
+    },
+    "aufwertung_zug2": {
+     "ziel_tsk": "sam",
+     "arten": [
+      "modernisierung",
+      "advanced",
+      "future"
+     ],
+     "kategorie_neu": "future",
+     "q_bd01": 1.4,
+     "einsatz_t": {
+      "modernisierung": 211.0,
+      "advanced": 99.0,
+      "future": 100.0,
+      "state_of_the_art": 80.0
+     }
+    },
+    "doktrin": {
+     "stufe": "ambiguitaet",
+     "ausgang": "nfu",
+     "bewegung": "+1 (E-2.1)",
+     "gebucht_zug": 4,
+     "quelle": "ERDE-01 Audit Zug 4 (K-5 Nachtrag)"
+    },
+    "programm_zug2": {
+     "deklariert": "L2 -> L3 Erstgeraet",
+     "status": "nichtig",
+     "grund": "CHN ist bereits L3 (zh01.py programm: 'CHN ist bereits Kernwaffenstaat')"
+    },
+    "restraum_pct_zug2": 0.0,
+    "aufwertung_zug3": {
+     "ziel_tsk": "heer",
+     "arten": [
+      "future",
+      "modernisierung",
+      "state_of_the_art"
+     ],
+     "kategorie_neu": "future",
+     "q_bd01": 1.4,
+     "einsatz_t": {
+      "future": 200.0,
+      "modernisierung": 145.05,
+      "state_of_the_art": 30.0
+     },
+     "quelle": "Ziel-TSK Heer: Spielerentscheid 01.09. (Blatt ohne Deklaration, sonst Befund V18)"
+    },
+    "restraum_pct_zug3": 0.0,
+    "aufwertung_zug4": {
+     "ziel_tsk": "see",
+     "modernisierung_t": 233.9,
+     "advanced_t": 99.0,
+     "hochtechnologie": {
+      "state_of_the_art": 80.0,
+      "future_sp": {
+       "stueck": 27,
+       "t": 270.0
+      },
+      "asat": {
+       "stueck": 0,
+       "t": 0.0
+      },
+      "sprengkoepfe": {
+       "stueck": 0,
+       "t": 0.0
+      }
+     },
+     "tranche_rest_verfallen_t": 0.9
+    }
+   },
+   "EU": {
+    "latenz": "L3",
+    "lw01": "FRA",
+    "sprengkoepfe": {
+     "lager": 290,
+     "disloziert": 280,
+     "kum_masse_t": 2900.0,
+     "pause_zuege": 0,
+     "massenlinie": false,
+     "ramp_fertig": false,
+     "geteilt_von": null,
+     "teilhabe_an": {}
+    },
+    "programm": null,
+    "bodenkonto": {
+     "h_vorzug": null,
+     "hilfe_t": 0.0,
+     "letzter_zug": 5,
+     "ausgaben_mrd_usd_zug3": 342.5,
+     "konto_t_zug3": 1640.4,
+     "tranche_t_zug3": 246.1,
+     "skalierung": "HE-15 BIP-Kopplung",
+     "ausgaben_mrd_usd_zug4": 338.1,
+     "konto_t_zug4": 1619.9,
+     "tranche_t_zug4": 243.0,
+     "ausgaben_mrd_usd_zug5": 334.4,
+     "konto_t_zug5": 1602.6,
+     "tranche_t_zug5": 240.4,
+     "zug5_t": 1660.5,
+     "zug5_tranche_t": 249.1,
+     "zug5_quelle": "HE-24 (E-1 rueckwirkend), Blatt 3 neu gedruckt",
+     "zug6_t": 1670.6,
+     "zug6_tranche_t": 250.6,
+     "zug6_ausgaben_mrd": 349.0,
+     "zug6_vortrag_t": 45,
+     "zug6_beleg": "zh01.py konto --ausgaben <a> --restraum-vortrag <v>; Quote unveraendert gegen Zug 5, BIP 2030 aus truth.ressourcen"
+    },
+    "boden": {
+     "advanced_punkte_jahr": 0,
+     "future_sp": 0,
+     "asat_schuss": 0
+    },
+    "schwerpunkt": false,
+    "marke": "A",
+    "beleg": "Frankreich: TNO/TNA-Serie warm; EU-Fraktion trägt das französische Arsenal (LW-01-Schlüssel FRA).",
+    "datenblatt_id": "EU",
+    "dienste": {
+     "pct": null,
+     "kosten_t": 97.2,
+     "slots": 5
+    },
+    "force_projection": {
+     "kosten_t": 324.0
+    },
+    "aufwertung_zug4": {
+     "ziel_tsk": "see",
+     "modernisierung_t": 243.0,
+     "advanced_t": 0.0,
+     "hochtechnologie": {},
+     "tranche_rest_verfallen_t": 243.0
+    },
+    "aufwertung_zug5": {
+     "ziel_tsk": null,
+     "modernisierung_t": 0.0,
+     "advanced_t": 0.0,
+     "hochtechnologie": {},
+     "tranche_rest_verfallen_t": 249.1,
+     "bodenkonto_verfallen_t": 1660.5,
+     "beleg": "B-34: Blatt 3 traegt keinen Einsatz und keine Stueckzahl; Z-1.4 'Was im Zug nicht gebucht ist, verfaellt'"
+    },
+    "transfer_zug5": {
+     "status": "ZURUECKGEWIESEN",
+     "code": "V13",
+     "regel": "Z-5",
+     "text": "Transfer 'nukleare Teilhabe' mit Ziel EU = eigene Fraktion, Posten 'advanced' passt nicht zur Teilhabe (Z-5.2 handelt in Sprengkoepfen), Menge leer. Rueckfrage an den Spieler."
+    }
+   },
+   "IND": {
+    "latenz": "L3",
+    "lw01": "IND",
+    "sprengkoepfe": {
+     "lager": 199,
+     "disloziert": 0,
+     "kum_masse_t": 1990.0,
+     "pause_zuege": 0,
+     "massenlinie": false,
+     "ramp_fertig": false,
+     "geteilt_von": "CHN",
+     "teilhabe_an": {},
+     "im_bau_zug2": {
+      "stueck": 9,
+      "kosten_t": 90.0,
+      "fertig_zug": 2027
+     },
+     "geteilt_stueck": 50
+    },
+    "programm": null,
+    "bodenkonto": {
+     "h_vorzug": null,
+     "hilfe_t": 0.0,
+     "letzter_zug": 5,
+     "konto_t_zug2": 628.8,
+     "tranche_t_zug2": 94.3,
+     "ausgaben_mrd_usd_zug3": 83.8,
+     "konto_t_zug3": 614.0,
+     "tranche_t_zug3": 92.1,
+     "skalierung": "HE-15 BIP-Kopplung",
+     "ausgaben_mrd_usd_zug4": 82.7,
+     "konto_t_zug4": 606.5,
+     "tranche_t_zug4": 91.0,
+     "ausgaben_mrd_usd_zug5": 81.9,
+     "konto_t_zug5": 601.0,
+     "tranche_t_zug5": 90.2,
+     "zug5_t": 719.3,
+     "zug5_tranche_t": 107.9,
+     "zug5_quelle": "HE-24 (E-1 rueckwirkend), Blatt 3 neu gedruckt",
+     "zug6_t": 764.0,
+     "zug6_tranche_t": 114.6,
+     "zug6_ausgaben_mrd": 105.7,
+     "zug6_vortrag_t": 40,
+     "zug6_beleg": "zh01.py konto --ausgaben <a> --restraum-vortrag <v>; Quote unveraendert gegen Zug 5, BIP 2030 aus truth.ressourcen"
+    },
+    "boden": {
+     "advanced_punkte_jahr": 0,
+     "future_sp": 9,
+     "asat_schuss": 0
+    },
+    "schwerpunkt": false,
+    "marke": "B",
+    "beleg": "Dhruva ~30 kg Pu/a → ~6–10 Köpfe/a; warme Kleinserie.",
+    "datenblatt_id": "IND",
+    "dienste": {
+     "pct": 85.0,
+     "kosten_t": 611.4,
+     "slots": 8,
+     "beleg": "Blatt 3 bf_z_intel_frei=85 · zh01.py dienste --pct 85 --konto 719.3"
+    },
+    "doktrin": {
+     "stufe": "de_eskalationsschlag",
+     "ausgang": "ersteinsatz_begrenzt",
+     "bewegung": "+1 (E-2.1)",
+     "gebucht_zug": 4,
+     "quelle": "ERDE-01 Audit Zug 4 (K-5 Nachtrag) — oberste Stufe"
+    },
+    "restraum_pct_zug2": 100.0,
+    "aufwertung_zug3": {
+     "ziel_tsk": "heer",
+     "arten": [
+      "future",
+      "modernisierung"
+     ],
+     "kategorie_neu": "future",
+     "q_bd01": 1.4,
+     "einsatz_t": {
+      "future": 90.0,
+      "modernisierung": 499.4
+     },
+     "quelle": "Future 9 SP vom Blatt; Ziel-TSK Heer und Resttonnage nach Modernisierung: Spielerentscheid 01.09."
+    },
+    "restraum_pct_zug3": 0.0,
+    "force_projection": {
+     "kosten_t": 0.0
+    },
+    "aufwertung_zug4": {
+     "ziel_tsk": "heer",
+     "modernisierung_t": 0.0,
+     "advanced_t": 0.0,
+     "hochtechnologie": {
+      "future_sp": {
+       "stueck": 9,
+       "t": 90.0
+      }
+     },
+     "tranche_rest_verfallen_t": 1.0
+    },
+    "aufwertung_zug5": {
+     "ziel_tsk": "heer",
+     "modernisierung_t": 0.0,
+     "advanced_t": 0.0,
+     "hochtechnologie": {
+      "future_sp": {
+       "stueck": 9,
+       "t": 90.0
+      }
+     },
+     "kategorie_neu": "future",
+     "q_bd01": 1.4,
+     "tranche_rest_verfallen_t": 17.9,
+     "beleg": "Blatt 3 bf_z_future=9, bf_z_zieltsk=heer · zh01.py aufwertung"
+    }
+   },
+   "RUS": {
+    "latenz": "L3",
+    "lw01": "RUS",
+    "sprengkoepfe": {
+     "lager": 4309,
+     "disloziert": 1718,
+     "kum_masse_t": 43090.0,
+     "pause_zuege": 0,
+     "massenlinie": true,
+     "ramp_fertig": true,
+     "geteilt_von": null,
+     "teilhabe_an": {}
+    },
+    "programm": null,
+    "bodenkonto": {
+     "h_vorzug": null,
+     "hilfe_t": 0.0,
+     "letzter_zug": 5,
+     "konto_t_zug4": 1079.8,
+     "tranche_t_zug4": 162.0,
+     "ausgaben_mrd_usd_zug5": 149.0,
+     "konto_t_zug5": 1079.8,
+     "tranche_t_zug5": 162.0
+    },
+    "boden": {
+     "advanced_punkte_jahr": 0,
+     "future_sp": 0,
+     "asat_schuss": 0
+    },
+    "schwerpunkt": false,
+    "marke": "B",
+    "beleg": "Durchgehende Neufertigung (Sarow/Lesnoi), Sarmat/Awangard-Bestückung; Massenlinie belegt.",
+    "datenblatt_id": "RUS",
+    "dienste": {
+     "pct": null,
+     "kosten_t": 151.2,
+     "slots": 8
+    },
+    "force_projection": {
+     "kosten_t": 0.0
+    },
+    "aufwertung_zug4": {
+     "ziel_tsk": "heer",
+     "modernisierung_t": 679.2,
+     "advanced_t": 99.0,
+     "hochtechnologie": {
+      "future_sp": {
+       "stueck": 15,
+       "t": 150.0
+      }
+     },
+     "tranche_rest_verfallen_t": 12.0
+    },
+    "doktrin": {
+     "stufe": "de_eskalationsschlag",
+     "ausgang": null,
+     "bewegung": "unveraendert seit Setup",
+     "gebucht_zug": 4,
+     "quelle": "ERDE-01 Audit (RUS Stufe 4, rein reaktiv)"
+    }
+   },
+   "REST": {
+    "_hinweis": "nicht im ZH-01-Datenblatt — GM setzt latenz/lw01 von Hand",
+    "sprengkoepfe": {
+     "lager": 0
+    }
+   }
+  },
+  "buchungen": [
+   {
+    "zug": null,
+    "beleg": "SETUP",
+    "text": "ZH-01 Zeughaus initialisiert; nukes := LW-01 lager",
+    "aenderungen": [
+     "USA: nukes None → 3700 (LW-01 USA lager)",
+     "CHN: nukes None → 700 (LW-01 CHN lager)",
+     "EU: nukes None → 290 (LW-01 FRA lager)",
+     "IND: nukes None → 190 (LW-01 IND lager)",
+     "RUS: nukes None → 4309 (LW-01 RUS lager)"
+    ]
+   },
+   {
+    "zug": 2,
+    "jahr": 2027,
+    "fraktion": "IND",
+    "posten": "geheimdienste",
+    "t": 503.0,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 2,
+    "jahr": 2027,
+    "fraktion": "IND",
+    "posten": "sprengkoepfe",
+    "stueck": 9,
+    "t": 90.0,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 2,
+    "jahr": 2027,
+    "fraktion": "CHN",
+    "posten": "geheimdienste",
+    "t": 263.7,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 2,
+    "jahr": 2027,
+    "fraktion": "CHN",
+    "posten": "force_projection",
+    "t": 211.0,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 2,
+    "jahr": 2027,
+    "fraktion": "CHN",
+    "posten": "modernisierung",
+    "t": 211.0,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 2,
+    "jahr": 2027,
+    "fraktion": "CHN",
+    "posten": "advanced",
+    "t": 99.0,
+    "leiter": "PRAEZISION"
+   },
+   {
+    "zug": 2,
+    "jahr": 2027,
+    "fraktion": "CHN",
+    "posten": "state_of_the_art",
+    "t": 80.0,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 2,
+    "jahr": 2027,
+    "fraktion": "CHN",
+    "posten": "future_sp",
+    "t": 100.0,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 2,
+    "jahr": 2027,
+    "fraktion": "CHN",
+    "posten": "sprengkoepfe",
+    "stueck": 20,
+    "t": 100.0,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 2,
+    "jahr": 2027,
+    "fraktion": "CHN",
+    "posten": "transfer_teilhabe",
+    "an": "IND",
+    "stueck": 50,
+    "regelref": "Z-5.2",
+    "hinweis": "Eigentum bleibt CHN; Zweitschluessel; Einsatz zaehlt als Einsatz CHNs; E-2-Ereignis Stationierung"
+   },
+   {
+    "zug": 3,
+    "jahr": 2028,
+    "fraktion": "IND",
+    "posten": "geheimdienste",
+    "t": 24.6,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 3,
+    "jahr": 2028,
+    "fraktion": "IND",
+    "posten": "future_sp",
+    "t": 90.0,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 3,
+    "jahr": 2028,
+    "fraktion": "IND",
+    "posten": "modernisierung",
+    "t": 499.4,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 3,
+    "jahr": 2028,
+    "fraktion": "CHN",
+    "posten": "geheimdienste",
+    "t": 145.1,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 3,
+    "jahr": 2028,
+    "fraktion": "CHN",
+    "posten": "force_projection",
+    "t": 145.05,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 3,
+    "jahr": 2028,
+    "fraktion": "CHN",
+    "posten": "modernisierung",
+    "t": 145.05,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 3,
+    "jahr": 2028,
+    "fraktion": "CHN",
+    "posten": "state_of_the_art",
+    "t": 30.0,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 3,
+    "jahr": 2028,
+    "fraktion": "CHN",
+    "posten": "future_sp",
+    "t": 200.0,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 3,
+    "jahr": 2028,
+    "fraktion": "CHN",
+    "posten": "sprengkoepfe",
+    "t": 130.0,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "USA",
+    "posten": "geheimdienste",
+    "t": 746.4,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "USA",
+    "posten": "force_projection",
+    "t": 447.8,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "USA",
+    "posten": "modernisierung",
+    "t": 746.4,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "CHN",
+    "posten": "geheimdienste",
+    "t": 280.7,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "CHN",
+    "posten": "force_projection",
+    "t": 280.7,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "CHN",
+    "posten": "modernisierung",
+    "t": 233.9,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "CHN",
+    "posten": "advanced",
+    "t": 99.0,
+    "leiter": "PRAEZISION"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "CHN",
+    "posten": "state_of_the_art",
+    "t": 80.0,
+    "stueck": null,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "CHN",
+    "posten": "future_sp",
+    "t": 270.0,
+    "stueck": 27,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "CHN",
+    "posten": "asat",
+    "t": 0.0,
+    "stueck": 0,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "CHN",
+    "posten": "sprengkoepfe",
+    "t": 0.0,
+    "stueck": 0,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "EU",
+    "posten": "geheimdienste",
+    "t": 97.2,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "EU",
+    "posten": "force_projection",
+    "t": 324.0,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "EU",
+    "posten": "modernisierung",
+    "t": 243.0,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "RUS",
+    "posten": "geheimdienste",
+    "t": 151.2,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "RUS",
+    "posten": "modernisierung",
+    "t": 679.2,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "RUS",
+    "posten": "advanced",
+    "t": 99.0,
+    "leiter": "PRAEZISION"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "RUS",
+    "posten": "future_sp",
+    "t": 150.0,
+    "stueck": 15,
+    "leiter": "HOCHTECHNOLOGIE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "IND",
+    "posten": "geheimdienste",
+    "t": 515.5,
+    "leiter": "MASSE"
+   },
+   {
+    "zug": 4,
+    "jahr": 2029,
+    "fraktion": "IND",
+    "posten": "future_sp",
+    "t": 90.0,
+    "stueck": 9,
+    "leiter": "HOCHTECHNOLOGIE"
+   }
+  ],
+  "_pruefsumme": "7f276b2fe853d526"
+ },
+ "eichwerk": {
+  "_norm": "EW-01 Rev. D",
+  "_writer": "ew01",
+  "modus": "STILL",
+  "hauptbuch": [
+   {
+    "zug": 0,
+    "eintrag": "Hauptbuch eroeffnet. Signaturfront und Kontaktwuerfe laufen ab Zug 2 verdeckt mit; Spieler werden nur auf Ansprache beraten."
+   }
+  ],
+  "doktrin": {
+   "USA": "LAUT",
+   "CHN": "LAUT",
+   "EU": "LAUT",
+   "IND": "LAUT",
+   "RUS": "LAUT",
+   "REST": "LAUT"
+  },
+  "_hinweis": "Doktrin LAUT ist die Vorwahl 2026 — niemand hat Funkstille angeordnet. Sichtbarkeit, Naht und ETZ-Kontakt fuehrt der GM verdeckt (STILL)."
+ },
+ "forschung": {
+  "_norm": "FO-01 Rev. A",
+  "_writer": "fo01",
+  "_erzeugt": "2026-08-18",
+  "aktiv_ab_zug": 2,
+  "hausentscheidung": "HE-8",
+  "eichung": {
+   "L1_L2": 0.693147,
+   "L3_AG": 0.405465,
+   "hinweis": "Bei E = E0_eff und m = 1 gilt p = 0,500 (L1/L2) bzw. 0,3333 (L3/AG) — exakt die alten Wuerfe 1W6>=4 bzw. >=5. Zug 1 wird deshalb NICHT rueckgerechnet."
+  },
+  "e0_je_stufe_jb": {
+   "L1": 0.25,
+   "L2": 0.5,
+   "L3": 1.0,
+   "AG": 2.0
+  },
+  "beta": 0.5,
+  "zeitfenster_unberuehrt": {
+   "L1": "2035/2036",
+   "L2": "ab 2046",
+   "L3": "S-01 Stufe C oder Jahr >= 2058",
+   "AG": "nur ueber S-01-Eigenschaftswurf"
+  },
+  "fraktionen": {
+   "USA": {
+    "e_kum_eigen_jb": 1.0,
+    "verhaertung": {
+     "raum": 0,
+     "energie": 0,
+     "waffen": 0,
+     "rechen": 0
+    },
+    "haertung": "H2",
+    "m_haertung": 0.97,
+    "abwerbungen": 0,
+    "beute_offen_jb": 0.0,
+    "kannibalisierung": 1.0,
+    "embargo_gegen": [],
+    "operationen_zug1_nicht_nach_FO01_gerechnet": true,
+    "absorption_malus": 0.2,
+    "operationen_zug3": []
+   },
+   "CHN": {
+    "e_kum_eigen_jb": 3.0,
+    "verhaertung": {
+     "raum": 0,
+     "energie": 0,
+     "waffen": 0,
+     "rechen": 0
+    },
+    "haertung": "H2",
+    "m_haertung": 0.92,
+    "abwerbungen": 0,
+    "beute_offen_jb": 0.0,
+    "kannibalisierung": 1.0,
+    "embargo_gegen": [],
+    "operationen_zug1_nicht_nach_FO01_gerechnet": true,
+    "operationen_zug2": [
+     {
+      "vektor": "BESCHAFFUNG",
+      "gegen": "IND",
+      "ziel": "Wirtschaft/Industrie",
+      "falsche_flagge": "EU",
+      "seed": 516030057,
+      "p_op": 0.39,
+      "wurf": 449,
+      "erfolg": false,
+      "ertrag_jb": 0.0,
+      "kosten_jb": 0.05,
+      "entdeckt": true,
+      "p_blowback": 0.45,
+      "attribution_D2": {
+       "score": 10.8,
+       "guete": "C3",
+       "rechnung": "2x5 (Umfang) + 1x3 (Gegenspionage IND N3) + 0,8x1 (Zuege) - 3 (falsche Flagge)",
+       "folge": "oeffentliche Attribution erlaubt (ab C3), KEIN Eskalationsrecht (braucht B2)"
+      }
+     }
+    ],
+    "operationen_zug3": [
+     {
+      "vektor": "ABWERBUNG",
+      "gegen": "USA",
+      "ziel": "Falcon Heavy",
+      "seed": 516031058,
+      "wurf": 100,
+      "erfolg": true,
+      "entdeckt": false,
+      "absorption_plus": 0.2,
+      "verhaertung_minus": 1,
+      "tacit_decke_faellt": true,
+      "halter_absorption_minus": 0.2,
+      "kosten_jb": 0.13
+     },
+     {
+      "vektor": "BESCHAFFUNG",
+      "gegen": "USA",
+      "ziel": "frontier KI",
+      "seed": 516031059,
+      "p_op": 0.32,
+      "wurf": 586,
+      "erfolg": false,
+      "entdeckt": true,
+      "attribution": {
+       "score": 6.8,
+       "guete": "D4"
+      },
+      "kosten_jb": 0.05
+     },
+     {
+      "vektor": "SABOTAGE",
+      "gegen": "USA",
+      "umfang": 5,
+      "falsche_flagge": true,
+      "seed": 516031060,
+      "wurf": 181,
+      "erfolg": true,
+      "entdeckt": true,
+      "blowback_in_zuegen": 1,
+      "attribution": {
+       "score": 9.8,
+       "guete": "C3",
+       "folge": "USA duerfen China oeffentlich benennen, kein Eskalationsrecht"
+      }
+     }
+    ],
+    "absorption_bonus": 0.2,
+    "freie_forschung_zug5": {
+     "quelle": "Siegbedingung 'Krieg gewonnen', scoring.md §Auszahlung bei Serie = 3",
+     "stufe": "L1",
+     "projekt": "Kuestenschutz (Klimaanpassung)",
+     "sofort_timelinefrei": true,
+     "zusaetzlich_zur_jahresration": true,
+     "ansparbar": false,
+     "wirkung": "G-2: Anpassung halbiert den Grenzschaden (erde01_regeln.json klima.schaden.anpassung_halbiert_grenzschaden = true)",
+     "vorbehalt": "RG-Z5-12 — Kuestenschutz steht nicht im L1-Katalog von research.md; als Hausentscheidung gebucht. B-35 — die Anpassungsregel hat weder Erwerbsregel noch Codepfad."
+    }
+   },
+   "EU": {
+    "e_kum_eigen_jb": 0.0,
+    "verhaertung": {
+     "raum": 0,
+     "energie": 0,
+     "waffen": 0,
+     "rechen": 0
+    },
+    "haertung": "H0",
+    "m_haertung": 1.0,
+    "abwerbungen": 0,
+    "beute_offen_jb": 0.0,
+    "kannibalisierung": 1.0,
+    "embargo_gegen": [],
+    "operationen_zug1_nicht_nach_FO01_gerechnet": true,
+    "projekt_zug5": {
+     "name": "Yoda-Inspektoren (Inspektorsatellit)",
+     "stufe": "L1",
+     "einsatz_jb": 1.0,
+     "p_erfolg": 0.75,
+     "erwartete_zuege": 1.33,
+     "p_in_4_zuegen": 0.99609,
+     "beleg": "HE-26 Redaktion Blatt 4 · fo01_rechner.py rate --einsatz 1.0 --stufe L1",
+     "hinweis": "Das Geraet selbst braucht keine L-Stufe (BS-01 §9 / NW-01); die Forschungszeile bildet die Entwicklungsarbeit ab."
+    }
+   },
+   "IND": {
+    "e_kum_eigen_jb": 1.0,
+    "verhaertung": {
+     "raum": 0,
+     "energie": 0,
+     "waffen": 0,
+     "rechen": 0
+    },
+    "haertung": "H0",
+    "m_haertung": 1.0,
+    "abwerbungen": 0,
+    "beute_offen_jb": 0.26875,
+    "kannibalisierung": 1.0,
+    "embargo_gegen": [],
+    "operationen_zug1_nicht_nach_FO01_gerechnet": true,
+    "operationen_zug2": [
+     {
+      "vektor": "NACHBAU",
+      "artefakt": "wrack",
+      "gegen": "CHN",
+      "ziel": "Traegerraketen / Kickerendstufen",
+      "seed": 516030055,
+      "wurf_1w6": 1,
+      "erhaltungsgrad": 0.25,
+      "kosten_jb": 0.175,
+      "laufzeit_zuege": 2,
+      "ertrag_jb": 0.0625,
+      "ertrag_je_zug_jb": 0.03125,
+      "decke": "Frontier minus 1",
+      "entdeckt": false,
+      "attribution": false
+     },
+     {
+      "vektor": "HANDEL",
+      "lizenz_von": "USA",
+      "ziel": "moderne LLM",
+      "kosten_jb": 0.15,
+      "decke_e0": 0.7,
+      "ertrag_jb": 0.175,
+      "politischer_preis": "Buendnisbindung, Auflagen, Sichtbarkeit",
+      "entdeckt": false
+     }
+    ],
+    "laufende_beute": [
+     {
+      "quelle": "NACHBAU CHN",
+      "rest_zuege": 2,
+      "je_zug_jb": 0.03125
+     }
+    ],
+    "operationen_zug3": [
+     {
+      "vektor": "BESCHAFFUNG",
+      "gegen": "USA",
+      "ziel": "Starship",
+      "seed": 516031055,
+      "p_op": 0.32,
+      "wurf": 549,
+      "erfolg": false,
+      "entdeckt": true,
+      "attribution": {
+       "score": 6.8,
+       "guete": "D4"
+      },
+      "kosten_jb": 0.05
+     },
+     {
+      "vektor": "BESCHAFFUNG",
+      "gegen": "EU",
+      "ziel": "Egide-Satellit",
+      "seed": 516031056,
+      "p_op": 0.39,
+      "wurf": 433,
+      "erfolg": false,
+      "entdeckt": false,
+      "kosten_jb": 0.05
+     },
+     {
+      "vektor": "SABOTAGE",
+      "gegen": "EU",
+      "umfang": 5,
+      "falsche_flagge": true,
+      "seed": 516031057,
+      "wurf": 679,
+      "erfolg": false,
+      "entdeckt": true,
+      "blowback_in_zuegen": 4,
+      "attribution": {
+       "score": 8.8,
+       "guete": "D4"
+      }
+     }
+    ],
+    "lizenz_zug5": {
+     "geber": "CHN",
+     "gegenstand": "Kuestenschutz (Klimaanpassung)",
+     "vektor": "FO-01 S-6 HANDEL/LIZENZ",
+     "kosten_jb": 0.15,
+     "decke_e0": 0.7,
+     "ertrag_jb": 0.175,
+     "entdeckung": false,
+     "politischer_preis": "Buendnisbindung, Auflagen, Sichtbarkeit",
+     "beschraenkung": "nur Indien; Weitergabe an Dritte durch Lizenzauflage untersagt"
+    }
+   },
+   "RUS": {
+    "e_kum_eigen_jb": 0.0,
+    "verhaertung": {
+     "raum": 0,
+     "energie": 0,
+     "waffen": 0,
+     "rechen": 0
+    },
+    "haertung": "H2",
+    "m_haertung": 0.97,
+    "abwerbungen": 0,
+    "beute_offen_jb": 0.175,
+    "kannibalisierung": 1.0,
+    "embargo_gegen": [],
+    "operationen_zug1_nicht_nach_FO01_gerechnet": true,
+    "operationen_zug3": [
+     {
+      "vektor": "HANDEL",
+      "lizenz_von": "CHN",
+      "ziel": "Reifknoten-Halbleiter >=28 nm",
+      "ertrag_jb": 0.175,
+      "kosten_jb": 0.15
+     },
+     {
+      "vektor": "BESCHAFFUNG",
+      "gegen": "EU",
+      "seed": 516031061,
+      "wurf": 612,
+      "erfolg": false,
+      "entdeckt": false,
+      "kosten_jb": 0.05
+     },
+     {
+      "vektor": "EINFLUSS",
+      "gegen": "EU",
+      "umfang": 2,
+      "falsche_flagge": true,
+      "seed": 516031062,
+      "wurf": 165,
+      "erfolg": true,
+      "entdeckt": true,
+      "attribution": {
+       "score": 2.8,
+       "guete": "F6"
+      }
+     }
+    ]
+   },
+   "REST": {
+    "e_kum_eigen_jb": 0.0,
+    "verhaertung": {
+     "raum": 0,
+     "energie": 0,
+     "waffen": 0,
+     "rechen": 0
+    },
+    "haertung": "H0",
+    "m_haertung": 1.0,
+    "abwerbungen": 0,
+    "beute_offen_jb": 0.0,
+    "kannibalisierung": 1.0,
+    "embargo_gegen": [],
+    "operationen_zug1_nicht_nach_FO01_gerechnet": true
+   }
+  },
+  "buchungen": []
+ },
+ "stellwerkConfig": {
+  "laufumgebung": "code",
+  "seed": 516028054,
+  "fraktionen": {
+   "IND": {
+    "autonomie": "A3",
+    "spieler": "Jakob",
+    "vertretung": "V0"
+   },
+   "CHN": {
+    "autonomie": "A3",
+    "spieler": "Andi",
+    "vertretung": "V0"
+   },
+   "EU": {
+    "autonomie": "A1",
+    "spieler": "Roman",
+    "vertretung": "V0",
+    "profil": [
+     6.6,
+     5.8,
+     4.6,
+     7.0,
+     4.2,
+     3.0
+    ],
+    "profil_quelle": "Profil des Spielers Roman (Zug 1), unveraendert",
+    "profil_achsen": [
+     "eskalation",
+     "risiko",
+     "militaer",
+     "diplomatie",
+     "forschung",
+     "verdeckt"
+    ],
+    "rueckgabebrief_faellig": true,
+    "doktrin": "defensiv-oekonomisch",
+    "hinweis": "Zug 3 lief auf A1-Doktrinbaum, nicht als Vertretung — dieser Zug wieder A3/V2 mit Romans Profil."
+   },
+   "USA": {
+    "autonomie": "A0",
+    "profil": [
+     3.72,
+     3.72,
+     3.59,
+     5.64,
+     3.21,
+     2.31
+    ],
+    "profil_quelle": "sv01_pipeline profile --history work/sv01/history_USA.json (eigene Blaetter Zug 2+3)",
+    "zielkarte": "Primat ohne Buendnislasten. Halbleiterhebel weiter ungezogen, Compute-Fuehrung (g_T 1,414) verteidigen, DISPERSION reift 2030, MOBIL laeuft. China ist bei C3 fuer eine Sabotage auf US-Boden benennbar — die Reaktion darauf ist die Entscheidung des Zuges.",
+    "vertretung": "V2",
+    "treuhand": "HE-22: A3 ohne menschlichen Spieler — Profil aus den EIGENEN Blaettern, Treuhand-Schranken §3 aktiv"
+   },
+   "RUS": {
+    "autonomie": "A0",
+    "profil": [
+     3.72,
+     3.72,
+     4.73,
+     8.2,
+     2.38,
+     2.9
+    ],
+    "profil_quelle": "sv01_pipeline profile --history work/sv01/history_RUS.json (eigene Blaetter Zug 2+3)",
+    "zielkarte": "HAUSENTSCHEIDUNG 5 bleibt bindend: Ukrainekrieg laeuft weiter, Stoerung nur unter der Kriegsschwelle ueber intel, kein neuer Konflikt aus eigenem Antrieb, W3+ nur reaktiv, Doktrin de_eskalationsschlag unveraendert, Kriegswirtschaft ohne freie Schritte. Das Energieabkommen mit Peking laeuft zu Moskaus Konditionen.",
+    "vertretung": "V2",
+    "treuhand": "HE-22"
+   },
+   "REST": {
+    "autonomie": "A1",
+    "doktrin": "status-quo",
+    "hinweis": "SB-1 Sammelblock (JPN_KOR + REST) — kein einheitlicher Wille, deshalb A1 Doktrinbaum statt A2."
+   }
+  }
+ }
+}

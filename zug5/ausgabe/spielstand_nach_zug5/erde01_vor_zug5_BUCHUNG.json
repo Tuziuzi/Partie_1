@@ -1,0 +1,3549 @@
+{
+  "kopf": {
+    "schema": "wn01",
+    "schema_version": "1.0",
+    "rev": "A",
+    "kampagne": "SCHWARZE SEE",
+    "zug": 4,
+    "uhr": {
+      "datum_ingame": "2029-12-31",
+      "modus": "makro",
+      "aufloesung": "jahr",
+      "notiz": "Aera I: 1 a/Zug. II ab Zug 26: 3 a. III ab 51: 10 a. [H-3]"
+    },
+    "seed_registry": {
+      "zug_seed": 20290101,
+      "stufen_seeds": {
+        "validierung": 20290102,
+        "aufloesung": 20290103,
+        "sensorfilter": 20290104,
+        "regime_bias": 20290105,
+        "rendering": 20290106,
+        "kipppunkte": 20290107,
+        "coup": 20290108,
+        "attribution": 20290109,
+        "schicksal": 20290110,
+        "regime_bias_usa": 20290200,
+        "regime_bias_china": 20290201,
+        "regime_bias_eu": 20290202,
+        "regime_bias_indien": 20290203,
+        "regime_bias_russland": 20290204,
+        "regime_bias_rest": 20290205
+      }
+    },
+    "aenderungslog": [
+      {
+        "zug": 0,
+        "eintrag": "init SCHWARZE SEE via erde01_engine v0.1",
+        "hausentscheidung": false
+      },
+      {
+        "zug": 0,
+        "eintrag": "setup: bespielte Staaten registriert (china, eu, indien) — Grundlage der EH-01-Blockführung; Vollaufstellung folgt im Spielbetrieb",
+        "hausentscheidung": false
+      },
+      {
+        "zug": 0,
+        "eintrag": "C-9 Raumfahrtquote Rev. B aktiviert (§9.3); Anker §1.1, kap_2026 aus launch_c2 Tab. 1; Balancelauf offen",
+        "hausentscheidung": true
+      },
+      {
+        "zug": 0,
+        "eintrag": "EH-01-Blockspiel aufgesetzt (Basis S2_beschleunigt), Domaene 'energie' aktiv (C-7b)",
+        "hausentscheidung": false
+      },
+      {
+        "zug": 1,
+        "eintrag": "zugdauer_a=1 gesetzt (Aera I, prozeduren.md Zeitmodell) — umgeht zugleich den Fallback-Bug eh01.py REGELN[\"zeit\"] (Key existiert in erde01_regeln.json nicht)",
+        "hausentscheidung": false
+      },
+      {
+        "zug": 1,
+        "hausentscheidung": false,
+        "eintrag": "SETUP-NACHTRAG: truth.ressourcen.<staat>.p_pl_W fuer die bespielten Staaten gebucht (anteil_p_pl x _p_welt_W aus staaten_2026.json, Beleg SETUP). Fehlte seit dem Aufsetzen — setup buchte unter truth.ressourcen nur q_raum (C-9). eh01.py spiel zug bricht ohne dieses Konto mit KeyError 'p_pl_W' ab."
+      },
+      {
+        "zug": 0,
+        "eintrag": "Energiedomaene ueber EH-01 Rev. B aufgeloest, 1 Jahre bis 2026 (C-7b)",
+        "hausentscheidung": false
+      },
+      {
+        "zug": 1,
+        "hausentscheidung": false,
+        "eintrag": "NACHTRAG Zug 1: wirtschaft, innenpolitik, aussenpolitik, militaer und forschung waren nach dem ersten Durchlauf unaufgeloest im Postfach liegengeblieben — resolve() liefert nur den Ablaufplan. Nachgeholt und gebucht (R-Z1-06 bis R-Z1-11). Ab sofort traegt jeder SITREP eine Domaenen-Checkliste."
+      },
+      {
+        "zug": 2,
+        "eintrag": "Energiedomaene ueber EH-01 Rev. B aufgeloest, 1 Jahre bis 2027 (C-7b)",
+        "hausentscheidung": false
+      },
+      {
+        "zug": 3,
+        "eintrag": "Energiedomaene ueber EH-01 Rev. B aufgeloest, 1 Jahre bis 2028 (C-7b)",
+        "hausentscheidung": false
+      },
+      {
+        "zug": 4,
+        "eintrag": "Energiedomaene ueber EH-01 Rev. B aufgeloest, 1 Jahre bis 2029 (C-7b)",
+        "hausentscheidung": false
+      }
+    ]
+  },
+  "module": {
+    "erde01": {
+      "writer": "erde01-gm",
+      "native_aufloesung": "jahr",
+      "domaenen": [
+        "wirtschaft",
+        "innenpolitik",
+        "aussenpolitik",
+        "intel",
+        "militaer",
+        "forschung",
+        "energie"
+      ],
+      "handoff_partner": [
+        "camberley-kriegsspiel-game-master",
+        "harpoon5-game-master",
+        "autonomous-drone-agents",
+        "lokale-blase-gm",
+        "blasser-punkt-gm"
+      ],
+      "daten": {
+        "K_welt": 0.7285,
+        "aera": "I",
+        "grosser_filter": 0,
+        "c9": {
+          "aktiv": true,
+          "rev": "B",
+          "geltung": "ab Setup (§9.3)",
+          "q_raum_2026": {
+            "usa": 0.0025,
+            "china": 0.001,
+            "eu": 0.0005,
+            "russland": 0.0015,
+            "indien": 0.0005,
+            "rest": 0.0002
+          },
+          "q_raum": {
+            "usa": 0.0025,
+            "china": 0.001,
+            "eu": 0.0005,
+            "russland": 0.0015,
+            "indien": 0.0005,
+            "rest": 0.0002
+          },
+          "kap_2026_t_a": {
+            "usa": 2000.0,
+            "china": 400.0,
+            "eu": 45.0,
+            "indien": 40.0,
+            "russland": 100.0,
+            "rest": null
+          },
+          "kap_peak_t_a": {
+            "usa": 2000.0,
+            "china": 400.0,
+            "eu": 45.0,
+            "indien": 40.0,
+            "russland": 100.0,
+            "rest": null
+          },
+          "werkzeug": "exec ob01 kapazitaet --kap0=<t/a> --w=<W_index> --q=<quote> --q0=<anker> [--kap_vor=… --peak=…] — Rampendeckel/Hysterese nach §3.1",
+          "balancelauf": "OFFEN (n >= 1200 vor erstem scharfen Zug, §9.2)"
+        },
+        "eh01": {
+          "gs": {
+            "jahr": 2029,
+            "basis": "S2_beschleunigt",
+            "global": {
+              "kum_co2": 207.19994821291488,
+              "ppm": 436.04807853023755,
+              "dT": {
+                "min": 1.3758175202484781,
+                "zentral": 1.4131135109268027,
+                "max": 1.4504095016051275
+              },
+              "B": 97.70804620956503,
+              "kum_res": {
+                "kohle": 674.2491056236449,
+                "oel": 784.5807774529688,
+                "gas": 592.5219413056275,
+                "uran": 0.21101992314645185,
+                "kupfer": 108.80572132050358,
+                "lithium": 1.2998835026467161,
+                "wolfram": 280
+              },
+              "emiss_cal": 1.0712918185522589,
+              "geo": {
+                "cdr_gt": 0,
+                "srm_tg_s": 0,
+                "_srm_dt_prev": 0
+              },
+              "dt_abwaerme": 0.019873534230991103,
+              "srm_dt": 0,
+              "cdr": 0,
+              "term_shock": 0
+            },
+            "bloecke": {
+              "usa": {
+                "id": "usa",
+                "name": "USA",
+                "controller": "ki",
+                "kiStrat": "auto",
+                "farbe": "#2f5a86",
+                "cap": {
+                  "kohle": 163.48943080624468,
+                  "oel": 123.39541104602895,
+                  "gas": 428.6439613047773,
+                  "fission": 71.92458703483832,
+                  "smr": 0,
+                  "thorium": 0,
+                  "hybrid": 0,
+                  "nuklearbatterie": 0,
+                  "wasser": 203.29730186750865,
+                  "wind": 268.4365892386328,
+                  "solar": 805.6897169762406,
+                  "bio": 21.926015052161862,
+                  "geothermie": 2.952876373164393,
+                  "gezeiten": 0.06035464533333333,
+                  "tiefengeothermie": 0,
+                  "fusion": 0,
+                  "sbsp": 0,
+                  "fusion_adv": 0,
+                  "h2_backup": 0
+                },
+                "kum_cap": {
+                  "kohle": 180.9136013686912,
+                  "oel": 138.5656292286874,
+                  "gas": 488.11505253247736,
+                  "fission": 76.30560997328583,
+                  "smr": 0,
+                  "thorium": 0,
+                  "hybrid": 0,
+                  "nuklearbatterie": 0,
+                  "wasser": 213.1726027397261,
+                  "wind": 301.9560844694549,
+                  "solar": 866.4378170241632,
+                  "bio": 25.11034820990682,
+                  "geothermie": 3.28236202631579,
+                  "gezeiten": 0.06912,
+                  "tiefengeothermie": 0,
+                  "fusion": 0,
+                  "sbsp": 0,
+                  "fusion_adv": 0,
+                  "h2_backup": 0
+                },
+                "cap0L": {
+                  "kohle": 180.9136013686912,
+                  "oel": 138.5656292286874,
+                  "gas": 456.95046032441917,
+                  "fission": 61.90560997328585,
+                  "smr": 5,
+                  "thorium": 5,
+                  "hybrid": 5,
+                  "nuklearbatterie": 5,
+                  "wasser": 193.97260273972606,
+                  "wind": 174.76599474145488,
+                  "solar": 254.34154630416313,
+                  "bio": 25.11034820990682,
+                  "geothermie": 5,
+                  "gezeiten": 5,
+                  "tiefengeothermie": 5,
+                  "fusion": 5,
+                  "sbsp": 5,
+                  "fusion_adv": 5,
+                  "h2_backup": 5
+                },
+                "strom_base0": 4493.515699756696,
+                "primaer_base0": 88.8,
+                "batterie_gw": 23.42560000000001,
+                "kum_strom_soll": 19741.110384798383,
+                "kum_unerf": 0,
+                "kum_abregelung": 0,
+                "kum_gen": 19741.110384798383,
+                "kum_emiss": 24.761182437795416,
+                "kum_emiss_strom": 6.4563321936837035,
+                "kum_clean_gen": 9555.208215265699,
+                "kum_wasser": 27.717005628719658,
+                "kum_tote": 110281.45360555129,
+                "score": {
+                  "versorgung": 100,
+                  "klima": 34.6,
+                  "nachhaltigkeit": 48.4,
+                  "total": 58.4
+                },
+                "last": {
+                  "strom_soll": 5214.306204517704,
+                  "strom_ist": 5214.306204517704,
+                  "unerf_pct": 0,
+                  "abregel_pct": 0,
+                  "zwang_pct": 0,
+                  "lastreaktion": 0,
+                  "primaer_ist": 93.36082009973588,
+                  "kosten_ct_kwh": 8.671965328323266,
+                  "emiss": 6.237409829281087,
+                  "reservemarge": -0.037639982159226815,
+                  "wasser": 6.915974104819181,
+                  "tote": 26592.260714366206,
+                  "strom": {
+                    "kohle": 787.692077624487,
+                    "oel": 108.09438007632137,
+                    "gas": 1577.0668624325367,
+                    "fission": 504.04750594014706,
+                    "smr": 0,
+                    "thorium": 0,
+                    "hybrid": 0,
+                    "nuklearbatterie": 0,
+                    "wasser": 617.9668744327033,
+                    "wind": 587.8761304326058,
+                    "solar": 917.5194496925428,
+                    "bio": 96.03594592846895,
+                    "geothermie": 17.848365949954857,
+                    "gezeiten": 0.158612007936,
+                    "tiefengeothermie": 0,
+                    "fusion": 0,
+                    "sbsp": 0,
+                    "fusion_adv": 0,
+                    "h2_backup": 0
+                  },
+                  "zubau": {
+                    "kohle": 0,
+                    "oel": 0,
+                    "gas": 7.927971343540792,
+                    "fission": 3.6,
+                    "smr": 0,
+                    "thorium": 0,
+                    "hybrid": 0,
+                    "nuklearbatterie": 0,
+                    "wasser": 4.799999999999999,
+                    "wind": 33.691926528,
+                    "solar": 166.64695872000007,
+                    "bio": 0,
+                    "geothermie": 0.2917215,
+                    "gezeiten": 0,
+                    "tiefengeothermie": 0,
+                    "fusion": 0,
+                    "sbsp": 0,
+                    "fusion_adv": 0,
+                    "h2_backup": 0
+                  },
+                  "clean_share": 0.5257560213876871
+                },
+                "budget_rest_bio": 0.320564687181259
+              },
+              "china": {
+                "id": "china",
+                "name": "CHINA",
+                "controller": "human",
+                "kiStrat": "auto",
+                "farbe": "#a5342c",
+                "cap": {
+                  "kohle": 950.2823165612971,
+                  "oel": 199.23217408473428,
+                  "gas": 482.64599375409307,
+                  "fission": 142.91673623272646,
+                  "smr": 0,
+                  "thorium": 0,
+                  "hybrid": 0,
+                  "nuklearbatterie": 0,
+                  "wasser": 473.549887653006,
+                  "wind": 430.3627292180193,
+                  "solar": 1776.1711738466433,
+                  "bio": 42.481654163563604,
+                  "geothermie": 3.7155460875893445,
+                  "gezeiten": 0.11693712533333336,
+                  "tiefengeothermie": 0,
+                  "fusion": 0,
+                  "sbsp": 0,
+                  "fusion_adv": 0,
+                  "h2_backup": 0
+                },
+                "kum_cap": {
+                  "kohle": 1051.5603079555176,
+                  "oel": 223.72575552548489,
+                  "gas": 548.6891275756246,
+                  "fission": 151.77094835262687,
+                  "smr": 0,
+                  "thorium": 0,
+                  "hybrid": 0,
+                  "nuklearbatterie": 0,
+                  "wasser": 497.86849315068497,
+                  "wind": 492.70186926062047,
+                  "solar": 1925.116643466474,
+                  "bio": 48.65129965669446,
+                  "geothermie": 4.2551578947368425,
+                  "gezeiten": 0.13392,
+                  "tiefengeothermie": 0,
+                  "fusion": 0,
+                  "sbsp": 0,
+                  "fusion_adv": 0,
+                  "h2_backup": 0
+                },
+                "cap0L": {
+                  "kohle": 1051.5603079555176,
+                  "oel": 223.72575552548489,
+                  "gas": 520.7891275756247,
+                  "fission": 130.8459483526269,
+                  "smr": 5,
+                  "thorium": 5,
+                  "hybrid": 5,
+                  "nuklearbatterie": 5,
+                  "wasser": 488.56849315068496,
+                  "wind": 369.3917616126205,
+                  "solar": 739.1801189464741,
+                  "bio": 48.65129965669446,
+                  "geothermie": 5,
+                  "gezeiten": 5,
+                  "tiefengeothermie": 5,
+                  "fusion": 5,
+                  "sbsp": 5,
+                  "fusion_adv": 5,
+                  "h2_backup": 5
+                },
+                "strom_base0": 11470.47929782461,
+                "primaer_base0": 159.84,
+                "batterie_gw": 45.38710000000002,
+                "kum_strom_soll": 50199.59955528877,
+                "kum_unerf": 0,
+                "kum_abregelung": 877.7637532274025,
+                "kum_gen": 47280.43634951435,
+                "kum_emiss": 43.769430519414115,
+                "kum_emiss_strom": 20.249012634964622,
+                "kum_clean_gen": 20371.34166019701,
+                "kum_wasser": 76.08250470503039,
+                "kum_tote": 513249.34634209337,
+                "score": {
+                  "versorgung": 98.3,
+                  "klima": 14.3,
+                  "nachhaltigkeit": 43.1,
+                  "total": 48.1
+                },
+                "last": {
+                  "strom_soll": 13237.398138409824,
+                  "strom_ist": 12143.791590463788,
+                  "unerf_pct": 0,
+                  "abregel_pct": 3.24545411900759,
+                  "zwang_pct": 0,
+                  "lastreaktion": 0.07727271711922834,
+                  "primaer_ist": 169.91593402809042,
+                  "kosten_ct_kwh": 9.495168154991763,
+                  "emiss": 11.119278614228822,
+                  "reservemarge": -0.16115701556293482,
+                  "wasser": 18.677856914218882,
+                  "tote": 123628.34556334517,
+                  "strom": {
+                    "kohle": 4578.46020119233,
+                    "oel": 174.52738449822724,
+                    "gas": 1775.7511402200591,
+                    "fission": 1001.5604875189471,
+                    "smr": 0,
+                    "thorium": 0,
+                    "hybrid": 0,
+                    "nuklearbatterie": 0,
+                    "wasser": 1439.4590644965954,
+                    "wind": 942.4943769874623,
+                    "solar": 2022.7037327765572,
+                    "bio": 186.0696452364086,
+                    "geothermie": 22.458246771825035,
+                    "gezeiten": 0.30731076537600005,
+                    "tiefengeothermie": 0,
+                    "fusion": 0,
+                    "sbsp": 0,
+                    "fusion_adv": 0,
+                    "h2_backup": 0
+                  },
+                  "zubau": {
+                    "kohle": 0,
+                    "oel": 0,
+                    "gas": 27.899999999999995,
+                    "fission": 6.9750000000000005,
+                    "smr": 0,
+                    "thorium": 0,
+                    "hybrid": 0,
+                    "nuklearbatterie": 0,
+                    "wasser": 0,
+                    "wind": 65.278107648,
+                    "solar": 322.8784825200001,
+                    "bio": 0,
+                    "geothermie": 0,
+                    "gezeiten": 0,
+                    "tiefengeothermie": 0,
+                    "fusion": 0,
+                    "sbsp": 0,
+                    "fusion_adv": 0,
+                    "h2_backup": 0
+                  },
+                  "clean_share": 0.4623805359903022
+                },
+                "budget_rest_bio": 0.4863133776767998
+              },
+              "eu": {
+                "id": "eu",
+                "name": "EU",
+                "controller": "human",
+                "kiStrat": "auto",
+                "farbe": "#2f6b4f",
+                "cap": {
+                  "kohle": 61.308536552341735,
+                  "oel": 34.704959356695646,
+                  "gas": 118.82072740026302,
+                  "fission": 44.39705397558624,
+                  "smr": 0,
+                  "thorium": 0,
+                  "hybrid": 0,
+                  "nuklearbatterie": 0,
+                  "wasser": 103.75555007391107,
+                  "wind": 178.49715969133214,
+                  "solar": 465.69289241104883,
+                  "bio": 12.333383466841045,
+                  "geothermie": 1.0787069286549706,
+                  "gezeiten": 0.033949488,
+                  "tiefengeothermie": 0,
+                  "fusion": 0,
+                  "sbsp": 0,
+                  "fusion_adv": 0,
+                  "h2_backup": 0
+                },
+                "kum_cap": {
+                  "kohle": 67.84260051325919,
+                  "oel": 38.971583220568334,
+                  "gas": 136.07715914072773,
+                  "fission": 47.48441674087267,
+                  "smr": 0,
+                  "thorium": 0,
+                  "hybrid": 0,
+                  "nuklearbatterie": 0,
+                  "wasser": 109.10958904109589,
+                  "wind": 204.474986574029,
+                  "solar": 501.67798405570096,
+                  "bio": 14.124570868072585,
+                  "geothermie": 1.2353684210526314,
+                  "gezeiten": 0.03888,
+                  "tiefengeothermie": 0,
+                  "fusion": 0,
+                  "sbsp": 0,
+                  "fusion_adv": 0,
+                  "h2_backup": 0
+                },
+                "cap0L": {
+                  "kohle": 67.84260051325919,
+                  "oel": 38.971583220568334,
+                  "gas": 136.07715914072773,
+                  "fission": 47.48441674087267,
+                  "smr": 5,
+                  "thorium": 5,
+                  "hybrid": 5,
+                  "nuklearbatterie": 5,
+                  "wasser": 109.10958904109589,
+                  "wind": 151.92725679228744,
+                  "solar": 157.37383177570092,
+                  "bio": 14.124570868072585,
+                  "geothermie": 5,
+                  "gezeiten": 5,
+                  "tiefengeothermie": 5,
+                  "fusion": 5,
+                  "sbsp": 5,
+                  "fusion_adv": 5,
+                  "h2_backup": 5
+                },
+                "strom_base0": 2107.4661025323485,
+                "primaer_base0": 53.28,
+                "batterie_gw": 13.176900000000005,
+                "kum_strom_soll": 9074.628213253345,
+                "kum_unerf": 0,
+                "kum_abregelung": 167.36588756662468,
+                "kum_gen": 8907.26232568672,
+                "kum_emiss": 14.659312243050042,
+                "kum_emiss_strom": 2.1638512330278434,
+                "kum_clean_gen": 5878.581355581437,
+                "kum_wasser": 12.124987222958756,
+                "kum_tote": 39401.353874625675,
+                "score": {
+                  "versorgung": 98.2,
+                  "klima": 51.4,
+                  "nachhaltigkeit": 66,
+                  "total": 69.8
+                },
+                "last": {
+                  "strom_soll": 2371.3430892887827,
+                  "strom_ist": 2309.2670943732232,
+                  "unerf_pct": 0,
+                  "abregel_pct": 2.617756797654173,
+                  "zwang_pct": 0,
+                  "lastreaktion": 0.062327542801289826,
+                  "primaer_ist": 55.3994791454768,
+                  "kosten_ct_kwh": 8.82234662988838,
+                  "emiss": 3.7081089880820737,
+                  "reservemarge": -0.14757049345571815,
+                  "wasser": 2.9498302553488895,
+                  "tote": 9461.388952017167,
+                  "strom": {
+                    "kohle": 295.3845291091825,
+                    "oel": 30.401544396465386,
+                    "gas": 437.1652202510477,
+                    "fission": 311.1345542609084,
+                    "smr": 0,
+                    "thorium": 0,
+                    "hybrid": 0,
+                    "nuklearbatterie": 0,
+                    "wasser": 315.38782067066893,
+                    "wind": 390.9087797240174,
+                    "solar": 530.3310658777025,
+                    "bio": 54.02021958476378,
+                    "geothermie": 6.520136159562105,
+                    "gezeiten": 0.08921925446399999,
+                    "tiefengeothermie": 0,
+                    "fusion": 0,
+                    "sbsp": 0,
+                    "fusion_adv": 0,
+                    "h2_backup": 0
+                  },
+                  "zubau": {
+                    "kohle": 0,
+                    "oel": 0,
+                    "gas": 0,
+                    "fission": 0,
+                    "smr": 0,
+                    "thorium": 0,
+                    "hybrid": 0,
+                    "nuklearbatterie": 0,
+                    "wasser": 0,
+                    "wind": 13.10480947689968,
+                    "solar": 93.73891428000003,
+                    "bio": 0,
+                    "geothermie": 0,
+                    "gezeiten": 0,
+                    "tiefengeothermie": 0,
+                    "fusion": 0,
+                    "sbsp": 0,
+                    "fusion_adv": 0,
+                    "h2_backup": 0
+                  },
+                  "clean_share": 0.696494484960664
+                },
+                "budget_rest_bio": 0.24005124058834038
+              },
+              "indien": {
+                "id": "indien",
+                "name": "INDIEN",
+                "controller": "human",
+                "kiStrat": "auto",
+                "farbe": "#c07a1e",
+                "cap": {
+                  "kohle": 177.1135500400984,
+                  "oel": 41.77448811454106,
+                  "gas": 106.48424976564317,
+                  "fission": 24.22944630074522,
+                  "smr": 0,
+                  "thorium": 0,
+                  "hybrid": 0,
+                  "nuklearbatterie": 0,
+                  "wasser": 78.76174362976911,
+                  "wind": 103.57031990744963,
+                  "solar": 345.35606373880614,
+                  "bio": 11.579676699422983,
+                  "geothermie": 0.7790661151397011,
+                  "gezeiten": 0.024519074666666668,
+                  "tiefengeothermie": 0,
+                  "fusion": 0,
+                  "sbsp": 0,
+                  "fusion_adv": 0,
+                  "h2_backup": 0
+                },
+                "kum_cap": {
+                  "kohle": 195.98973481608215,
+                  "oel": 46.91023906179522,
+                  "gas": 120.89772029811485,
+                  "fission": 25.787867319679428,
+                  "smr": 0,
+                  "thorium": 0,
+                  "hybrid": 0,
+                  "nuklearbatterie": 0,
+                  "wasser": 82.70136986301371,
+                  "wind": 116.21523337356005,
+                  "solar": 372.65561380327955,
+                  "bio": 13.261402648357041,
+                  "geothermie": 0.8922105263157896,
+                  "gezeiten": 0.02808,
+                  "tiefengeothermie": 0,
+                  "fusion": 0,
+                  "sbsp": 0,
+                  "fusion_adv": 0,
+                  "h2_backup": 0
+                },
+                "cap0L": {
+                  "kohle": 195.98973481608215,
+                  "oel": 46.91023906179522,
+                  "gas": 109.19772029811486,
+                  "fission": 22.86286731967943,
+                  "smr": 5,
+                  "thorium": 5,
+                  "hybrid": 5,
+                  "nuklearbatterie": 5,
+                  "wasser": 78.8013698630137,
+                  "wind": 64.54425942156004,
+                  "solar": 123.99150382327952,
+                  "bio": 13.261402648357041,
+                  "geothermie": 5,
+                  "gezeiten": 5,
+                  "tiefengeothermie": 5,
+                  "fusion": 5,
+                  "sbsp": 5,
+                  "fusion_adv": 5,
+                  "h2_backup": 5
+                },
+                "strom_base0": 2132.9943062913885,
+                "primaer_base0": 35.519999999999996,
+                "batterie_gw": 9.516650000000004,
+                "kum_strom_soll": 9548.921637011592,
+                "kum_unerf": 0,
+                "kum_abregelung": 102.21709070919172,
+                "kum_gen": 9099.769057415142,
+                "kum_emiss": 10.042802306351254,
+                "kum_emiss_strom": 3.9132607527683976,
+                "kum_clean_gen": 3819.015156716201,
+                "kum_wasser": 14.152075102365092,
+                "kum_tote": 96967.03486624573,
+                "score": {
+                  "versorgung": 98.9,
+                  "klima": 14,
+                  "nachhaltigkeit": 42,
+                  "total": 47.9
+                },
+                "last": {
+                  "strom_soll": 2550.5592158446393,
+                  "strom_ist": 2366.520887722305,
+                  "unerf_pct": 0,
+                  "abregel_pct": 2.5491442992484328,
+                  "zwang_pct": 0,
+                  "lastreaktion": 0.06069391188686746,
+                  "primaer_ist": 38.387715217677616,
+                  "kosten_ct_kwh": 9.332679902053965,
+                  "emiss": 2.5711123764664756,
+                  "reservemarge": -0.14608537444260683,
+                  "wasser": 3.4749932416842433,
+                  "tote": 23358.632977295303,
+                  "strom": {
+                    "kohle": 853.3330840931941,
+                    "oel": 36.59445158833797,
+                    "gas": 391.7768517377543,
+                    "fission": 169.79995967562252,
+                    "smr": 0,
+                    "thorium": 0,
+                    "hybrid": 0,
+                    "nuklearbatterie": 0,
+                    "wasser": 239.41364734628178,
+                    "wind": 226.81900059731467,
+                    "solar": 393.2914853857525,
+                    "bio": 50.718983943472665,
+                    "geothermie": 4.708987226350409,
+                    "gezeiten": 0.064436128224,
+                    "tiefengeothermie": 0,
+                    "fusion": 0,
+                    "sbsp": 0,
+                    "fusion_adv": 0,
+                    "h2_backup": 0
+                  },
+                  "zubau": {
+                    "kohle": 0,
+                    "oel": 0,
+                    "gas": 5.8500000000000005,
+                    "fission": 1.4625,
+                    "smr": 0,
+                    "thorium": 0,
+                    "hybrid": 0,
+                    "nuklearbatterie": 0,
+                    "wasser": 0,
+                    "wind": 13.687345152000002,
+                    "solar": 67.70032698000001,
+                    "bio": 0,
+                    "geothermie": 0,
+                    "gezeiten": 0,
+                    "tiefengeothermie": 0,
+                    "fusion": 0,
+                    "sbsp": 0,
+                    "fusion_adv": 0,
+                    "h2_backup": 0
+                  },
+                  "clean_share": 0.45840140517294037
+                },
+                "budget_rest_bio": 0.15378600904319994
+              },
+              "row": {
+                "id": "row",
+                "name": "RUSSLAND + REST",
+                "controller": "ki",
+                "kiStrat": "auto",
+                "farbe": "#7a6a55",
+                "cap": {
+                  "kohle": 638.6305890868932,
+                  "oel": 313.3086608590579,
+                  "gas": 621.818043812923,
+                  "fission": 156.24073586968396,
+                  "smr": 0,
+                  "thorium": 0,
+                  "hybrid": 0,
+                  "nuklearbatterie": 0,
+                  "wasser": 562.941009646899,
+                  "wind": 597.5210763891323,
+                  "solar": 1888.3352741630638,
+                  "bio": 51.38909777850436,
+                  "geothermie": 9.168110100968567,
+                  "gezeiten": 0.2121843,
+                  "tiefengeothermie": 0,
+                  "fusion": 0,
+                  "sbsp": 0,
+                  "fusion_adv": 0,
+                  "h2_backup": 0
+                },
+                "kum_cap": {
+                  "kohle": 706.69375534645,
+                  "oel": 351.82679296346413,
+                  "gas": 710.4611691600743,
+                  "fission": 165.65115761353516,
+                  "smr": 0,
+                  "thorium": 0,
+                  "hybrid": 0,
+                  "nuklearbatterie": 0,
+                  "wasser": 590.5479452054794,
+                  "wind": 670.4725002320771,
+                  "solar": 2030.7136336503827,
+                  "bio": 58.85237861696911,
+                  "geothermie": 10.266720209703946,
+                  "gezeiten": 0.243,
+                  "tiefengeothermie": 0,
+                  "fusion": 0,
+                  "sbsp": 0,
+                  "fusion_adv": 0,
+                  "h2_backup": 0
+                },
+                "cap0L": {
+                  "kohle": 706.69375534645,
+                  "oel": 351.82679296346413,
+                  "gas": 692.9855326611136,
+                  "fission": 131.90115761353516,
+                  "smr": 5,
+                  "thorium": 5,
+                  "hybrid": 5,
+                  "nuklearbatterie": 5,
+                  "wasser": 545.5479452054794,
+                  "wind": 372.37072743207716,
+                  "solar": 596.1129991503824,
+                  "bio": 58.85237861696911,
+                  "geothermie": 7.721052631578948,
+                  "gezeiten": 5,
+                  "tiefengeothermie": 5,
+                  "fusion": 5,
+                  "sbsp": 5,
+                  "fusion_adv": 5,
+                  "h2_backup": 5
+                },
+                "strom_base0": 10644.785997594961,
+                "primaer_base0": 254.56,
+                "batterie_gw": 54.903750000000024,
+                "kum_strom_soll": 46333.648509617284,
+                "kum_unerf": 0,
+                "kum_abregelung": 0,
+                "kum_gen": 46333.64850961728,
+                "kum_emiss": 73.96722070630405,
+                "kum_emiss_strom": 16.658661405444988,
+                "kum_clean_gen": 22874.985218169502,
+                "kum_wasser": 71.21146385273988,
+                "kum_tote": 372232.44331433525,
+                "score": {
+                  "versorgung": 100,
+                  "klima": 28.1,
+                  "nachhaltigkeit": 49.4,
+                  "total": 56
+                },
+                "last": {
+                  "strom_soll": 12185.35659556195,
+                  "strom_ist": 12185.356595561949,
+                  "unerf_pct": 0,
+                  "abregel_pct": 0,
+                  "zwang_pct": 0,
+                  "lastreaktion": 0,
+                  "primaer_ist": 269.86142157183014,
+                  "kosten_ct_kwh": 9.002880339883799,
+                  "emiss": 18.74255183545898,
+                  "reservemarge": -0.05921371852699453,
+                  "wasser": 17.657069032550734,
+                  "tote": 89534.1052067565,
+                  "strom": {
+                    "kohle": 3076.9221782206514,
+                    "oel": 274.45838691253476,
+                    "gas": 2287.7929467965064,
+                    "fission": 1094.9350769747452,
+                    "smr": 0,
+                    "thorium": 0,
+                    "hybrid": 0,
+                    "nuklearbatterie": 0,
+                    "wasser": 1711.1830458438717,
+                    "wind": 1308.5711572921998,
+                    "solar": 2150.436210216897,
+                    "bio": 225.08424826984907,
+                    "geothermie": 55.415724694294404,
+                    "gezeiten": 0.5576203404,
+                    "tiefengeothermie": 0,
+                    "fusion": 0,
+                    "sbsp": 0,
+                    "fusion_adv": 0,
+                    "h2_backup": 0
+                  },
+                  "zubau": {
+                    "kohle": 0,
+                    "oel": 0,
+                    "gas": 5.562101879875822,
+                    "fission": 8.4375,
+                    "smr": 0,
+                    "thorium": 0,
+                    "hybrid": 0,
+                    "nuklearbatterie": 0,
+                    "wasser": 11.25,
+                    "wind": 78.96545280000001,
+                    "solar": 390.57880950000015,
+                    "bio": 0,
+                    "geothermie": 0.6837222656250002,
+                    "gezeiten": 0,
+                    "tiefengeothermie": 0,
+                    "fusion": 0,
+                    "sbsp": 0,
+                    "fusion_adv": 0,
+                    "h2_backup": 0
+                  },
+                  "clean_share": 0.5372171944493158
+                },
+                "budget_rest_bio": 0.48588689337762403
+              }
+            },
+            "events": [],
+            "historie": [
+              {
+                "jahr": 2026,
+                "ppm": 426.0735357115785,
+                "dT": 1.3420762871908891,
+                "B": 99.47348895513052,
+                "bloecke": {
+                  "usa": {
+                    "score": 54.8,
+                    "strom_ist": 4664.330623650127,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.4377641958419082,
+                    "emiss": 6.142787034294191
+                  },
+                  "china": {
+                    "score": 46,
+                    "strom_ist": 11636.195360568343,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.3999448347476427,
+                    "emiss": 10.745276380621455
+                  },
+                  "eu": {
+                    "score": 67.6,
+                    "strom_ist": 2148.0722311713507,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0.9903243239749596,
+                    "clean": 0.6208979280723412,
+                    "emiss": 3.621062457742843
+                  },
+                  "indien": {
+                    "score": 44.6,
+                    "strom_ist": 2199.83017611144,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.377005356631508,
+                    "emiss": 2.4469895606748677
+                  },
+                  "row": {
+                    "score": 52.2,
+                    "strom_ist": 11003.484256519205,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.44573521547366346,
+                    "emiss": 18.241983095753486
+                  }
+                }
+              },
+              {
+                "jahr": 2027,
+                "ppm": 429.37321387980745,
+                "dT": 1.365574152084139,
+                "B": 98.921782811486,
+                "bloecke": {
+                  "usa": {
+                    "score": 56,
+                    "strom_ist": 4839.58932048868,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.4689305247762007,
+                    "emiss": 6.174704017653082
+                  },
+                  "china": {
+                    "score": 46.7,
+                    "strom_ist": 11706.666031724477,
+                    "unerf_pct": 0,
+                    "abregel_pct": 1.0539000450266223,
+                    "clean": 0.41984463881407846,
+                    "emiss": 10.883371157827016
+                  },
+                  "eu": {
+                    "score": 68.3,
+                    "strom_ist": 2198.1064566507234,
+                    "unerf_pct": 0,
+                    "abregel_pct": 1.5730363300703505,
+                    "clean": 0.6471292043438773,
+                    "emiss": 3.650564112770751
+                  },
+                  "indien": {
+                    "score": 45.8,
+                    "strom_ist": 2243.2646291071314,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.4059274120055971,
+                    "emiss": 2.490450241306898
+                  },
+                  "row": {
+                    "score": 53.5,
+                    "strom_ist": 11375.482304349556,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.4781069616481443,
+                    "emiss": 18.407877021543932
+                  }
+                }
+              },
+              {
+                "jahr": 2028,
+                "ppm": 432.6990720312914,
+                "dT": 1.389260318629634,
+                "B": 98.33574221146795,
+                "bloecke": {
+                  "usa": {
+                    "score": 57.2,
+                    "strom_ist": 5022.884236141874,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.49820921782630184,
+                    "emiss": 6.206281556567054
+                  },
+                  "china": {
+                    "score": 47.3,
+                    "strom_ist": 11793.783366757734,
+                    "unerf_pct": 0,
+                    "abregel_pct": 2.494308936873375,
+                    "clean": 0.4398479632825191,
+                    "emiss": 11.02150436673682
+                  },
+                  "eu": {
+                    "score": 69.1,
+                    "strom_ist": 2251.8165434914226,
+                    "unerf_pct": 0,
+                    "abregel_pct": 2.1158359225217995,
+                    "clean": 0.6723447717736206,
+                    "emiss": 3.679576684454375
+                  },
+                  "indien": {
+                    "score": 46.8,
+                    "strom_ist": 2290.1533644742653,
+                    "unerf_pct": 0,
+                    "abregel_pct": 1.5260070516435635,
+                    "clean": 0.434140484399666,
+                    "emiss": 2.534250127903013
+                  },
+                  "row": {
+                    "score": 54.8,
+                    "strom_ist": 11769.32535318657,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.5085647857513955,
+                    "emiss": 18.574808753547646
+                  }
+                }
+              },
+              {
+                "jahr": 2029,
+                "ppm": 436.04807853023755,
+                "dT": 1.4131135109268027,
+                "B": 97.70804620956503,
+                "bloecke": {
+                  "usa": {
+                    "score": 58.4,
+                    "strom_ist": 5214.306204517704,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.5257560213876871,
+                    "emiss": 6.237409829281087
+                  },
+                  "china": {
+                    "score": 48.1,
+                    "strom_ist": 12143.791590463788,
+                    "unerf_pct": 0,
+                    "abregel_pct": 3.24545411900759,
+                    "clean": 0.4623805359903022,
+                    "emiss": 11.119278614228822
+                  },
+                  "eu": {
+                    "score": 69.8,
+                    "strom_ist": 2309.2670943732232,
+                    "unerf_pct": 0,
+                    "abregel_pct": 2.617756797654173,
+                    "clean": 0.696494484960664,
+                    "emiss": 3.7081089880820737
+                  },
+                  "indien": {
+                    "score": 47.9,
+                    "strom_ist": 2366.520887722305,
+                    "unerf_pct": 0,
+                    "abregel_pct": 2.5491442992484328,
+                    "clean": 0.45840140517294037,
+                    "emiss": 2.5711123764664756
+                  },
+                  "row": {
+                    "score": 56,
+                    "strom_ist": 12185.356595561949,
+                    "unerf_pct": 0,
+                    "abregel_pct": 0,
+                    "clean": 0.5372171944493158,
+                    "emiss": 18.74255183545898
+                  }
+                }
+              }
+            ],
+            "_cfg": {
+              "basis": "S2_beschleunigt",
+              "controllers": {
+                "usa": "ki",
+                "china": "human",
+                "eu": "human",
+                "indien": "human",
+                "row": "ki"
+              },
+              "names": {
+                "usa": "USA",
+                "china": "CHINA",
+                "eu": "EU",
+                "indien": "INDIEN",
+                "row": "RUSSLAND + REST"
+              }
+            }
+          },
+          "basis": "S2_beschleunigt",
+          "letzter_zug": 4
+        },
+        "memoranden": [
+          {
+            "zug": 1,
+            "typ": "gemeinsame_absprache",
+            "quelle": "Memorandum Zug 1.docx",
+            "wortlaut": "Keiner schiesst Militaer- oder Dual-use-Gueter ins All.",
+            "unterzeichner": [
+              "indien",
+              "china",
+              "eu"
+            ],
+            "hinweis": "Wortlaut verbietet den START, nicht Entwicklung oder Foerderung."
+          }
+        ],
+        "zugdauer_a": 1,
+        "co2_ppm": 436.0,
+        "T_ist_C": 1.4131,
+        "biosphaere": 97.71,
+        "handelslage": {
+          "zug": 1,
+          "stand": "2026",
+          "vertraege": [
+            {
+              "id": "HV-2026-01",
+              "partner": [
+                "eu",
+                "indien"
+              ],
+              "art": "Freihandelsabkommen",
+              "status": "ZUSTANDE GEKOMMEN",
+              "grundlage": "beidseitiges Angebot im selben Zug: O-eu-04 (EU schlaegt Indien Freihandelsabkommen vor) und O-indien-01 (Indien: Handelsabkommen mit der EU). Zwei uebereinstimmende Willenserklaerungen.",
+              "inhalt": "Zollabbau, EU-Normen fuer Importe"
+            },
+            {
+              "id": "HV-2026-02",
+              "partner": [
+                "china",
+                "indien"
+              ],
+              "art": "Wirtschaftsabkommen ohne Technologieteil",
+              "status": "ZUSTANDE GEKOMMEN, EINGESCHRAENKT",
+              "grundlage": "O-indien-02 (Handelsabkommen mit China) trifft auf O-china-09 woertlich 'Indien ist ein freund und helfer. Kein technologietransfer aber wirtschaft helfen.'",
+              "inhalt": "Warenhandel und Investitionen ja; Technologietransfer ausdruecklich ausgeschlossen"
+            },
+            {
+              "id": "HV-2026-03",
+              "partner": [
+                "indien",
+                "usa"
+              ],
+              "art": "einseitige Anpassung",
+              "status": "WIRKSAM",
+              "grundlage": "O-indien-06 'alles schlucken was Trump mag' — einseitige Zugestaendnisse an den KI-gefuehrten US-Block",
+              "inhalt": "Handelspolitische Anpassung an US-Forderungen ohne Gegenleistung"
+            },
+            {
+              "id": "HV-2026-04",
+              "partner": [
+                "china",
+                "usa"
+              ],
+              "art": "bilaterale Gespraeche",
+              "status": "AUFGENOMMEN",
+              "grundlage": "O-china-05 / O-china-10 — ausdruecklich OHNE Beteiligung der EU",
+              "inhalt": "freundschaftlicher Austausch, EU bewusst ausgeschlossen"
+            },
+            {
+              "id": "HV-2026-05",
+              "partner": [
+                "china",
+                "russland"
+              ],
+              "art": "Wirtschafts- und Ruestungshilfe",
+              "status": "WIRKSAM",
+              "grundlage": "O-china-08 — Waffenlieferungen und Wirtschaftsstuetzung, damit Russland die EU unter Druck setzt"
+            }
+          ],
+          "brueche": [
+            {
+              "id": "HB-2026-01",
+              "akteur": "china",
+              "ziel": "eu",
+              "art": "C-7 Zuendstufe I1 (Totalabbruch)",
+              "grundlage": "O-china-02 'exportverbot von waren und dienstleistungen' + Freitext 'Exportverbot von Waren, Dienstleistungen und Technologie nach EU'",
+              "ip_i1": 1.42,
+              "ip_gesamt": 1.42,
+              "kaskadenwurf": "FINDET NICHT STATT (IP < 2, Daempfungsregime C-7 §3)",
+              "zuenderkosten_china_pp": {
+                "2026": -8.0,
+                "2027": -4.0,
+                "niveau_dauerhaft": -3.0
+              },
+              "zielschaden_eu_pp": {
+                "2026": -1.45
+              },
+              "erosion": "C-4: Ersatzhandel -20 %/Zug, Boden 40 % Restwirkung",
+              "folge_autokratie": "selbst ausgeloeste Rezession zaehlt ab Zug 2 voll auf den Coup-Track (x1,47)"
+            },
+            {
+              "id": "HB-2026-02",
+              "akteur": "eu",
+              "ziel": "china",
+              "art": "C-4 Handelsmassnahme (KEINE Zuendstufe)",
+              "grundlage": "O-eu-02 Strafzoelle auf chinesische E-Autos; O-eu-01 Huawei-Ausschluss aus dem 5G-Netz",
+              "einordnung": "gezielte Zoelle und ein Beschaffungsausschluss sind kein Voll-Decoupling — C-7 §Aktivierung nicht erfuellt, es gilt C-4.",
+              "c4_wirkung": {
+                "strafzoelle_e_auto": {
+                  "typ": "us_unilateral (blockweite unilaterale Massnahme)",
+                  "bip_wachstum_pp_a": -0.7,
+                  "dauer_a": 7,
+                  "kumuliert_pp": -4.9,
+                  "anpassung": "ab Zug 4 -20 %/Zug, Restwirkung 40 %"
+                },
+                "huawei_ausschluss": {
+                  "typ": "Einzelsanktion",
+                  "niveau_pct": -0.39,
+                  "regelluecke": "erde01_engine.py sanktion kennt nur un_allgemein/un_umfassend/us_unilateral; die Konstante einzelsanktion_niveau_pct = -0.39 steht im Asset, die CLI gibt sie nicht aus. Direkt aus dem Asset angewandt."
+                },
+                "verhaltensaenderung": {
+                  "p": 0.26,
+                  "wurf": "W100 = 47",
+                  "ergebnis": "NEIN — 47 > 26"
+                },
+                "einordnung": "Keine Zuendstufe, aber Wirkung: kumuliert -4,9 Pp auf China ueber sieben Jahre plus -0,39 % Niveau, bei null gebuchten Kosten fuer die EU (C-4 kennt keine Zuenderkosten)."
+              }
+            }
+          ],
+          "regelluecke": "c7.py ip addiert den I2-Fire-Sale-Term (+1,0) unbedingt; es gibt keinen Schalter, um eine reine I1-Zuendung zu rechnen. Rohausgabe lautete 'I1=1.42 I2=1.0 ... IP=2.42'. Nach implosion_regeln.md §2 gilt aber woertlich 'Nur gezuendete Stufen zaehlen' — China hat keinen Fire-Sale angeordnet. Massgeblich ist daher I1 allein: IP = 1,42. Damit greift §3 'Bei IP < 2 findet kein Wurf statt'. Als REGELLUECKE gemeldet."
+        },
+        "regler_2026": {
+          "eu": {
+            "repression_alt": 0.08,
+            "repression_neu": 0.2,
+            "delta": 0.12,
+            "safety": 0.6,
+            "ruestungsquote": "NORMATIV (unveraendert)",
+            "orbitalanteil": "0 % — C-9 §4 deckelt ohnehin auf P_orbital_ansaessig / P_welt = 0"
+          },
+          "china": {
+            "repression_alt": 0.72,
+            "repression_neu": 0.8,
+            "delta": 0.08,
+            "safety": 0.0,
+            "ruestungsquote": "NORMATIV (unveraendert)",
+            "orbitalanteil": "0 % — C-9 §4 deckelt ohnehin auf P_orbital_ansaessig / P_welt = 0"
+          },
+          "indien": {
+            "repression_alt": 0.42,
+            "repression_neu": 0.4,
+            "delta": -0.02,
+            "safety": 0.0,
+            "ruestungsquote": "NORMATIV (unveraendert)",
+            "orbitalanteil": "0 % — C-9 §4 deckelt ohnehin auf P_orbital_ansaessig / P_welt = 0"
+          }
+        },
+        "domaenen_2026": {
+          "energie": {
+            "status": "aufgeloest (EH-01)",
+            "ergebnis": "Scores EU 67,6 · USA 54,8 · ROW 52,2 · China 46,0 · Indien 44,6; Welt ppm 426,1, dT 1,3421, B 99,47; Rezessionsflag EU (-0,1123) und Indien (-0,0518); EU-Abregelung 0,99 %"
+          },
+          "wirtschaft": {
+            "status": "aufgeloest",
+            "china": "C-7 -1,56 Bio (I1) + C-4 -0,1256 (Zoelle) + C-4 -0,0695 (Huawei) = 19,5 -> 17,7449 Bio USD, zusammen -9,0 %",
+            "eu": "C-7-Zielschaden -0,2944 Bio = 20,3 -> 20,0056 Bio USD (-1,45 %)",
+            "indien": "4,3 Bio USD unveraendert; zwei Handelsabkommen wirksam"
+          },
+          "innenpolitik": {
+            "status": "aufgeloest",
+            "mechanik": "B-2 Kaskadenrisiko aus der Reglerstellung",
+            "eu": "Repression 0,08 -> 0,20 (Frontex-Pushbacks, AfD-Verbotspruefung). p = 0,75 %/Zug, 7,25 % ueber 10 Zuege.",
+            "china": "Repression 0,72 -> 0,80. p = 9,75 %/Zug, 64,15 % ueber 10 Zuege — hoechster Wert am Tisch.",
+            "indien": "Repression 0,42 -> 0,40. p = 3,75 %/Zug, 31,76 % ueber 10 Zuege."
+          },
+          "aussenpolitik": {
+            "status": "aufgeloest",
+            "eu": "Kanada-Beitrittsangebot ausgesprochen (NPC-Antwort 2027 offen); Russisches Haus Berlin geschlossen; TAURUS/Eurofighter-Drohung ausgesprochen — bedingte Zusage, keine Lieferung.",
+            "china": "Bilaterale USA-Gespraeche unter Ausschluss der EU aufgenommen; Russland mit Waffen und Wirtschaftshilfe gestuetzt; EU-spaltende Parteien gefoerdert — wirkt ueber die EU-Kaskadenleiste, kein Sofortschaden.",
+            "indien": "Afrika-Engagement ausgeweitet; einseitige US-Zugestaendnisse ohne Gegenleistung."
+          },
+          "militaer": {
+            "status": "aufgeloest — kein Gefecht, keine Verluste, kein Zoom-in",
+            "eu": "NATO-Europaeisierung eingeleitet; deutsch-franzoesische Traegerkooperation statt FCAS (zweiter Traeger + EU-Carrier-Group, Bauzeit ausserhalb Zug 1); Nukleargespraeche mit Frankreich aufgenommen; Ostsee-/Unterwasserueberwachung verstaerkt. Ruestungsquote bleibt NORMATIV — alles aus dem laufenden Haushalt, keine Mobilisierungsstufe, kein Sprungdeckel beruehrt.",
+            "china": "keine militaerische Order.",
+            "indien": "keine militaerische Order."
+          },
+          "forschung": {
+            "status": "aufgeloest",
+            "mechanik": "F-3 Safety-Slider",
+            "eu": "s = 0,60 -> Fortschritt 0,4804, X-Risk 0,064 %/Zug, 1,9 % ueber 30 Zuege. Ariane-/Dual-use-Foerderung angelaufen.",
+            "china": "s = 0,00 -> Fortschritt 1,00, X-Risk 0,4 %/Zug, 11,33 % ueber 30 Zuege. KI/Rechenzentren, SMR-Kernkraftwerke.",
+            "indien": "s = 0,00 -> Fortschritt 1,00, X-Risk 0,4 %/Zug, 11,33 % ueber 30 Zuege. Bessere Traegerraketen."
+          },
+          "intel": {
+            "status": "aufgeloest",
+            "ergebnis": "Zwei verdeckte Operationen gegen die EU attribuiert: China A1, Indien B2 trotz falscher Flagge."
+          }
+        },
+        "attitude_2026": {
+          "usa": {
+            "delta": 1,
+            "grund": "von zwei Seiten umworben — Indiens einseitige Zugestaendnisse und Chinas bilaterale Gespraeche unter Ausschluss Bruessels; gegenlaeufig die EU mit NATO-Europaeisierung 'im Hinblick auf Rueckzug der USA' und dem Kanada-Angebot."
+          },
+          "russland": {
+            "delta": 1,
+            "grund": "chinesische Waffen und Wirtschaftshilfe staerken Moskau; EU-Massnahmen (Russisches Haus, TAURUS-Drohung) haerten die Haltung."
+          },
+          "rest": {
+            "delta": 1,
+            "grund": "indisches Afrika-Engagement."
+          }
+        },
+        "fremdkontext": [
+          {
+            "platz": 3,
+            "modul": null,
+            "rolle": null,
+            "text": "Sabotage gegen eu. Pipelines sprengen",
+            "art": "moduluebergreifend",
+            "fraktion": "indien",
+            "zug": 1
+          }
+        ],
+        "domaenen_zug2": {
+          "energie": {
+            "status": "aufgeloest",
+            "ergebnis": "EH-01 Zug 2: Rangfolge EU 68,3 · USA 56,0 · RUS+REST 53,5 · CHN 46,7 · IND 45,8. Welt ppm 429,4 · dT 1,3656 °C · B 98,92 · Abwaerme K 0,0193. Abregelung CHN 1,05 %, EU 1,57 %. Rezessionsflag CHN -0,1137 · EU -0,125 · IND -0,089, alle mit Coup-Track x1,47. Befunde V10: EU und IND fahren 'erneuerbar' mit 5 % auf batterie — Speicher, kein Erzeuger, Anteil wirkungslos."
+          },
+          "wirtschaft": {
+            "status": "aufgeloest",
+            "china": "17.7449 -> 16.0059 Bio USD (-9.8 Pp). C-7 I1 Nachwirkung Jahr 2 -4,0 · C-7 I2 NEU GEZUENDET (Fire-Sale EU-Anleihen + Konfiskation europaeischer Fabrikationsanlagen) mit Doom-Loop-Bankenkrise 2W10=13<=16 -> -5,7 Pp (anteilig aus Gesamtschaden -9,5 statt -5) · EU-Strafzoelle -0,7 · DW-01 Z-Konto Stufe 2 +0,6. Kapitalmarktausschluss 10 Zuege, Risikoaufschlag +2 Pp dauerhaft, Kreditklemme 2 Zuege.",
+            "eu": "20.0056 -> 19.5795 Bio USD (-2.13 Pp). Zielschaden CHN I1 mit C-4-Erosion -1,45 x 0,80 = -1,16 · Fire-Sale-Direktschaden 0 (EZB ist harte Notenbank, QI-04/QI-05 buyer of last resort) · Indien: C-7-Teilentkopplung -0,073 + C-4 unilateral -0,90 = -0,973.",
+            "indien": "4.3 -> 4.1839 Bio USD (-2.7 Pp). C-7 I1 TEILENTKOPPLUNG gegen die EU, Haircut 1/3 (Spielerentscheid 23.08.): Zuenderpreis -8,0 x 1/3 = -2,7 Pp 2027, -1,33 Pp 2028, danach dauerhaft -1,0 Niveau. Zustimmung -10.",
+            "kaskadenwurf": "CHN IP 2,9 (I1 1,4 + I2 1,5) -> Schwelle 2W10<=5,6; Wurf 12 -> KEINE globale Kaskade. Zuendung bleibt aktiv, Wurf wiederholt sich in Zug 3 (p ~10 %).",
+            "indien_ip": "IND IP 0,25 -> Daempfungsregime, kein Kaskadenwurf moeglich (QI-06/07/12).",
+            "offen": [
+              "Konfiskation: §5 bepreist den Fire-Sale, nicht den Zielschaden der Asset-Konfiskation — RULES-GAP RG-Z2-04, als Einmal-Vermoegensverlust vermerkt, nicht als Wachstumsrate gebucht.",
+              "EU-Antirezessionspaket und Chinas Kauf indischer Staatsanleihen: keine Tafel, qualitativ vermerkt, nicht gebucht."
+            ]
+          },
+          "innenpolitik": {
+            "status": "aufgeloest",
+            "ergebnis": "B-2 Kaskadenrisiko: IND 12,75 %/Zug (74,43 %/10) — Sprung von 3,75 %, weil die Repression von 0,4 auf 1,0 gezogen wurde · CHN 9,75 % · RUS 6,75 % · EU 0,75 % · USA 0,00 %. Kaskadenwurf Zug 2 (Seed 20270107): IND 2805, CHN 5221, RUS 6941, EU 9730 — alle ruhig. A-2 Coup-Track mit Rezession x1,47: RUS 4,41 % · IND 2,94 % · CHN 1,76 % · EU/USA 0,29 % — kein Putsch. EU haertet sieben Rechenzentren H0->H1, USA elf von zwoelf Standorten H0->H1.",
+            "hinweis_indien": "Repression 1,0 in einer Demokratie: Kaskadenrisiko fast vervierfacht, und die Repressionsfalle B-2 (QB-09) macht den Weg zurueck teurer als den Weg hinein."
+          },
+          "aussenpolitik": {
+            "status": "aufgeloest",
+            "ergebnis": "CHN: Fire-Sale europaeischer Staatsanleihen und Kauf indischer Papiere (Finanzschlag I2 bzw. Bindung des Vasallen) · Bilaterale Gespraeche mit den USA laufen weiter. EU: oeffentliche Attribution der Guete A1 gegen China vor Rat und WTO (Wurf D-2 Score 19,8 -> A1, oeffentlich UND eskalationsberechtigt) · Freihandel mit Indien wird technisch umgesetzt, nichts Neues unterschrieben · die B2-Attribution gegen Indien bleibt bewusst ungespielt. USA: Rueckzugsdrohung gegenueber Europa bleibt auf dem Tisch, dagegen befristete bilaterale Zusage ohne Buendnisautomatik plus Zugang zur US-Startkapazitaet · Halbleiterhebel gegen China ausdruecklich UNGEZOGEN. RUS: Zehnjahres-Energieabkommen an Peking angeboten (Gas, Oel, Nordroute gegen Reifknoten-Chips und Werkzeugmaschinen) · bilaterale Billigenergie an einzelne EU-Hauptstaedte am Rat vorbei, gegen TAURUS-Freigabe. IND: keine eigene aussenpolitische Zeile ausser der Entkopplung."
+          },
+          "intel": {
+            "status": "aufgeloest",
+            "ergebnis": "IND -> EU SABOTAGE (Umfang 5, 'Pipelines sprengen', Seed 20270111): Wurf 319 <= 390 ERFOLG · Entdeckung 605 > 600 UNENTDECKT · Blowback 876 > 450 keiner. Europaeische Pipelineinfrastruktur beschaedigt, kein Taeter greifbar. CHN -> IND BESCHAFFUNG mit falscher Flagge auf die EU (Seed 516030057): Wurf 449, p 0,39 GESCHEITERT, aber ENTDECKT (p 0,60). Attribution D-2: 2x5 + 1x3 (Gegenspionage IND N3) + 0,8x1 - 3 (falsche Flagge) = 10,8 -> Guete C3. Indien darf China oeffentlich benennen, hat aber KEIN Eskalationsrecht (braucht B2). Die falsche Flagge hat die Guete um drei Punkte gedrueckt und damit genau das Eskalationsrecht verhindert. RUS -> EU Einfluss/Desinformation, viele kleine Operationen (Umfang 2, Seed 20270112): Wurf 639 GESCHEITERT, entdeckt (531) — Attributionsscore 2x2 + 1x1 + 0,8 - 3 = 2,8 -> F6, nicht benennbar. Genau die Doktrin, die Moskau angesagt hatte: unter der Schwelle bleiben. USA: OSINT-Schwerpunkt auf Chinas Rechenpunkt-Zuteilung statt verdeckter Operation — Lagebild, kein Ertrag. IND HANDEL (Lizenz) von den USA: legal, keine Entdeckung, politischer Preis Buendnisbindung.",
+            "attributionen_offen": {
+              "IND_gegen_CHN": "C3 — oeffentlich benennbar, kein Eskalationsrecht",
+              "EU_gegen_CHN": "A1 — oeffentlich AUSGESPIELT in Zug 2",
+              "EU_gegen_IND": "B2 aus Zug 1 — weiterhin ungespielt"
+            }
+          },
+          "militaer": {
+            "status": "aufgeloest",
+            "ergebnis": "ZH-01 Bodenkonten Zug 2 gebucht. IND 628,8 t: 503,0 t Geheimdienste (8 Slots, Deckel), 9 Sprengkoepfe (90,0 t, P0-Preis 10 t) — 35,8 t verfallen (Z-1.4). CHN 2 636,9 t: 263,7 t Geheimdienste (7 Slots), 211,0 t Force Projection, 211,0 t Modernisierung, 99 Advanced-Punkte, 80,0 t State-of-the-Art, 10 Future-SP (100,0 t), 20 Sprengkoepfe (100,0 t zu P4-Preis 5 t) — 1 572,2 t verfallen. Aufwertung Z-2d: Chinas SAM-Truppe auf 'future' (q 1,40), eine Teilstreitkraft je Runde. PROLIFERATION: China stationiert 50 Sprengkoepfe nukleare Teilhabe in Indien (Z-5.2, Deckel 10 % von 700 eingehalten). Eigentum bleibt China, Zweitschluessel Peking, Einsatz zaehlt als Einsatz Chinas. E-2-Ereignis 'Stationierung'. Doktrin: IND von NFU eine Stufe auf 'ambiguitaet' (deklariert war ersteinsatz_begrenzt = zwei Stufen, E-2.1 erlaubt eine). CHN eine Stufe auf 'vergeltung_nur'. Chinas Programmschritt L2->L3 NICHTIG — China ist bereits Kernwaffenstaat. USA beginnt DISPERSION der Bodensegmente P und T (drei Zuege Bauzeit, reif Zug 5). EU baut den europaeischen Pfeiler weiter, Frankreich-Gespraeche laufen ohne Abschluss. RUS haelt die Front, Kriegsstufe unveraendert (HE-5 eingehalten).",
+            "regelluecke": "RG-Z2-01: Z-5.2 setzt einen Vasallen OHNE eigenes Arsenal voraus ('hat_kernwaffen = geteilt', Doktrinstufe > 2 gesperrt). Indien ist L3 mit 190 eigenen Koepfen. GM-Auslegung: die Sperre gilt fuer die 50 geteilten Koepfe, nicht fuer Indiens eigene Leiter — gemeldet, nicht gefuellt."
+          },
+          "forschung": {
+            "status": "aufgeloest",
+            "ergebnis": "Keine Techstufe offen (L1 erst 2035/36) — es wird nichts freigeschaltet. FO-01-Beute laeuft auf das Konto: IND 0,2375 JB offen (NACHBAU eines chinesischen Traegerraketen-Wracks, 1W6=1 -> Erhaltungsgrad nur 0,25, 0,0625 JB ueber zwei Zuege · US-Lizenz fuer moderne LLM 0,175 JB, Decke 0,7 E0). CHN 0,0 — die Beschaffung gegen Indien lief ins Leere. DW-01: USA F-Konto 8 RP = 8 % Weltanteil -> Stufe 3, -30 % Forschungszeit (Deckel). CHN F 3 RP -> Stufe 2, -20 %. IND F 0 -> keine Wirkung. Trainingskonten: USA g_T 1,414 (T 10) · CHN g_T 1,673 (T 14) · IND g_T 0,775 (T 3) · RUS kein T. X-Risk je Zug: CHN 0,0067 · IND 0,0031 · USA aus T 10 bei Safety 0,55. Indien hat sein gesamtes Rechenbudget ins Training gelegt und das Operationskonto auf 0 gelassen: -1 Initiative und -1 auf Duelle je zwei fehlende Slots (launch_c2 §3.2)."
+          }
+        },
+        "regler_2027": {
+          "indien": {
+            "repression_alt": 0.4,
+            "repression_neu": 1.0,
+            "delta": 0.6,
+            "safety": 0.0,
+            "ruestungsquote": "NORMATIV",
+            "orbitalanteil": "0 %"
+          },
+          "china": {
+            "repression_alt": 0.8,
+            "repression_neu": 0.8,
+            "delta": 0.0,
+            "safety": 0.0,
+            "ruestungsquote": "NORMATIV",
+            "orbitalanteil": "0 %"
+          },
+          "eu": {
+            "repression_alt": 0.2,
+            "repression_neu": 0.2,
+            "delta": 0.0,
+            "safety": 0.6,
+            "ruestungsquote": "NORMATIV",
+            "orbitalanteil": "0 %"
+          },
+          "usa": {
+            "repression_neu": 0.05,
+            "safety": 0.55,
+            "ruestungsquote": "NORMATIV",
+            "orbitalanteil": "0 %"
+          },
+          "russland": {
+            "repression_neu": 0.6,
+            "safety": 0.3,
+            "ruestungsquote": "KRIEGSWIRTSCHAFT",
+            "orbitalanteil": "0 %"
+          }
+        },
+        "domaenen_zug3": {
+          "energie": {
+            "status": "aufgeloest",
+            "ergebnis": "EH-01 Zug 3: EU 69,1 · USA 57,2 · RUS+REST 54,8 · CHN 47,3 · IND 46,8. Welt ppm 432,7 · dT 1,3893 °C · B 98,34 · Abwaerme K 0,0196. Abregelung steigt ueberall: CHN 2,49 % · EU 2,12 % · IND 1,53 %. Rezessionsflag CHN -0,1449 · EU -0,1367 · IND -0,1239, alle mit Coup-Track x1,47. Chinas Energiebefehl 'nuklear' plus SMR-Forschung ist der einzige Traegerwechsel dieses Zuges."
+          },
+          "wirtschaft": {
+            "status": "aufgeloest",
+            "china": "16,0059 -> 15,3817 Bio USD (-3,90 Pp). C-7 I2 Nachwirkung Jahr 2 der Bankenkrise -3,8 (Gesamtschaden -9,5, davon -5,7 in Zug 2) · EU-Strafzoelle -0,7 · DW-01 Z-Konto Stufe 2 +0,6. Das Infrastrukturprogramm zur Staerkung der Binnennachfrage laeuft gegen Kapitalmarktausschluss und Kreditklemme — es ist rein binnenfinanziert und wirkt fruehestens 2029.",
+            "eu": "19,5795 -> 19,3269 Bio USD (-1,29 Pp). CHN I1 Zielschaden Jahr 3 mit C-4-Erosion -0,93 · Indiens Sanktionen -0,90 · Indiens Teilentkopplung Jahr 2 -0,058 · DW-01 Z-Konto Stufe 2 +0,60. Der A1-Doktrinbaum hat das Budget auf 45 % Wirtschaft verschoben — Wirkung ab 2029.",
+            "indien": "4,1839 -> 4,1283 Bio USD (-1,33 Pp). C-7-Teilentkopplung Zuenderpreis Jahr 2. Ab 2029 bleibt der dauerhafte Niveauabzug von -1,0.",
+            "kaskadenwurf": "Chinas Zuendung I1+I2 ist NICHT abgebrochen und bleibt aktiv: IP 2,9, Schwelle 2W10<=5,6, Wurf 16 -> keine globale Kaskade. Dritter Wurf faellig in Zug 4. Ein Abbruch ist eine eigene Ansage; Hysterese heisst, dass die gebuchten Schaeden bleiben (QI-09).",
+            "usa": "DW-01 Z-Konto Stufe 5 (27,7 RP zivil) -> +1,50 % BIP/a. Kein BIP-Konto in truth.ressourcen gefuehrt."
+          },
+          "innenpolitik": {
+            "status": "aufgeloest",
+            "ergebnis": "Indien nimmt die Repression von 1,0 auf 0,4 zurueck — Kaskadenrisiko faellt von 12,75 % auf 3,75 %/Zug. Russland von 0,6 auf 0,55 (6,00 %). CHN 0,8 unveraendert (9,75 %), EU 0,2 (0,75 %), USA 0,05 (0,00 %). Kaskadenwuerfe Zug 3 (Seed 20280107): IND 3610, CHN 3766, EU 3347, RUS 1012 — alle ruhig. A-2 Coup-Track: RUS 4,41 % · IND 2,94 % · CHN 1,76 % · EU 0,29 % — kein Putsch. Indien staerkt den Nationalismus ausdruecklich als Vorbereitung eines Alignmentwechsels (Blatt 1/2, Domaene innenpolitik) — eine innere Weichenstellung ohne Aussenwirkung in diesem Zug. USA haerten ihre Trainings-Rechenzentren H1 -> H2."
+          },
+          "aussenpolitik": {
+            "status": "aufgeloest",
+            "ergebnis": "BEIJING-DELHI NUCLEAR PACT: China und Indien haben das Verteidigungsbuendnis UNABHAENGIG VONEINANDER auf ihren Blaettern beantragt (CHN Domaene aussenpolitik -> indien, IND Freitext). Beidseitiger Wille, der Pakt kommt zustande. Er verschraenkt die bereits laufende nukleare Teilhabe (50 chinesische Koepfe in Indien, Zweitschluessel Peking) mit einer foermlichen Beistandsklausel. China baut zusaetzlich eine antikoloniale Front gegen EU und USA auf (Reparationsforderungen) und vertieft Schul- und Kulturaustausch mit Indien. Indien erklaert die Arktis zu chinesisch-indischem Eigentum und will dort mit China eine Station bauen — eine einseitige Ansage gegen alle fuenf Arktisanrainer, die China auf seinem Blatt NICHT mittraegt. USA: befristete, bepreiste Startzusage an die EU ohne Buendnisautomatik; Rueckzugsdrohung bleibt; Halbleiterhebel gegen China ausdruecklich als Zusicherung ungezogen. RUS: Energieabkommen mit China neu bepreist (Energie auf Yuan-Kredit gegen feste Chiplieferungen, Meistbeguenstigung, Transferverbot) und Festpreisgas an einzelne EU-Hauptstaedte am Rat vorbei. EU (A1 defensiv-oekonomisch): Haltung defensiv, Reaktion nur auf Angriff — keine eigene Initiative."
+          },
+          "intel": {
+            "status": "aufgeloest",
+            "ergebnis": "Fuenf Operationen, EINE geglueckt — und ausgerechnet die lauteste. CHN -> USA SABOTAGE (Umfang 5, falsche Flagge, Seed 516031060): Wurf 181 ERFOLG, ENTDECKT. Attribution 2x5 + 1x2 + 0,8 - 3 = 9,8 -> C3. Washington darf Peking oeffentlich benennen, hat aber kein Eskalationsrecht. Blowback bereits im naechsten Zug faellig. CHN -> USA ABWERBUNG (Falcon Heavy, Seed 516031058): Wurf 100 ERFOLG, UNENTDECKT. Absorption +0,20 dauerhaft, Verhaertung -1, tacit-Decke faellt, US-Absorption -0,20. Der stillste Erfolg des Zuges. CHN -> USA BESCHAFFUNG (frontier KI): Wurf 586 gescheitert, entdeckt, Attribution 6,8 -> D4. IND -> EU SABOTAGE (Umfang 5, falsche Flagge, Seed 516031057): Wurf 679 GESCHEITERT, ENTDECKT, Blowback in 4 Zuegen. Attribution 8,8 -> D4 — Bruessel weiss, dass es wieder getroffen wurde, und kann Neu-Delhi wieder nicht benennen. Die falsche Flagge hat drei Punkte gekostet und genau das gerettet. IND -> USA BESCHAFFUNG (Starship): Wurf 817 gescheitert, entdeckt, D4. IND -> EU BESCHAFFUNG (Egide-Satellit): Wurf 433 gescheitert, unentdeckt. RUS -> EU Einfluss/Desinformation (klein, falsche Flagge, Seed 516031062): Wurf 165 ERFOLG, entdeckt, Attribution 2,8 -> F6, nicht benennbar. Moskaus Nadelstich-Doktrin traegt zum zweiten Mal. RUS -> CHN HANDEL (Reifknoten-Halbleiter, Lizenz): legal, 0,175 JB Ertrag, kein Wurf. USA: keine verdeckte Operation, verdecktes Achtel in Gegenspionage und OSINT auf Chinas RP-Zuteilung. LAGE DER USA: viermal angegriffen, einmal benennbar. Washington sieht zwei gescheiterte Beschaffungen (beide D4) und eine geglueckte Sabotage (C3, China).",
+            "attributionen_offen": {
+              "USA_gegen_CHN": "C3 aus Zug 3 — oeffentlich benennbar, kein Eskalationsrecht",
+              "IND_gegen_CHN": "C3 aus Zug 2 — weiterhin ungespielt",
+              "EU_gegen_CHN": "A1 aus Zug 1 — in Zug 2 ausgespielt",
+              "EU_gegen_IND": "B2 aus Zug 1 — weiterhin ungespielt"
+            }
+          },
+          "militaer": {
+            "status": "aufgeloest",
+            "ergebnis": "ZH-01 Zug 3, Konten nach HE-15 mit dem BIP skaliert. IND 614,0 t vollstaendig verbraucht: 24,6 t Geheimdienste (4 Slots), 9 Future-SP (90,0 t, Hochtechnologie 90,0 von 92,1 t), 499,4 t Modernisierung. Ziel-Teilstreitkraft HEER. CHN 2 417,5 t, davon 795,2 t gebucht, 1 622,3 t verfallen: 145,1 t Geheimdienste (5 Slots), 145,05 t Force Projection, 145,05 t Modernisierung, 30,0 t State-of-the-Art, 20 Future-SP (200,0 t), 26 Sprengkoepfe (130,0 t). Ziel-Teilstreitkraft HEER. DECKELBRUCH: China bestellte 99 Sprengkoepfe (495 t) neben Future 200 t und SotA 30 t — zusammen 725 t gegen eine Tranche von 362,6 t. Gekuerzt in Blattreihenfolge (Z-3.1): SotA, dann Future, der Rest von 132,6 t fuer die Koepfe -> 26 statt 99. TONNENVERGLEICH Z-2c: Modernisierung IND 499,4 t gegen CHN 145,1 t -> INDIEN gewinnt. Geheimdienste CHN 145,1 t gegen IND 24,6 t -> CHINA gewinnt (1x extra Erd-Scoring). AUFWERTUNG: beide Heere auf 'future', q 1,40. Gefechtswert Heer IND 64 -> 89,6 · CHN 105 -> 147,0. DOKTRIN: IND ambiguitaet -> ersteinsatz_begrenzt (+1, zulaessig). CHN vergeltung_nur -> nfu (+1). Indien erklaert damit im selben Jahr die begrenzte Ersteinsatzoption, in dem es ein Buendnis mit seinem nuklearen Patron schliesst. USA bestellen MOBIL (See- und Luftstartplattform, keine Bauzeit) — die DISPERSION der Segmente P und T laeuft weiter und reift 2030."
+          },
+          "forschung": {
+            "status": "aufgeloest",
+            "ergebnis": "Keine Techstufe offen — L1 oeffnet erst 2035/36. Deklarierte Projekte erzeugen deshalb KEINEN Freischaltwurf; ihr Einsatz laeuft auf e_kum_eigen und damit auf die Absorptionskapazitaet A = min(1, (E_eigen/E_ziel)^0,5) — wer nichts forscht, kann nichts verwerten (FO-01 R-4). IND: 1 E0 auf 'Starship-Technologie'. CHN: je 1 E0 auf kleine Kernreaktoren, bessere KI und bessere KI-Chips — zusammen 3 E0, das breiteste Forschungsprogramm der Partie. USA: erstmals ein konkretes Vorhaben, KI-Alignment (R2a). DW-01-Zuteilungen: USA T 10 / F 8,8 / O 0,5 / Z 27,7 / D 8,0, Pruefer P2 -> g_T 1,414, Forschungszeit -30 % (Deckel), Z-Stufe 5 (+1,50 % BIP/a), X-Risk 0,0057. CHN T 4 / F 4 / O 4 / Z 4 / D 4, Pruefer P0 -> P3 -> g_T 0,894, Forschungszeit -20 %, Z-Stufe 2, 1,68 QP/a wirksame Synthetik, X-Risk 0,0036. China hat sein Trainingskonto von 14 auf 4 RP gesenkt und damit die KI-Fuehrung, die es in Zug 2 kurz hatte, freiwillig an die USA abgegeben — g_T faellt von 1,673 auf 0,894, waehrend die USA auf 1,414 stehen. Dafuer faellt Chinas X-Risk fast auf die Haelfte und die Datenseite wird erstmals bedient. IND T 3 / Rest 0 -> g_T 0,775, Operationskonto zum zweiten Mal auf 0 (-1 Initiative, -1 auf Duelle je zwei fehlende Slots). EU (A1-abgeleitet) F 3 / O 1 / Z 4 -> Forschungszeit -20 %, Z-Stufe 2. RUS Z 1 -> Z-Stufe 1. BEUTE: IND 0,2375 JB offen (aus Zug 2) plus 0,03125 JB Nachbau-Rate. RUS +0,175 JB aus der China-Lizenz. CHN: kein Beuteertrag, aber Absorption +0,20 dauerhaft aus der geglueckten Abwerbung."
+          }
+        },
+        "domaenen_zug4": {
+          "energie": {
+            "status": "aufgeloest",
+            "ergebnis": "EH-01 Zug 4: EU 69,8 · USA 58,4 · RUS+REST 56,0 · CHN 48,1 · IND 47,9. Welt ppm 436,0 · dT 1,4131 °C · B 97,71 · Abwaerme K 0,0199. Abregelung steigt weiter: CHN 3,25 % · EU 2,62 % · IND 2,55 %. Rezessionsflag bei allen drei Spielerbloecken. China wechselt von 'nuklear' auf 'ausgewogen' und forscht weiter an kleinen Reaktoren."
+          },
+          "wirtschaft": {
+            "status": "aufgeloest",
+            "china": "15,3817 -> 15,0587 Bio USD (-2,10 Pp). Die I2-Bankenkrise ist mit -9,5 Pp ueber zwei Jahre abgeschrieben; es bleiben EU-Strafzoelle -0,7 und das Zivilkonto +0,6. Neu und schwer: die B-2-KASKADE mit -2,0 Pp [GM-BEMESSUNG, siehe Regelluecke]. Kapitalmarktausschluss laeuft noch sieben Zuege.",
+            "eu": "19,3269 -> 19,1163 Bio USD (-1,09 Pp). CHN I1 Jahr 4 mit C-4-Erosion -0,74 · Indiens Sanktionen -0,90 · Indiens Teilentkopplung -0,05 · Zivilkonto +0,60.",
+            "indien": "4,1283 -> 4,0870 Bio USD (-1,00 Pp). Der Zuenderpreis der Teilentkopplung ist abgeschrieben; es bleibt der dauerhafte Niveauabzug von -1,0 Pp.",
+            "kaskadenwurf_c7": "Chinas Zuendung weiter aktiv, IP 2,9, Schwelle 5,6, Wurf 11 -> keine globale Kaskade. Vierter Wurf ohne Treffer.",
+            "usa": "Z-Konto Stufe 5, +1,50 % BIP/a. Kein BIP-Konto in truth.ressourcen."
+          },
+          "innenpolitik": {
+            "status": "aufgeloest",
+            "ergebnis": "**PRAEFERENZKASKADE IN CHINA (B-2).** Nach vier Zuegen mit 9,75 % Risiko je Zug faellt der Wurf: 258 gegen 975 (Seed 20290107). Die Repressionsfalle QB-09 schlaegt zu — Repression hat die geaeusserte Zustimmung gehoben und die tatsaechliche gleich stark gesenkt; die Luecke bricht binnen eines Zuges zusammen. Der Spieler-Autokrat hatte keine Vorwarnung, so will es die Regel. Uebrige Kaskadenwuerfe ruhig: IND 2016 (p 6,75 %, Repression auf 0,6 angehoben), RUS 4115 (5,25 %), EU 7908 (0,75 %), USA kein Wurf. A-2 Coup-Track alle ruhig: RUS 4,41 % · IND 2,94 % · CHN 1,76 % · EU 0,29 %. Indien hebt die Repression von 0,4 auf 0,6 und verdoppelt damit sein eigenes Kaskadenrisiko, im selben Jahr, in dem es beim Patron sichtbar wird.",
+            "regelluecke_RG-Z4-01": "B-2 sagt, die Zustimmung bricht 'auf den wahren Wert' zusammen — aber die Kampagne hat NIE einen Zustimmungswert gefuehrt. Die Kaskade faellt in ein leeres Feld. Vollstaendig anwendbar ist nur die INFORMATIONSWIRKUNG: die B-1-Bias-Funktion ist fuer China ab sofort gebrochen, der Autokrat sieht seine wahren Zahlen, weil die Luecke oeffentlich geworden ist. Der Wirtschaftsschaden von -2,0 Pp ist GM-BEMESSUNG ohne Tafel und revidierbar. GEMELDET, NICHT GEFUELLT."
+          },
+          "aussenpolitik": {
+            "status": "aufgeloest",
+            "ergebnis": "USA benennen China oeffentlich als Urheber der Sabotage von 2028 (Guete C3) und verzichten ausdruecklich auf das Eskalationsrecht; ein Zwischenfallkanal wird angeboten. Der Halbleiterhebel bleibt zum dritten Mal ungezogen, demonstrativ im selben Zug. Indien bekommt dieselben bepreisten Startbedingungen wie die EU, ohne Forderung zum Beijing-Delhi-Pakt. EU (Vertretung Roman, A3/V2): das amerikanische Angebot wird gehalten, nicht gezeichnet — Fristverlaengerung bis Zug 6 erbeten. Frankreich-Gespraeche, europaeischer Pfeiler, Traegerprogramm und Ariane wieder aufgenommen. Die B2-Attribution gegen Indien bleibt ungespielt; stattdessen Streitbeilegung aus dem Freihandelsabkommen. RUS haelt das Energieabkommen mit Peking fort, ohne zu zeichnen, und geht in Chinas C3-Streit mit Washington nicht mit. Festpreisgas weiter an einzelne EU-Hauptstaedte. CHN vertieft die antikoloniale Allianz und den Kulturaustausch mit Indien, baut den eYuan aus."
+          },
+          "intel": {
+            "status": "aufgeloest",
+            "ergebnis": "CHN -> USA SABOTAGE (Umfang 5, OHNE falsche Flagge, Seed 516032060): Wurf 368 ERFOLG, UNENTDECKT. Washington weiss nicht einmal, dass es passiert ist — und benennt im selben Zug oeffentlich die Sabotage des VORjahres. Der Blowback aus jener Operation ist mit Wurf 993 gegen 450 verpufft. CHN NACHBAU gegen EU (ASML) und gegen USA (NVIDIA), beide als Kauf ueber Mittelsmaenner: Erhaltungsgrad 1,0, je 0,25 JB Ertrag ueber zwei Zuege, keine Entdeckung, keine Attribution. Zusammen 0,50 JB — der groesste Beuteertrag der Partie, und er kam aus zwei Kaufvertraegen statt aus Agenten. IND -> EU SABOTAGE (Umfang 5, falsche Flagge, Seed 516032059): Wurf 953 GESCHEITERT, unentdeckt. Dritter Fehlschlag in Folge gegen Bruessel. IND -> CHN BESCHAFFUNG (Starship, Seed 516032056): Wurf 985 gescheitert und ENTDECKT. Attribution 2x2 + 3 (CHN Netz N3) + 0,8 = 7,8 -> D4: Peking merkt, dass jemand seine Traegerraketentechnik abgreifen wollte, kann Neu-Delhi aber nicht benennen. Indien hat seinen eigenen Buendnispartner bestohlen, vier Monate nach dem Beijing-Delhi-Pakt. IND -> USA BESCHAFFUNG (Starship): Wurf 605 gescheitert, unentdeckt — die US-Haertung H2 drueckte p auf 0,25 und hob die Entdeckungswahrscheinlichkeit auf 0,76. RUS -> EU Einfluss, bestehendes Netz auf kleinstem Umfang weitergefuehrt (Treuhand-Schranke 6 verbietet neue Operationen): Wurf 144 ERFOLG, entdeckt, Attribution 2,6 -> F6, nicht benennbar. Dritter Erfolg in Folge unter der Schwelle. Blowback in drei Zuegen. USA und EU fuehren keine eigene Operation: die USA aus Ueberzeugung, die EU wegen Schranke 6.",
+            "netzstufen_aus_slots": "GM-Konvention Zug 4: Slots <=3 -> N1 · 4-6 -> N2 · 7-8 -> N3. USA 7, IND 8, CHN 8, RUS 8 -> N3; EU 5 -> N2.",
+            "attributionen_offen": {
+              "USA_gegen_CHN": "C3 aus Zug 3 — in Zug 4 AUSGESPIELT, ohne Eskalationsanspruch",
+              "IND_gegen_CHN": "C3 aus Zug 2 — weiterhin ungespielt",
+              "EU_gegen_IND": "B2 aus Zug 1 — weiterhin ungespielt, bewusst zurueckgehalten"
+            }
+          },
+          "militaer": {
+            "status": "aufgeloest",
+            "ergebnis": "ERSTMALS fuehren alle fuenf Grossmaechte ein ZH-01-Bodenkonto (HE-19) — und der Unterschied ist sofort sichtbar. USA 7 463,6 t: 746,4 t Geheimdienste (7 Slots), 447,8 t Force Projection, 746,4 t Modernisierung auf SAM. Die USA GEWINNEN ALLE DREI TONNENVERGLEICHE: Geheimdienste 746,4 gegen Indiens 515,5 und Chinas 280,7; Force Projection 447,8 gegen die EU 324,0 und China 280,7; Modernisierung 746,4 gegen Russlands 679,2. 5 523,0 t verfallen bewusst, darunter die ganze Hochtechnologie-Tranche von 1 119,5 t: null Sprengkoepfe, null ASAT, kein State-of-the-Art. Washington kauft Einfluss, nicht Waffen. CHN 2 339,2 t: 280,7 t Geheimdienste (8 Slots), 280,7 t Force Projection, 233,9 t Modernisierung, 99 Advanced-Punkte, 80 t State-of-the-Art, 27 Future-SP auf die MARINE. DECKELBRUCH ZUM ZWEITEN MAL: bestellt waren 99 Future-SP (990 t), 10 ASAT (200 t) und 20 Sprengkoepfe (100 t) neben 80 t SotA — zusammen 1 370 t gegen eine Tranche von 350,9 t. Gekuerzt in Blattreihenfolge (HE-16): SotA voll, Future auf 27 statt 99, ASAT und Sprengkoepfe auf NULL. IND 606,5 t praktisch vollstaendig verbraucht: 515,5 t Geheimdienste (8 Slots, Deckel), 9 Future-SP aufs Heer. EU 1 619,9 t erstmals gefuehrt: 97,2 t Geheimdienste (5 Slots — nach zwei blinden Zuegen endlich ein Netz), 324,0 t Force Projection, 243,0 t Modernisierung auf die Marine, keine Sprengkoepfe. RUS 1 079,8 t fast vollstaendig: 151,2 t Geheimdienste (8 Slots), 679,2 t Modernisierung, 99 Advanced, 15 Future-SP aufs Heer, kein Force Projection, null Sprengkoepfe bei 4 309 im Lager. AUFWERTUNGEN: Chinas Marine auf 'future' (q 1,40) — China hat damit drei von vier Teilstreitkraeften auf dem Hoechstwert. Russlands Heer auf 'future'. Die SAM der USA auf 'modern'. DOKTRIN: CHN nfu -> ambiguitaet (+1). IND ersteinsatz_begrenzt -> de_eskalationsschlag (+1) — Indien steht damit auf der OBERSTEN Stufe der Leiter, waehrend chinesische Sprengkoepfe in seinem Land stehen."
+          },
+          "forschung": {
+            "status": "aufgeloest",
+            "ergebnis": "Keine Techstufe offen (L1 erst 2035/36); Einsaetze laufen auf e_kum_eigen und damit auf die Absorption. CHN erklaert drei Vorhaben (KI-Entwicklung, Rechenzentren, Smart Grids) und holt aus zwei Nachbau-Kaeufen 0,50 JB — der groesste Ertrag der Partie. Zuteilung T20/F0/O0/Z0/D0, Pruefer P1: China legt den GESAMTEN Bestand ins Training zurueck und holt sich die KI-Fuehrung mit g_T 2,00 (Deckel) — von 0,894 im Vorjahr. Preis: kein Forschungsrabatt, kein Zivilkonto, kein Operationskonto fuer zwoelf C2-Slots, X-Risk auf dem Maximum. USA F 10,5 (Stufe 3, -30 %), Z 26,0 (Stufe 5), T 10,0, D 8,0, Pruefer P2 — g_T 1,414. Erstmals hinter China. IND T3, sonst nichts: g_T 0,775, Operationskonto zum dritten Mal auf 0. EU F/O/Z aus dem A3-Blatt, RUS 1 RP auf Z. BEUTEKONTEN: CHN 0,50 JB neu · IND 0,2688 JB weiter offen · RUS 0,175 JB unabsorbiert."
+          }
+        }
+      }
+    }
+  },
+  "truth": {
+    "fraktionen": {
+      "china": {
+        "bespielt": true,
+        "beleg": "setup --mensch (DV-Fraktion CHN)",
+        "aufstellung": "offen — Vollaufstellung im ersten ERDE-01-Zug (staaten_2026 + Startlage)"
+      },
+      "eu": {
+        "bespielt": true,
+        "beleg": "setup --mensch (DV-Fraktion EU)",
+        "aufstellung": "offen — Vollaufstellung im ersten ERDE-01-Zug (staaten_2026 + Startlage)"
+      },
+      "indien": {
+        "bespielt": true,
+        "beleg": "setup --mensch (DV-Fraktion IND)",
+        "aufstellung": "offen — Vollaufstellung im ersten ERDE-01-Zug (staaten_2026 + Startlage)"
+      }
+    },
+    "ressourcen": {
+      "china": {
+        "q_raum": 0.001,
+        "p_pl_W": 5384296117482.1,
+        "bip_bio_usd": 15.0587
+      },
+      "eu": {
+        "q_raum": 0.0005,
+        "p_pl_W": 1755498695161.9,
+        "bip_bio_usd": 19.1162
+      },
+      "indien": {
+        "q_raum": 0.0005,
+        "p_pl_W": 1216429919817.8,
+        "bip_bio_usd": 4.087
+      }
+    },
+    "buchungen": [
+      {
+        "id": "SETUP-p_pl-indien",
+        "zug": 0,
+        "fraktion": "indien",
+        "konto": "p_pl_W",
+        "delta": 1348900000000.0,
+        "grund": "Startbestand Primaerleistung: anteil_p_pl 0.07 x P_welt 1.927e+13 W",
+        "beleg": "SETUP — staaten_2026.json (_p_welt_W QH-02/QH-03, anteil_guete C)"
+      },
+      {
+        "id": "SETUP-p_pl-eu",
+        "zug": 0,
+        "fraktion": "eu",
+        "konto": "p_pl_W",
+        "delta": 1734300000000.0,
+        "grund": "Startbestand Primaerleistung: anteil_p_pl 0.09 x P_welt 1.927e+13 W",
+        "beleg": "SETUP — staaten_2026.json (_p_welt_W QH-02/QH-03, anteil_guete C)"
+      },
+      {
+        "id": "SETUP-p_pl-china",
+        "zug": 0,
+        "fraktion": "china",
+        "konto": "p_pl_W",
+        "delta": 5395600000000.0,
+        "grund": "Startbestand Primaerleistung: anteil_p_pl 0.28 x P_welt 1.927e+13 W",
+        "beleg": "SETUP — staaten_2026.json (_p_welt_W QH-02/QH-03, anteil_guete A)"
+      },
+      {
+        "id": "C9-SETUP-china",
+        "zug": 0,
+        "fraktion": "china",
+        "konto": "q_raum",
+        "delta": 0.001,
+        "grund": "C-9 Aktivierung im Setup (§9.3), Ankerwert §1.1",
+        "beleg": "C-9 §1.1 [S] Güte C — Primärdatenbedarf O-11 offen"
+      },
+      {
+        "id": "C9-SETUP-eu",
+        "zug": 0,
+        "fraktion": "eu",
+        "konto": "q_raum",
+        "delta": 0.0005,
+        "grund": "C-9 Aktivierung im Setup (§9.3), Ankerwert §1.1",
+        "beleg": "C-9 §1.1 [S] Güte C — Primärdatenbedarf O-11 offen"
+      },
+      {
+        "id": "C9-SETUP-indien",
+        "zug": 0,
+        "fraktion": "indien",
+        "konto": "q_raum",
+        "delta": 0.0005,
+        "grund": "C-9 Aktivierung im Setup (§9.3), Ankerwert §1.1",
+        "beleg": "C-9 §1.1 [S] Güte C — Primärdatenbedarf O-11 offen"
+      },
+      {
+        "fraktion": "china",
+        "konto": "p_pl_W",
+        "delta": -252588927232.0,
+        "grund": "EH-01-Energiedomaene Zug 0: Block china 162.3 EJ",
+        "beleg": "EH01B:china/2026",
+        "id": "B-0004",
+        "zug": 0
+      },
+      {
+        "fraktion": "eu",
+        "konto": "p_pl_W",
+        "delta": -29417660928.0,
+        "grund": "EH-01-Energiedomaene Zug 0: Block eu 53.8 EJ",
+        "beleg": "EH01B:eu/2026",
+        "id": "B-0005",
+        "zug": 0
+      },
+      {
+        "fraktion": "indien",
+        "konto": "p_pl_W",
+        "delta": -201281307904.0,
+        "grund": "EH-01-Energiedomaene Zug 0: Block indien 36.2 EJ",
+        "beleg": "EH01B:indien/2026",
+        "id": "B-0006",
+        "zug": 0
+      },
+      {
+        "id": "SETUP-bip-china",
+        "zug": 0,
+        "fraktion": "china",
+        "konto": "bip_bio_usd",
+        "delta": 19.5,
+        "grund": "Startbestand BIP",
+        "beleg": "SETUP — LW-01 startlage, fraktionen.CHN.bip_bio_usd"
+      },
+      {
+        "id": "SETUP-bip-eu",
+        "zug": 0,
+        "fraktion": "eu",
+        "konto": "bip_bio_usd",
+        "delta": 20.3,
+        "grund": "Startbestand BIP",
+        "beleg": "SETUP — LW-01 startlage, fraktionen.EU.bip_bio_usd"
+      },
+      {
+        "id": "SETUP-bip-indien",
+        "zug": 0,
+        "fraktion": "indien",
+        "konto": "bip_bio_usd",
+        "delta": 4.3,
+        "grund": "Startbestand BIP",
+        "beleg": "SETUP — LW-01 startlage, fraktionen.IND.bip_bio_usd"
+      },
+      {
+        "id": "Z1-china-12",
+        "zug": 1,
+        "fraktion": "china",
+        "konto": "bip_bio_usd",
+        "delta": -1.56,
+        "grund": "C-7 I1 Zuenderkosten Jahr 1 (-8 Pp)",
+        "beleg": "C-7 §4 | R-Z1-07"
+      },
+      {
+        "id": "Z1-eu-13",
+        "zug": 1,
+        "fraktion": "eu",
+        "konto": "bip_bio_usd",
+        "delta": -0.2944,
+        "grund": "C-7 I1 Zielschaden (-10 x bilat. Handelsanteil 0,145)",
+        "beleg": "C-7 assets | R-Z1-07"
+      },
+      {
+        "id": "Z1-china-14",
+        "zug": 1,
+        "fraktion": "china",
+        "konto": "bip_bio_usd",
+        "delta": -0.1256,
+        "grund": "C-4 Strafzoelle E-Autos -0,7 Pp/a (7 a, kumuliert -4,9 Pp)",
+        "beleg": "C-4 us_unilateral | R-Z1-11"
+      },
+      {
+        "id": "Z1-china-15",
+        "zug": 1,
+        "fraktion": "china",
+        "konto": "bip_bio_usd",
+        "delta": -0.0695,
+        "grund": "C-4 Huawei-Ausschluss: Einzelsanktion -0,39 % Niveau",
+        "beleg": "erde01_regeln wirtschaft.sanktionen.einzelsanktion_niveau_pct | R-Z1-11"
+      },
+      {
+        "fraktion": "china",
+        "konto": "p_pl_W",
+        "delta": 79202370520.6,
+        "grund": "EH-01-Energiedomaene Zug 2: Block china 164.8 EJ",
+        "beleg": "EH01B:china/2027",
+        "id": "B-0017",
+        "zug": 2
+      },
+      {
+        "fraktion": "eu",
+        "konto": "p_pl_W",
+        "delta": 16707846922.9,
+        "grund": "EH-01-Energiedomaene Zug 2: Block eu 54.3 EJ",
+        "beleg": "EH01B:eu/2027",
+        "id": "B-0018",
+        "zug": 2
+      },
+      {
+        "fraktion": "indien",
+        "konto": "p_pl_W",
+        "delta": 22493326365.1,
+        "grund": "EH-01-Energiedomaene Zug 2: Block indien 36.9 EJ",
+        "beleg": "EH01B:indien/2027",
+        "id": "B-0019",
+        "zug": 2
+      },
+      {
+        "id": "Z2-BIP-china",
+        "zug": 2,
+        "fraktion": "china",
+        "konto": "bip_bio_usd",
+        "delta": -1.739,
+        "grund": "Zug-2-Wirtschaftsdomaene -9.80 Pp",
+        "beleg": "C-7 §4/§5 + C-4 + DW-01 Z-Konto"
+      },
+      {
+        "id": "Z2-BIP-eu",
+        "zug": 2,
+        "fraktion": "eu",
+        "konto": "bip_bio_usd",
+        "delta": -0.4261,
+        "grund": "Zug-2-Wirtschaftsdomaene -2.13 Pp",
+        "beleg": "C-7 §4/§5 + C-4 + DW-01 Z-Konto"
+      },
+      {
+        "id": "Z2-BIP-indien",
+        "zug": 2,
+        "fraktion": "indien",
+        "konto": "bip_bio_usd",
+        "delta": -0.1161,
+        "grund": "Zug-2-Wirtschaftsdomaene -2.70 Pp",
+        "beleg": "C-7 §4/§5 + C-4 + DW-01 Z-Konto"
+      },
+      {
+        "fraktion": "china",
+        "konto": "p_pl_W",
+        "delta": 80422087026.7,
+        "grund": "EH-01-Energiedomaene Zug 3: Block china 167.3 EJ",
+        "beleg": "EH01B:china/2028",
+        "id": "B-0023",
+        "zug": 3
+      },
+      {
+        "fraktion": "eu",
+        "konto": "p_pl_W",
+        "delta": 16871583822.8,
+        "grund": "EH-01-Energiedomaene Zug 3: Block eu 54.9 EJ",
+        "beleg": "EH01B:eu/2028",
+        "id": "B-0024",
+        "zug": 3
+      },
+      {
+        "fraktion": "indien",
+        "konto": "p_pl_W",
+        "delta": 22934195561.8,
+        "grund": "EH-01-Energiedomaene Zug 3: Block indien 37.6 EJ",
+        "beleg": "EH01B:indien/2028",
+        "id": "B-0025",
+        "zug": 3
+      },
+      {
+        "id": "Z3-BIP-china",
+        "zug": 3,
+        "fraktion": "china",
+        "konto": "bip_bio_usd",
+        "delta": -0.6242,
+        "grund": "Zug-3-Wirtschaftsdomaene -3.90 Pp",
+        "beleg": "C-7 §4/§5 + C-4 + DW-01 Z-Konto"
+      },
+      {
+        "id": "Z3-BIP-eu",
+        "zug": 3,
+        "fraktion": "eu",
+        "konto": "bip_bio_usd",
+        "delta": -0.2526,
+        "grund": "Zug-3-Wirtschaftsdomaene -1.29 Pp",
+        "beleg": "C-7 §4/§5 + C-4 + DW-01 Z-Konto"
+      },
+      {
+        "id": "Z3-BIP-indien",
+        "zug": 3,
+        "fraktion": "indien",
+        "konto": "bip_bio_usd",
+        "delta": -0.0556,
+        "grund": "Zug-3-Wirtschaftsdomaene -1.33 Pp",
+        "beleg": "C-7 §4/§5 + C-4 + DW-01 Z-Konto"
+      },
+      {
+        "fraktion": "china",
+        "konto": "p_pl_W",
+        "delta": 81660587166.8,
+        "grund": "EH-01-Energiedomaene Zug 4: Block china 169.9 EJ",
+        "beleg": "EH01B:china/2029",
+        "id": "B-0029",
+        "zug": 4
+      },
+      {
+        "fraktion": "eu",
+        "konto": "p_pl_W",
+        "delta": 17036925344.2,
+        "grund": "EH-01-Energiedomaene Zug 4: Block eu 55.4 EJ",
+        "beleg": "EH01B:eu/2029",
+        "id": "B-0030",
+        "zug": 4
+      },
+      {
+        "fraktion": "indien",
+        "konto": "p_pl_W",
+        "delta": 23383705794.9,
+        "grund": "EH-01-Energiedomaene Zug 4: Block indien 38.4 EJ",
+        "beleg": "EH01B:indien/2029",
+        "id": "B-0031",
+        "zug": 4
+      },
+      {
+        "id": "Z4-BIP-china",
+        "zug": 4,
+        "fraktion": "china",
+        "konto": "bip_bio_usd",
+        "delta": -0.323,
+        "grund": "Zug-4-Wirtschaftsdomaene -2.10 Pp",
+        "beleg": "C-4 + DW-01 Z-Konto + B-2-Kaskade"
+      },
+      {
+        "id": "Z4-BIP-eu",
+        "zug": 4,
+        "fraktion": "eu",
+        "konto": "bip_bio_usd",
+        "delta": -0.2107,
+        "grund": "Zug-4-Wirtschaftsdomaene -1.09 Pp",
+        "beleg": "C-4 + DW-01 Z-Konto + B-2-Kaskade"
+      },
+      {
+        "id": "Z4-BIP-indien",
+        "zug": 4,
+        "fraktion": "indien",
+        "konto": "bip_bio_usd",
+        "delta": -0.0413,
+        "grund": "Zug-4-Wirtschaftsdomaene -1.00 Pp",
+        "beleg": "C-4 + DW-01 Z-Konto + B-2-Kaskade"
+      }
+    ],
+    "regime": {
+      "eu": {
+        "repression": 0.2,
+        "safety": 0.6
+      },
+      "china": {
+        "repression": 0.8,
+        "safety": 0.0
+      },
+      "indien": {
+        "repression": 0.4,
+        "safety": 0.0
+      }
+    }
+  },
+  "beliefs": {},
+  "postfach": {
+    "indien": {
+      "orders": [
+        {
+          "id": "O-indien-Z4-E1",
+          "fraktion": "indien",
+          "domaene": "energie",
+          "ziel": "-",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          },
+          "aufgeloest": false,
+          "zug": 4
+        }
+      ],
+      "befunde": [
+        {
+          "code": "V8",
+          "order": "O-indien-04",
+          "regel": "spielmaterial.md (Befehlszeile ohne Freitext)",
+          "text": "ZURUECKGEWIESEN, NICHT UMGEDEUTET. Blatt 1 Zeile 4 traegt Domaene 'intel' und Ziel 'china', aber keinen Text; auch die beigelegten Freitexte nennen keine Absicht gegen China. Ohne Auftrag laesst sich keine Operation aufloesen, und Raten ist verboten.",
+          "gegenvorschlag": "In Zug 2 den Auftrag ausformulieren (Aufklaerungsziel benennen)."
+        },
+        {
+          "code": "V9",
+          "order": "O-indien-08",
+          "regel": "Gegenseitigkeit — Antwort des Adressaten",
+          "text": "ANFRAGE ABGELEHNT DURCH DEN ADRESSATEN. Chinas eigener Zug-1-Befehl O-china-09 lautet woertlich: 'Kein Technologietransfer aber wirtschaft helfen.' Der SPADEX-Bau laeuft damit ohne chinesische Hilfe — als reiner Eigenbau Indiens.",
+          "gegenvorschlag": "SPADEX in Eigenregie bauen (so gerechnet) oder in Zug 2 erneut anfragen."
+        },
+        {
+          "code": "V9",
+          "order": "O-eu-07 (zur Kenntnis)",
+          "regel": "Memorandum Zug 1 (gemeinsame Absprache)",
+          "text": "HINWEIS, NICHT ZURUECKGEWIESEN. Das Memorandum Zug 1 lautet woertlich: 'Keiner schiesst Militaer- oder Dual-use-Gueter ins All.' Das Foerderprogramm fuer dual-use-Weltraumtechnologie startet nichts, es entwickelt. Der Befehl wird deshalb ausgefuehrt — aber alle drei Postfaecher bekommen diesen Befund, damit die Absprache nicht durch die Hintertuer erodiert.",
+          "gegenvorschlag": "Vor dem ersten Start eines dual-use-Traegers das Memorandum ausdruecklich erneuern oder aufkuendigen."
+        },
+        {
+          "code": "V8",
+          "order": "—",
+          "regel": "D-2 Attribution",
+          "text": "Ihre falsche Flagge hat nicht gehalten: die EU attribuiert die Einflussoperation mit Admiralty B2 auf Indien. Oeffentliche Benennung und Eskalation sind ihr erlaubt."
+        },
+        {
+          "code": "V8",
+          "order": "—",
+          "regel": "C-7 §2/§3/§4 + C-4",
+          "text": "HANDELSLAGE. Zwei Abkommen kommen zustande: Freihandel mit der EU (beidseitiges Angebot) und ein Wirtschaftsabkommen mit China OHNE Technologieteil. Waehrend China und die EU sich wirtschaftlich entkoppeln, sind Sie der einzige Spieler mit Vertraegen zu beiden Seiten."
+        },
+        {
+          "code": "V10",
+          "order": "O-indien-Z2-E1",
+          "regel": "C-7b Energiebefehl",
+          "text": "batterie ist Speicher, kein Erzeuger — EH-01 laesst ihn mit fester Rate wachsen, Budget kauft ihn nicht. Der Anteil bleibt wirkungslos; die uebrigen Traeger wurden neu normiert. [P10-02]"
+        },
+        {
+          "code": "V10",
+          "order": "O-indien-Z3-E1",
+          "regel": "C-7b Energiebefehl",
+          "text": "batterie ist Speicher, kein Erzeuger — EH-01 laesst ihn mit fester Rate wachsen, Budget kauft ihn nicht. Der Anteil bleibt wirkungslos; die uebrigen Traeger wurden neu normiert. [P10-02]"
+        }
+      ],
+      "archiv": [
+        {
+          "id": "O-indien-01",
+          "fraktion": "indien",
+          "domaene": "wirtschaft",
+          "ziel": "eu",
+          "text": "Handelsabkommen",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-indien-02",
+          "fraktion": "indien",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "Handelsabkommen",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-indien-05",
+          "fraktion": "indien",
+          "domaene": "aussenpolitik",
+          "ziel": "rest",
+          "text": "mehr beteiligung in afrika",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-indien-06",
+          "fraktion": "indien",
+          "domaene": "wirtschaft",
+          "ziel": "usa",
+          "text": "alles schlucken was Trump mag",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-indien-E1",
+          "fraktion": "indien",
+          "domaene": "energie",
+          "ziel": "-",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          },
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-indien-03",
+          "fraktion": "indien",
+          "domaene": "intel",
+          "ziel": "eu",
+          "text": "Undercover-Psyop in der EU ueber ein Goethe-Institut-Pendant (Freitext 'Zug 1 Indien'); Traeger ist der Sonderbefehl Einfluss/Umfang 5 mit FALSCHER FLAGGE laut Blatt 1.",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-indien-07",
+          "fraktion": "indien",
+          "domaene": "forschung",
+          "ziel": "-",
+          "text": "Entwicklung besserer Traegerraketen (Freitext 'Zug 1 Indien').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-indien-08",
+          "fraktion": "indien",
+          "domaene": "aussenpolitik",
+          "ziel": "china",
+          "text": "Anfrage an China: Unterstuetzung beim SPADEX-Bau, 'mit Hilfe der Chinesen wenn erlaubt' (Freitext 'Zug 1 Indien').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-indien-Z2-01",
+          "fraktion": "indien",
+          "domaene": "wirtschaft",
+          "ziel": "eu",
+          "text": "Decoupling",
+          "aufgeloest": true,
+          "zug": 2
+        },
+        {
+          "id": "O-indien-Z2-E1",
+          "fraktion": "indien",
+          "domaene": "energie",
+          "ziel": "-",
+          "text": "Energiepolitik: Vorwahl erneuerbar, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "erneuerbar"
+          },
+          "aufgeloest": true,
+          "zug": 2
+        },
+        {
+          "id": "O-indien-Z3-04",
+          "fraktion": "indien",
+          "domaene": "innenpolitik",
+          "ziel": "indien",
+          "text": "nationalismus stärken vorbereitung das alignment zu ändern",
+          "aufgeloest": true,
+          "zug": 3
+        },
+        {
+          "id": "O-indien-Z3-E1",
+          "fraktion": "indien",
+          "domaene": "energie",
+          "ziel": "-",
+          "text": "Energiepolitik: Vorwahl erneuerbar, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "erneuerbar"
+          },
+          "aufgeloest": true,
+          "zug": 3
+        }
+      ]
+    },
+    "china": {
+      "orders": [
+        {
+          "id": "O-china-Z4-01",
+          "fraktion": "china",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "binnennachfrage stärken",
+          "aufgeloest": false,
+          "zug": 4
+        },
+        {
+          "id": "O-china-Z4-02",
+          "fraktion": "china",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "eYuan weiter ausbauen",
+          "aufgeloest": false,
+          "zug": 4
+        },
+        {
+          "id": "O-china-Z4-03",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "indien",
+          "text": "verbrüderung mit indien Kulturaustausch",
+          "aufgeloest": false,
+          "zug": 4
+        },
+        {
+          "id": "O-china-Z4-04",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "Antikoloniale allianz",
+          "aufgeloest": false,
+          "zug": 4
+        },
+        {
+          "id": "O-china-Z4-05",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "usa",
+          "text": "sagotage gekeimoperation",
+          "aufgeloest": false,
+          "zug": 4
+        },
+        {
+          "id": "O-china-Z4-06",
+          "fraktion": "china",
+          "domaene": "innenpolitik",
+          "ziel": "china",
+          "text": "strärkung der nationalen identitä",
+          "aufgeloest": false,
+          "zug": 4
+        },
+        {
+          "id": "O-china-Z4-E1",
+          "fraktion": "china",
+          "domaene": "energie",
+          "ziel": "-",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100% — SMR forschung",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          },
+          "aufgeloest": false,
+          "zug": 4
+        }
+      ],
+      "befunde": [
+        {
+          "code": "V9",
+          "order": "O-china-06",
+          "regel": "Memorandum Zug 1 / Doppelnennung",
+          "text": "HINWEIS. 'Sabotage durch massive Hackerangriffe' steht sowohl als Befehlszeile 6 (Domaene aussenpolitik) als auch als Sonderbefehl 'Sabotage/Umfang 5'. Beides beschreibt DIESELBE Operation und wird EINMAL aufgeloest — nicht zweimal.",
+          "gegenvorschlag": "Kuenftig entweder Zeile oder Sonderbefehl nutzen, nicht beides."
+        },
+        {
+          "code": "V9",
+          "order": "O-eu-07 (zur Kenntnis)",
+          "regel": "Memorandum Zug 1 (gemeinsame Absprache)",
+          "text": "HINWEIS, NICHT ZURUECKGEWIESEN. Das Memorandum Zug 1 lautet woertlich: 'Keiner schiesst Militaer- oder Dual-use-Gueter ins All.' Das Foerderprogramm fuer dual-use-Weltraumtechnologie startet nichts, es entwickelt. Der Befehl wird deshalb ausgefuehrt — aber alle drei Postfaecher bekommen diesen Befund, damit die Absprache nicht durch die Hintertuer erodiert.",
+          "gegenvorschlag": "Vor dem ersten Start eines dual-use-Traegers das Memorandum ausdruecklich erneuern oder aufkuendigen."
+        },
+        {
+          "code": "V10",
+          "order": "O-china-E1",
+          "regel": "C-7b Energiebefehl",
+          "text": "batterie ist Speicher, kein Erzeuger — EH-01 laesst ihn mit fester Rate wachsen, Budget kauft ihn nicht. Der Anteil bleibt wirkungslos; die uebrigen Traeger wurden neu normiert. [P10-02]"
+        },
+        {
+          "code": "V8",
+          "order": "—",
+          "regel": "D-2 Attribution",
+          "text": "Ihr Hackerangriff wurde mit Admiralty A1 attribuiert — der bestmoeglichen Guete. Die EU kann Sie oeffentlich benennen und eskalieren."
+        },
+        {
+          "code": "V8",
+          "order": "—",
+          "regel": "C-7 §2/§3/§4 + C-4",
+          "text": "C-7 ZUENDUNG GEBUCHT. Ihr Exportverbot ist Zuendstufe I1. Implosionspunkte IP = 1,42 — unter der Schwelle 2, es gibt KEINEN globalen Kaskadenwurf. Der bilaterale Preis steht trotzdem: China -8,0 Pp BIP 2026, -4,0 Pp 2027, dauerhaft -3 Niveau. Die EU traegt -1,45 Pp. Sie zahlen das 5,5-fache Ihres Ziels. Ab Zug 2 zaehlt die selbst ausgeloeste Rezession voll auf den Coup-Track (x1,47) — und Ihr Innenbericht meldet die Kosten um Faktor 1,2834 zu guenstig."
+        },
+        {
+          "code": "V8",
+          "order": "Conditional",
+          "regel": "Zugphase 1",
+          "text": "Bedingter Befehl ohne Verfallszug: falsche flagge operation in indien. china betreibt industrie. Conditionals gelten nicht unbefristet. ZURUECKGEWIESEN."
+        }
+      ],
+      "archiv": [
+        {
+          "id": "O-china-01",
+          "fraktion": "china",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "KI fördern, Rechenzentren fördern,",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-02",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "exportverbot von waren und dienstleistungen",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-03",
+          "fraktion": "china",
+          "domaene": "intel",
+          "ziel": "eu",
+          "text": "was haben sie so ins all geschossen",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-04",
+          "fraktion": "china",
+          "domaene": "forschung",
+          "ziel": "-",
+          "text": "entwicklung kleiner serienmäßig baubarer kleiner atomkraftwerke",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-05",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "usa",
+          "text": "freundliche austausch",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-06",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "sabotage durch massive hackerengriffe",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-E1",
+          "fraktion": "china",
+          "domaene": "energie",
+          "ziel": "-",
+          "text": "Energiepolitik: Vorwahl erneuerbar, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "erneuerbar"
+          },
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-07",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "EU-spaltende Parteien foerdern (Freitext 'China Runde 1').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-08",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "russland",
+          "text": "Russland unterstuetzen: Waffenlieferungen und Wirtschaftsstuetzung, damit Russland die EU unter Druck setzt (Freitext 'China Runde 1').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-09",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "indien",
+          "text": "Indien ist Freund und Helfer: wirtschaftliche Hilfe JA, Technologietransfer NEIN (Freitext 'China Runde 1').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-10",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "usa",
+          "text": "Bilaterale Gespraeche mit den USA OHNE Beteiligung der EU (Freitext 'China Runde 1').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-china-Z2-01",
+          "fraktion": "china",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "KI Ausbau und Rechenzentren forcieren",
+          "aufgeloest": true,
+          "zug": 2
+        },
+        {
+          "id": "O-china-Z2-02",
+          "fraktion": "china",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "verstaatlichung großer europäischer firmen/fabrikationsanlagen in china",
+          "aufgeloest": true,
+          "zug": 2
+        },
+        {
+          "id": "O-china-Z2-03",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "Massiver verkauf Europäischer staatsanleihe",
+          "aufgeloest": true,
+          "zug": 2
+        },
+        {
+          "id": "O-china-Z2-04",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "indien",
+          "text": "kauf indischer staatsanleihe",
+          "aufgeloest": true,
+          "zug": 2
+        },
+        {
+          "id": "O-china-Z2-05",
+          "fraktion": "china",
+          "domaene": "intel",
+          "ziel": "indien",
+          "text": "wirtschaft",
+          "aufgeloest": true,
+          "zug": 2
+        },
+        {
+          "id": "O-china-Z2-06",
+          "fraktion": "china",
+          "domaene": "forschung",
+          "ziel": "china",
+          "text": "ki, grafikkartennchips für ki, rechenzentren",
+          "aufgeloest": true,
+          "zug": 2
+        },
+        {
+          "id": "O-china-Z2-E1",
+          "fraktion": "china",
+          "domaene": "energie",
+          "ziel": "-",
+          "text": "Energiepolitik: Vorwahl nuklear, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "nuklear"
+          },
+          "aufgeloest": true,
+          "zug": 2
+        },
+        {
+          "id": "O-china-Z3-01",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "indien",
+          "text": "Gründung BDN Bejind Deli Nuklerar  Pact. verteidungungsbündnis mit indien.",
+          "aufgeloest": true,
+          "zug": 3
+        },
+        {
+          "id": "O-china-Z3-02",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "aufbau eine antikolinialen Front gegen EU und USA  (Reparationsforderungen für Kolonialismus)",
+          "aufgeloest": true,
+          "zug": 3
+        },
+        {
+          "id": "O-china-Z3-03",
+          "fraktion": "china",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "stärkung des binnennachfrage durch investitionen in infrastruktur",
+          "aufgeloest": true,
+          "zug": 3
+        },
+        {
+          "id": "O-china-Z3-04",
+          "fraktion": "china",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "Forschung + Förderung von KI und Rechenzentren",
+          "aufgeloest": true,
+          "zug": 3
+        },
+        {
+          "id": "O-china-Z3-05",
+          "fraktion": "china",
+          "domaene": "intel",
+          "ziel": "china",
+          "text": "wirtschaftliche lage",
+          "aufgeloest": true,
+          "zug": 3
+        },
+        {
+          "id": "O-china-Z3-06",
+          "fraktion": "china",
+          "domaene": "aussenpolitik",
+          "ziel": "indien",
+          "text": "fürderung der verbründerung. schulaustausch + kulturaustausch",
+          "aufgeloest": true,
+          "zug": 3
+        },
+        {
+          "id": "O-china-Z3-E1",
+          "fraktion": "china",
+          "domaene": "energie",
+          "ziel": "-",
+          "text": "Energiepolitik: Vorwahl nuklear, Budget 100% — forschung von SMR",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "nuklear"
+          },
+          "aufgeloest": true,
+          "zug": 3
+        }
+      ]
+    },
+    "eu": {
+      "orders": [
+        {
+          "id": "O-eu-Z4-01",
+          "fraktion": "eu",
+          "domaene": "wirtschaft",
+          "ziel": "eu",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — EU",
+          "text": "Budget wirtschaft 36%, militaer 29%, forschung 30%, verdeckt 5%"
+        },
+        {
+          "id": "O-eu-Z4-02",
+          "fraktion": "eu",
+          "domaene": "aussenpolitik",
+          "ziel": "usa",
+          "text": "Das befristete amerikanische Startangebot in Verhandlung halten: Eingang bestaetigen, Bepreisung und Zugangsbedingungen schriftlich klaeren lassen und um Fristverlaengerung bis Zug 6 bitten, ohne zu zeichnen und ohne Buendnisautomatik.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — EU"
+        },
+        {
+          "id": "O-eu-Z4-03",
+          "fraktion": "eu",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "Frankreich-Gespraeche und den europaeischen Pfeiler auf Ratsarbeitsebene wieder aufnehmen und laufend halten: Mandat, Sitzungsfolge und Textstand sichern, kein Abschluss in diesem Zug.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — EU"
+        },
+        {
+          "id": "O-eu-Z4-04",
+          "fraktion": "eu",
+          "domaene": "militaer",
+          "ziel": "eu",
+          "text": "Deutsch-franzoesisches Traegerprogramm und die Ueberwachung von Ostsee und Unterwasserinfrastruktur wieder aufnehmen, rein schuetzend und ohne Ausweitung des Einsatzgebiets.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — EU"
+        },
+        {
+          "id": "O-eu-Z4-05",
+          "fraktion": "eu",
+          "domaene": "forschung",
+          "ziel": "eu",
+          "text": "Ariane und die Dual-Use-Startkapazitaet wieder aufnehmen, um die Abhaengigkeit von 45 t/a an einem einzigen Startplatz zu senken.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — EU"
+        },
+        {
+          "id": "O-eu-Z4-06",
+          "fraktion": "eu",
+          "domaene": "wirtschaft",
+          "ziel": "indien",
+          "text": "Das Streitbeilegungsverfahren aus dem EU-Indien-Freihandelsabkommen von Zug 1 gegen Indiens Sanktionen und Teilentkopplung foermlich einleiten, ohne neue Zoelle und ohne die B2-Attribution zu verbrauchen.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — EU"
+        },
+        {
+          "id": "O-eu-Z4-07",
+          "fraktion": "eu",
+          "domaene": "intel",
+          "ziel": "eu",
+          "text": "Geheimdienstliche Mittel ausschliesslich auf Abwehr, Gegenspionage und Beobachtung richten, bestehende Netze weiterfuehren und die B2-Akte gegen Indien belastbar sichern und Roman vorlegen: keine neuen Operationen oberhalb Beobachtung.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — EU"
+        },
+        {
+          "id": "O-eu-Z4-E1",
+          "fraktion": "eu",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — EU",
+          "text": "Energiepolitik: Vorwahl erneuerbar, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "erneuerbar"
+          }
+        }
+      ],
+      "befunde": [
+        {
+          "code": "V9",
+          "order": "O-eu-07",
+          "regel": "Memorandum Zug 1 (gemeinsame Absprache)",
+          "text": "HINWEIS, NICHT ZURUECKGEWIESEN. Das Memorandum Zug 1 lautet woertlich: 'Keiner schiesst Militaer- oder Dual-use-Gueter ins All.' Das Foerderprogramm fuer dual-use-Weltraumtechnologie startet nichts, es entwickelt. Der Befehl wird deshalb ausgefuehrt — aber alle drei Postfaecher bekommen diesen Befund, damit die Absprache nicht durch die Hintertuer erodiert.",
+          "gegenvorschlag": "Vor dem ersten Start eines dual-use-Traegers das Memorandum ausdruecklich erneuern oder aufkuendigen."
+        },
+        {
+          "code": "V10",
+          "order": "O-eu-E1",
+          "regel": "C-7b Energiebefehl",
+          "text": "batterie ist Speicher, kein Erzeuger — EH-01 laesst ihn mit fester Rate wachsen, Budget kauft ihn nicht. Der Anteil bleibt wirkungslos; die uebrigen Traeger wurden neu normiert. [P10-02]"
+        },
+        {
+          "code": "V8",
+          "order": "—",
+          "regel": "D-2 Attribution",
+          "text": "AUFKLAERUNGSERFOLG. Zwei verdeckte Operationen gegen die EU wurden in Zug 1 attribuiert: Chinas Sabotage mit Admiralty A1 (hoechste Guete), Indiens Einflussoperation trotz falscher Flagge mit B2. Beide sind oeffentlich benennbar und eskalationsfaehig."
+        },
+        {
+          "code": "V8",
+          "order": "—",
+          "regel": "C-7 §2/§3/§4 + C-4",
+          "text": "C-7 ZUENDUNG GEGEN SIE. Chinas Exportverbot ist Zuendstufe I1, IP 1,42, kein globaler Kaskadenwurf. Ihr Schaden 2026: -1,45 Pp BIP. Ersatzhandel baut die Wirkung mit -20 % je Zug ab, Boden 40 %. Peking traegt -8,0 Pp. Ihre eigenen Massnahmen (E-Auto-Zoelle, Huawei-Ausschluss) bleiben C-4 und loesen keine Zuendstufe aus."
+        },
+        {
+          "code": "V10",
+          "order": "O-eu-Z2-E1",
+          "regel": "C-7b Energiebefehl",
+          "text": "batterie ist Speicher, kein Erzeuger — EH-01 laesst ihn mit fester Rate wachsen, Budget kauft ihn nicht. Der Anteil bleibt wirkungslos; die uebrigen Traeger wurden neu normiert. [P10-02]"
+        },
+        {
+          "code": "V10",
+          "order": "O-eu-Z3-E1",
+          "regel": "C-7b Energiebefehl",
+          "text": "batterie ist Speicher, kein Erzeuger — EH-01 laesst ihn mit fester Rate wachsen, Budget kauft ihn nicht. Der Anteil bleibt wirkungslos; die uebrigen Traeger wurden neu normiert. [P10-02]"
+        },
+        {
+          "code": "V10",
+          "order": "O-eu-Z4-E1",
+          "regel": "C-7b Energiebefehl",
+          "text": "batterie ist Speicher, kein Erzeuger — EH-01 laesst ihn mit fester Rate wachsen, Budget kauft ihn nicht. Der Anteil bleibt wirkungslos; die uebrigen Traeger wurden neu normiert. [P10-02]"
+        }
+      ],
+      "archiv": [
+        {
+          "id": "O-eu-01",
+          "fraktion": "eu",
+          "domaene": "innenpolitik",
+          "ziel": "china",
+          "text": "huawei soll aus 5g netz entfernt werden; keine fremde Technologie in sicherheitsrevelanten Systemen",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-02",
+          "fraktion": "eu",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "Strafzölle auf chinesische E-Autos in der EU",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-03",
+          "fraktion": "eu",
+          "domaene": "innenpolitik",
+          "ziel": "eu",
+          "text": "Bundesrat beschließt mit Mehrheit, ein AfD-Verbot prüfen zu lassen",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-04",
+          "fraktion": "eu",
+          "domaene": "aussenpolitik",
+          "ziel": "indien",
+          "text": "EU schlägt Indien Freihandelsabkommen vor (Abbau von Zöllen, EU-Normen für Importe)",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-05",
+          "fraktion": "eu",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "Angebot an Kanada: Beitrittsverfahren für EU-Mitgliedschaft",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-06",
+          "fraktion": "eu",
+          "domaene": "militaer",
+          "ziel": "eu",
+          "text": "Ausbau der europäischen NATO-Struktur im Hinblick auf Rückzug der USA",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-E1",
+          "fraktion": "eu",
+          "domaene": "energie",
+          "ziel": "-",
+          "text": "Energiepolitik: Vorwahl erneuerbar, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "erneuerbar"
+          },
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-07",
+          "fraktion": "eu",
+          "domaene": "forschung",
+          "ziel": "eu",
+          "text": "Foerderprogramm fuer DUAL-USE-Weltraumtechnologie, Schwerpunkt Weiterentwicklung Ariane auf deutsche Bitte (Freitext 'Roman EU').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-08",
+          "fraktion": "eu",
+          "domaene": "militaer",
+          "ziel": "eu",
+          "text": "Gespraeche mit Frankreich ueber Einbindung der franzoesischen Nuklearstreitkraefte in die EU-NATO-Struktur, Gegenleistung Mitfinanzierung (Freitext 'Roman EU').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-09",
+          "fraktion": "eu",
+          "domaene": "militaer",
+          "ziel": "eu",
+          "text": "Deutsch-franzoesische Militaerkooperation statt FCAS: Einstieg in das franzoesische Flugzeugtraegerprogramm, zweiter Traeger, Aufbau einer EU-Carrier-Group unter deutsch-franzoesischer Fuehrung (Freitext 'Roman EU').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-10",
+          "fraktion": "eu",
+          "domaene": "militaer",
+          "ziel": "eu",
+          "text": "Verstaerkte Ueberwachung der Ostsee und der Unterwasserinfrastruktur (Freitext 'Roman EU').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-11",
+          "fraktion": "eu",
+          "domaene": "innenpolitik",
+          "ziel": "eu",
+          "text": "Frontex staerken: mehr Rechte, Pushbacks eventuell legalisieren, mehr Mittel (Freitext 'Roman EU').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-12",
+          "fraktion": "eu",
+          "domaene": "aussenpolitik",
+          "ziel": "russland",
+          "text": "Russisches Haus in Berlin schliessen; Drohung an Russland: bei weiteren Angriffen auf zivile Ziele Lieferung von TAURUS und Eurofighter an die Ukraine (Freitext 'Roman EU').",
+          "zug": 1,
+          "aufgeloest": true
+        },
+        {
+          "id": "O-eu-Z2-01",
+          "fraktion": "eu",
+          "domaene": "intel",
+          "ziel": "china",
+          "text": "Oeffentliche Attribution der Guete A1: die EU benennt China vor dem Europaeischen Rat und in der WTO-Streitbeilegung namentlich als Urheber des Wirtschaftsangriffs von 2026 und legt die Beweislage als Rechtsgrundlage der bereits laufenden Strafzoelle vor — Feststellung, kein neuer Zoll, kein neues Embargo, keine neue Massnahme.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — EU"
+        },
+        {
+          "id": "O-eu-Z2-02",
+          "fraktion": "eu",
+          "domaene": "wirtschaft",
+          "ziel": "eu",
+          "text": "Entkopplungs- und Antirezessionspaket aus dem laufenden Haushalt: europaeische Reserve fuer kritische Rohstoffe und Vorprodukte, gemeinsame Beschaffung und beschleunigte Genehmigung fuer Substitutionsindustrie, um das chinesische Exportverbot und das Rezessionsflag von 2026 abzufedern.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — EU"
+        },
+        {
+          "id": "O-eu-Z2-03",
+          "fraktion": "eu",
+          "domaene": "aussenpolitik",
+          "ziel": "indien",
+          "text": "Das Freihandelsabkommen mit Indien technisch umsetzen — Zollabbau planmaessig in Kraft setzen, Normenanerkennung und einen Lieferkettenkorridor vorbereiten —, in diesem Zug aber bewusst nichts Neues unterzeichnen und die Attribution B2 nicht gegen Delhi einsetzen.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — EU"
+        },
+        {
+          "id": "O-eu-Z2-04",
+          "fraktion": "eu",
+          "domaene": "militaer",
+          "ziel": "eu",
+          "text": "Europaeischen Pfeiler weiterbauen: staendiges EU-Operationshauptquartier, gemeinsame Beschaffung und Fortsetzung des deutsch-franzoesischen Traegerprogramms; die Gespraeche mit Frankreich ueber die Einbindung der Nuklearstreitkraefte laufen weiter, werden aber nicht abgeschlossen, die NATO-Bindung wird ausdruecklich bestaetigt.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — EU"
+        },
+        {
+          "id": "O-eu-Z2-05",
+          "fraktion": "eu",
+          "domaene": "innenpolitik",
+          "ziel": "eu",
+          "text": "Resilienzprogramm kritische Infrastruktur: Haertung der sieben EU-Rechenzentren von H0 auf H1 beginnen, verbindliche Schutzstandards und eine gemeinsame Reparaturfaehigkeit fuer Seekabel und Unterwasserinfrastruktur in Ostsee und Nordsee — Fortschreibung der Ueberwachungsorder aus Zug 1, keine neuen Befugnisse zur See.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — EU"
+        },
+        {
+          "id": "O-eu-Z2-06",
+          "fraktion": "eu",
+          "domaene": "forschung",
+          "ziel": "eu",
+          "text": "Dual-Use-Weltraumprogramm aus Zug 1 fortfuehren: Ariane-Weiterentwicklung plus europaeische Erdbeobachtung mit der Ostsee- und Unterwasserlage als erstem Nutzlastziel, Safety-Slider bleibt bei 0,6.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — EU"
+        },
+        {
+          "id": "O-eu-Z2-E1",
+          "fraktion": "eu",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK",
+          "text": "Energiepolitik: Vorwahl erneuerbar, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "erneuerbar"
+          }
+        },
+        {
+          "id": "O-eu-Z3-01",
+          "fraktion": "eu",
+          "domaene": "wirtschaft",
+          "ziel": "eu",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A1 — defensiv-oekonomisch",
+          "text": "Budgetverteilung wirtschaft 45%, militaer 20%, forschung 25%, verdeckt 10%"
+        },
+        {
+          "id": "O-eu-Z3-02",
+          "fraktion": "eu",
+          "domaene": "aussenpolitik",
+          "ziel": "-",
+          "text": "haltung: defensiv",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A1 — defensiv-oekonomisch"
+        },
+        {
+          "id": "O-eu-Z3-03",
+          "fraktion": "eu",
+          "domaene": "militaer",
+          "ziel": "-",
+          "text": "reaktion: verteidigen",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A1 — defensiv-oekonomisch"
+        },
+        {
+          "id": "O-eu-Z3-E1",
+          "fraktion": "eu",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A1 — defensiv-oekonomisch",
+          "text": "Energiepolitik: Vorwahl erneuerbar, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "erneuerbar"
+          }
+        }
+      ]
+    },
+    "usa": {
+      "orders": [
+        {
+          "id": "O-usa-Z4-01",
+          "fraktion": "usa",
+          "domaene": "wirtschaft",
+          "ziel": "usa",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — USA",
+          "text": "Budget wirtschaft 42%, militaer 28%, forschung 22%, verdeckt 8%"
+        },
+        {
+          "id": "O-usa-Z4-02",
+          "fraktion": "usa",
+          "domaene": "aussenpolitik",
+          "ziel": "china",
+          "text": "Wir benennen China oeffentlich und namentlich als Urheber der geglueckten Sabotage auf amerikanischem Boden — Guete C3, genau die Schwelle, ab der oeffentliche Attribution erlaubt ist — und erklaeren in demselben Dokument ausdruecklich, dass wir das Eskalationsrecht NICHT beanspruchen, weil es Guete B2 verlangt und wir sie nicht haben: die Feststellung ist die Sanktion, die Akte bleibt offen, und ein staendiger Zwischenfallkanal auf Arbeitsebene steht Peking ab sofort zur Verfuegung.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — USA"
+        },
+        {
+          "id": "O-usa-Z4-03",
+          "fraktion": "usa",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "Der Halbleiterhebel K1/K2 bleibt zum dritten Mal ungezogen und die eng umrissene, einseitig kuendbare Handelsstabilisierung ohne Technologietransfer oberhalb des K2-Knotens laeuft unveraendert weiter — die Zusicherung wird bewusst in demselben Zug wiederholt, in dem wir benennen, damit die Benennung nachweisbar keine wirtschaftliche Drohung traegt und China aus ihr keinen Anlass zur Gegeneskalation ableiten kann.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — USA"
+        },
+        {
+          "id": "O-usa-Z4-04",
+          "fraktion": "usa",
+          "domaene": "aussenpolitik",
+          "ziel": "indien",
+          "text": "Wir bieten Indien dieselben kommerziellen Bedingungen an wie dem EU-Block, dessen laufender Dreizugvertrag in diesem Zug ausdruecklich weiterlaeuft und NICHT abgeschlossen wird — feste Jahrestonnage aus unseren 2000 t/a plus Zugang zu den Kontroll- und TT&C-Segmenten K/B, bepreist, befristet, einseitig kuendbar, ohne jede Buendnisautomatik und ohne eine einzige Forderung zum Beijing-Delhi Nuclear Pact —, weil Sriharikota 95 % eines Durchsatzes von 40 t/a traegt und gegen eine antikoloniale Front kein Gegenblock hilft, sondern nur ein Angebot, das billiger ist als die Front.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — USA"
+        },
+        {
+          "id": "O-usa-Z4-05",
+          "fraktion": "usa",
+          "domaene": "innenpolitik",
+          "ziel": "usa",
+          "text": "Die Haertung bleibt bei H2 und geht ausdruecklich NICHT auf H3, weil der Sicherheitsstaat 18 % der eigenen Forschungsrate und je Zug einen Punkt Legitimitaet kostet und damit genau die Kaskade fuettert, die wir mit Repression 0,05 seit drei Zuegen vermeiden — stattdessen bekommen Start- und Rechensegment Personalsicherheit, Bindungs- und Rueckkehrprogramme gegen ABWERBUNG, denn abgeworben wurde ein Schluesselteam und nicht eine Festplatte.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — USA"
+        },
+        {
+          "id": "O-usa-Z4-06",
+          "fraktion": "usa",
+          "domaene": "forschung",
+          "ziel": "usa",
+          "text": "R2a KI-Alignment laeuft weiter, keine Faehigkeitskarte wird angestossen, und der dauerhafte Absorptionsverlust von 0,20 wird bewusst nicht repariert — heben koennte ihn allein ABWERBUNG, also genau der Vektor, mit dem er uns beigebracht wurde, und er kostet Erfolgs-P 0,39 gegen Entdeckungs-P 0,60, was sich ein Fuehrer, der in demselben Zug oeffentlich benennt, nicht leisten kann.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — USA"
+        },
+        {
+          "id": "O-usa-Z4-07",
+          "fraktion": "usa",
+          "domaene": "intel",
+          "ziel": "china",
+          "text": "Der OSINT-Schwerpunkt bleibt auf China und bekommt zwei Fragen dazu — die Kontrollregelung der 50 chinesischen Sprengkoepfe in Indien (Zweitschluessel oder blosse Dislozierung) und ob Chinas jetzt faelliger Blowback die eigene Operationsdichte senkt —, waehrend die neuen Operationsslots ausschliesslich Beobachtung und Gegenspionage tragen: OSINT braucht kein Netz, keine Zielpraesenz und keinen Entdeckungswurf und liefert den wahren Wert mit Guete C3, und Gegenspionage ist der einzige Summand der Attributionsformel, den wir selbst stellen.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — USA"
+        },
+        {
+          "id": "O-usa-Z4-E1",
+          "fraktion": "usa",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — USA",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          }
+        }
+      ],
+      "archiv": [
+        {
+          "id": "O-usa-Z2-01",
+          "fraktion": "usa",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "Die Rueckzugsdrohung bleibt ausdruecklich auf dem Tisch — unter PENNY kostet weder das Drohen noch das Zuruecknehmen etwas — und wir bieten dagegen keine Buendniserneuerung, sondern eine bilateral bepreiste, auf drei Zuege befristete und nicht automatisch verlaengerbare Sicherheits- und Startzusage samt Zugang zu unserer freien Startkapazitaet an den EU-Block, der mit 45 t/a an einem einzigen Weltraumbahnhof haengt.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — USA"
+        },
+        {
+          "id": "O-usa-Z2-02",
+          "fraktion": "usa",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "Eng umrissene, einseitig kuendbare bilaterale Handelsstabilisierung ohne Technologietransfer oberhalb des K2-Knotens, solange China an seinen selbst zugefuegten -9,0 % BIP traegt — der Halbleiterhebel K1/K2 wird in diesem Zug ausdruecklich NICHT gezogen, sondern als stehende Abschreckung deklariert, weil C-6b den am haertesten trifft, der oben in der Wertschoepfung steht, und beide Ausgaenge (A verbraucht den Knoten, B zuechtet einen Gegner ohne Verlustangst) fuer uns schlechter sind als der ungezogene Hebel.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — USA"
+        },
+        {
+          "id": "O-usa-Z2-03",
+          "fraktion": "usa",
+          "domaene": "militaer",
+          "ziel": "usa",
+          "text": "DISPERSION in den Bodensegmenten P und T sofort beginnen (drei Zuege Bauzeit, Reife in Zug 5), weil unsere neun Rampen auf real nur n_eff 2,02 Standorten liegen und Cape plus Vandenberg 96 % des Durchsatzes tragen — HAERTUNG an der Rampe wird bewusst NICHT bestellt, da der Klassendeckel h1 sie nahezu wirkungslos macht.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — USA"
+        },
+        {
+          "id": "O-usa-Z2-04",
+          "fraktion": "usa",
+          "domaene": "innenpolitik",
+          "ziel": "usa",
+          "text": "Rechenzentrumsbestand von H0 auf H1 haerten — 11 unserer 12 Standorte stehen ungehaertet — und den 2026 ausgelaufenen P1-Pruefer wieder finanzieren, damit der 55-RP-Vorsprung weder an einem einzigen Schlag noch an Datenverfall haengt.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — USA"
+        },
+        {
+          "id": "O-usa-Z2-05",
+          "fraktion": "usa",
+          "domaene": "forschung",
+          "ziel": "usa",
+          "text": "Forschung defensiv und alignment-gewichtet fahren (R2a, -3 auf der Filterleiste) und keine Faehigkeitskarten Richtung S2a/S2b anstossen, weil bis zur Oeffnung von L1 in 2035/36 ohnehin keine Stufe offen ist und der hohe Safety-Regler damit fast kein Tempo, aber jeden Zug Risiko abkauft.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — USA"
+        },
+        {
+          "id": "O-usa-Z2-06",
+          "fraktion": "usa",
+          "domaene": "intel",
+          "ziel": "china",
+          "text": "OSINT-Schwerpunkt auf Chinas tatsaechliche Rechenpunkt-Zuteilung statt einer verdeckten Operation (Guete C3, ohne Netz, ohne Zielpraesenz, ohne Entdeckungs- und Blowback-Wurf), weil fremde Compute-Zuteilung fuer uns unsichtbar ist und unsere Entscheidung, T niedrig zu halten und erst bei Bedarf aus dem Bestand hochzufahren, genau an dieser Zahl haengt.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — USA"
+        },
+        {
+          "id": "O-usa-Z2-E1",
+          "fraktion": "usa",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          }
+        },
+        {
+          "id": "O-usa-Z3-01",
+          "fraktion": "usa",
+          "domaene": "wirtschaft",
+          "ziel": "usa",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — USA",
+          "text": "Budgetverteilung wirtschaft 42%, militaer 28%, forschung 22%, verdeckt 8%"
+        },
+        {
+          "id": "O-usa-Z3-02",
+          "fraktion": "usa",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "Wir bieten dem EU-Block einen bilateral bepreisten, auf drei Zuege befristeten, nicht automatisch verlaengerbaren und einseitig kuendbaren Vertrag ohne jede Buendnisautomatik an — feste Jahrestonnage aus unseren 2000 t/a Startkapazitaet plus Zugang zu unseren Kontroll- und TT&C-Segmenten K/B —, ausdruecklich verkauft als der billigere Ersatz fuer den zweiten europaeischen Weltraumbahnhof, den Europa sonst als Verteidigungsausgabe bauen muesste, weil Kourou 95 % des EU-Durchsatzes traegt (n_eff Standorte 1,10), 7000 km vom Kernland in einem Ueberseegebiet liegt und ohne einen Schuss per Hafen- und Seewegblockade abzuschneiden ist; die Rueckzugsdrohung bleibt unter PENNY kostenfrei auf dem Tisch.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — USA"
+        },
+        {
+          "id": "O-usa-Z3-03",
+          "fraktion": "usa",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "Wir erklaeren gegenueber China ausdruecklich und fuer diesen Zug verbindlich, dass der Halbleiterhebel K1/K2 nicht gezogen wird, und setzen die eng umrissene, einseitig kuendbare Handelsstabilisierung ohne Technologietransfer oberhalb des K2-Knotens fort — nicht aus Nachsicht, sondern weil ein Schlag gegen ein bereits kapitalmarktausgeschlossenes China zwangslaeufig in Ausgang B laeuft (Eskalationsstufe +1 gegen einen Gegner mit 700 Sprengkoepfen und nichts mehr zu verlieren), waehrend die Zusicherung China davon abhaelt, seine knappen Mittel in ein Autarkieprogramm nach Ausgang A zu stecken, das unseren Knoten in fuenf bis sieben Jahren verbrauchen wuerde.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — USA"
+        },
+        {
+          "id": "O-usa-Z3-04",
+          "fraktion": "usa",
+          "domaene": "militaer",
+          "ziel": "usa",
+          "text": "MOBIL sofort bestellen — eine See- und Luftstartplattform, die als einzige E-5.6-Massnahme keine Bauzeit traegt —, weil das Ankuendigungsfenster von E-5 abgelaufen und unser Bodensegment ab diesem Zug scharf beschiessbar ist, unsere neun Rampen aber weiter auf n_eff 2,02 Standorten liegen (Cape und Vandenberg 96 %, drei Falcon-Rampen 88 %) und die laufende DISPERSION der Segmente P und T erst 2030 reif wird: eine nicht ortsfeste Plattform zwingt jeden Angreifer erst zu einem Entdeckungswurf 1W100 <= 35 und schliesst damit genau die zwei Zuege, in denen wir sonst offen stehen.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — USA"
+        },
+        {
+          "id": "O-usa-Z3-05",
+          "fraktion": "usa",
+          "domaene": "innenpolitik",
+          "ziel": "usa",
+          "text": "Die Rechenzentren, die den Trainings- und Frontier-Anteil tragen, von H1 auf H2 haerten und den Datenpruefer von P1 auf P2 finanzieren (D = 8,0 RP), damit der Vorsprung von 55 der 100 Weltrechenpunkte weder an einem einzigen Schlag noch an Datenverfall und Modellkollaps haengt — Daten wirken ausschliesslich ueber die Prueferstufe, und ein unbezahlter Pruefer macht den exklusiven Bestand von 3,0 QP wertlos.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — USA"
+        },
+        {
+          "id": "O-usa-Z3-06",
+          "fraktion": "usa",
+          "domaene": "forschung",
+          "ziel": "usa",
+          "text": "Den Forschungsanteil von 22 % erstmals in ein konkretes laufendes Vorhaben binden und R2a KI-Alignment anstossen (-3 auf der X-Risk-Leiste 0-20 mit Schwellen bei 6/11/15/18/20), waehrend die Faehigkeitskarten S2a und S2b ausdruecklich nicht angestossen werden: wer 55 % des Weltcomputes haelt, kauft dauerhafte Risikosenkung besser ueber die Leiste als ueber den Regler.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — USA"
+        },
+        {
+          "id": "O-usa-Z3-07",
+          "fraktion": "usa",
+          "domaene": "intel",
+          "ziel": "china",
+          "text": "OSINT-Schwerpunkt erneut auf China — tatsaechliche Zuteilung der Rechenpunkte, und ob der Kapitalmarktausschluss den Rechenzentrumszubau bremst oder umgekehrt ein Substitutionsprogramm am K2-Knoten anlaeuft —, weil OSINT kein Netz, keine Zielpraesenz und keinen Entdeckungswurf braucht, den wahren Wert mit Guete C3 liefert und genau diese Zahl die einzige Bedingung ist, unter der wir T aus dem Bestand hochfahren wuerden.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — USA"
+        },
+        {
+          "id": "O-usa-Z3-E1",
+          "fraktion": "usa",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — USA",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          }
+        }
+      ],
+      "befunde": []
+    },
+    "russland": {
+      "orders": [
+        {
+          "id": "O-russland-Z4-01",
+          "fraktion": "russland",
+          "domaene": "wirtschaft",
+          "ziel": "russland",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — RUS",
+          "text": "Budget wirtschaft 28%, militaer 45%, forschung 10%, verdeckt 17%"
+        },
+        {
+          "id": "O-russland-Z4-02",
+          "fraktion": "russland",
+          "domaene": "aussenpolitik",
+          "ziel": "china",
+          "text": "Die Neubepreisung aus Zug 3 wird gehalten, nicht geschlossen: die laufenden Konditionen werden um ein Jahr fortgeschrieben, der neue Rahmen mit Meistbeguenstigung, Ueberpruefungsklausel und Transferverbot bleibt ausdruecklich offen und ununterzeichnet, weil Pekings zweites Bankenkrisenjahr und der Kapitalmarktausschluss meine Position mit jedem Quartal verbessern und eine Unterschrift heute den abwesenden Spieler zu schlechteren Bedingungen binden wuerde — und aus dem foermlichen Verteidigungsbuendnis China-Indien erwaechst Russland keine neue Verpflichtung, weder Beistand noch Beitritt noch Anpassung meiner Lieferzusagen.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — RUS"
+        },
+        {
+          "id": "O-russland-Z4-03",
+          "fraktion": "russland",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "Die Lieferungen laufen unveraendert weiter — Energie auf Yuan-Kredit zu nachrangigen Konditionen gegen feste Jahresmengen Reifknoten-Halbleiter (>=28 nm), Advanced Packaging, Werkzeugmaschinen und Prozessgase (C-6b K3/K4) plus die Yuan-Clearingschiene —, denn dieser Kanal traegt die Wiederherstellungsrate des kill-net, und ein zahlungswilligerer Patron ist ein Grund, mehr zu beziehen und weniger zu unterschreiben, nicht umgekehrt.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — RUS"
+        },
+        {
+          "id": "O-russland-Z4-04",
+          "fraktion": "russland",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "Die oeffentlichen Langfrist-Festpreisangebote fuer Gas an einzelne Mitgliedstaaten laufen unveraendert weiter, weiter am Bruesseler Gemeinschaftsrahmen vorbei und offen als Ausweg aus der Rezession beworben, gekoppelt an die Bedingung, Sanktionsverlaengerung und Zollgeschlossenheit im Rat nicht mitzutragen — Ziel bleibt die gespaltene Abstimmung und die oeffentliche Begruendungsnot der Ablehnenden und ausdruecklich nicht der Vertragsschluss, was sich mit der Treuhandauflage, laufende Verhandlungen zu halten statt abzuschliessen, ohne jeden Abstrich deckt.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — RUS"
+        },
+        {
+          "id": "O-russland-Z4-05",
+          "fraktion": "russland",
+          "domaene": "intel",
+          "ziel": "eu",
+          "text": "Kein neuer Ansatz: das bestehende Netz wird weitergefuehrt, aber auf kleinsten Umfang zurueckgenommen und auf Netzpflege und Beobachtung beschraenkt — keine frische falsche Flagge, keine neue Kampagne, obwohl die Zug-3-Logik (Dauerterm 0,8*min(Zuege,4) in D-2 zuruecksetzen) genau das verlangt haette; die Treuhand verbietet neue verdeckte Operationen oberhalb Beobachtung, und der kleinere Umfang haelt den Attributionsscore gegen den weiterlaufenden Dauerterm, damit die zweimal erreichte Guete F6 nicht durch blosses Zeitverstreichen nach E5 wandert.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — RUS"
+        },
+        {
+          "id": "O-russland-Z4-06",
+          "fraktion": "russland",
+          "domaene": "intel",
+          "ziel": "russland",
+          "text": "Drittes OSINT-Eigenaudit nach D-4 auf Kriegswirtschaft, Mobilisierungsreserve und tatsaechliche Zustimmung, dazu Gegenspionage gegen fremde Beschaffung und Abwerbung und Haertung H2 unveraendert gehalten — H3 bleibt aus, weil es Legitimitaet kostet und die Kaskadenluecke nach B-2 vergroessert; das ist reine Beobachtung im eigenen Land, also treuhandkonform, und der einzige Kanal, auf dem ein Autokrat seine eigene Informationsluecke ueberhaupt sieht, ausgerechnet auf der Domaene intel mit d = 1,80, auf der dieser ganze Zug ruht.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — RUS"
+        },
+        {
+          "id": "O-russland-Z4-07",
+          "fraktion": "russland",
+          "domaene": "militaer",
+          "ziel": "russland",
+          "text": "Front halten statt erweitern: Kriegsstufe unveraendert, Doktrin de_eskalationsschlag unveraendert auf Stufe 4 und rein reaktiv, kein neuer Konflikt aus eigenem Antrieb und kein automatisches Mitgehen in Pekings Streit mit Washington, nachdem China fuer die Sabotage auf amerikanischem Boden bei C3 benennbar geworden ist — und das Bodenkonto von 1 079,8 t geht in 14 % Geheimdienste (151,2 t), 0 % Force Projection, 62,9 % Modernisierung (679,2 t), 99 Advanced-Punkte (99 t) und 15 Future-SP (150 t), alles nach Z-2d auf die eine Teilstreitkraft heer, bei null Sprengkoepfen und null ASAT.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — RUS"
+        },
+        {
+          "id": "O-russland-Z4-E1",
+          "fraktion": "russland",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A3 — RUS",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          }
+        }
+      ],
+      "archiv": [
+        {
+          "id": "O-russland-Z2-01",
+          "fraktion": "russland",
+          "domaene": "aussenpolitik",
+          "ziel": "china",
+          "text": "Wir bieten Peking ein Zehnjahresabkommen als sein Energie-Rueckgrat — Gas, Oel und Nordroute zu Vorzugspreisen — gegen politische Rueckendeckung im Zollkonflikt mit Bruessel und die ausdrueckliche Zusage, dass Russland in keinem Ausgleich mit Washington oder der EU zur Verhandlungsmasse wird.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — RUS"
+        },
+        {
+          "id": "O-russland-Z2-02",
+          "fraktion": "russland",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "Tauschgeschaeft mit Peking: verbilligte Energie und Rohstoffe gegen Reifknoten-Halbleiter (>=28 nm), Advanced Packaging, Werkzeugmaschinen und Prozessgase (C-6b K3/K4) sowie eine Clearingschiene in Yuan, damit die Wiederherstellungsrate des kill-net und die Drohnenfertigung nicht am Chipengpass haengen.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — RUS"
+        },
+        {
+          "id": "O-russland-Z2-03",
+          "fraktion": "russland",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "Bilaterale Energieangebote unter Weltmarktpreis an einzelne Mitgliedstaaten, ausdruecklich am Bruesseler Gemeinschaftsrahmen vorbei und gekoppelt an die Bedingung, TAURUS-Freigabe und neue Sanktionspakete im Rat nicht mitzutragen — Ziel ist die gespaltene Abstimmung, nicht der Vertragsschluss.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — RUS"
+        },
+        {
+          "id": "O-russland-Z2-04",
+          "fraktion": "russland",
+          "domaene": "intel",
+          "ziel": "eu",
+          "text": "Viele kleine, kurz laufende Desinformations- und Einflussoperationen (Umfang klein, wo moeglich unter falscher Flagge) gegen die TAURUS-Freigabe und gegen den Durchhaltewillen bei den China-Strafzoellen, bewusst so bemessen, dass der Attributionsscore nach D-2 unter C3 bleibt und die EU an ihren zwei bereits attribuierten Gegnern gebunden bleibt.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — RUS"
+        },
+        {
+          "id": "O-russland-Z2-05",
+          "fraktion": "russland",
+          "domaene": "intel",
+          "ziel": "russland",
+          "text": "OSINT-Eigenaudit nach D-4 auf Kriegswirtschaft, Mobilisierungsreserve und tatsaechliche Zustimmung, dazu Gegenspionage und Haertung H1 auf H2 (nicht H3, das kostet Legitimitaet und hebt das Kaskadenrisiko), um die Hofberichterstattung im am staerksten verzerrten Kanal zu korrigieren, bevor die Repressionsluecke nach B-2 aufbricht.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — RUS"
+        },
+        {
+          "id": "O-russland-Z2-06",
+          "fraktion": "russland",
+          "domaene": "militaer",
+          "ziel": "russland",
+          "text": "Front halten statt erweitern — Kriegsstufe unveraendert, keine Eskalation aus eigenem Antrieb, Doktrin de_eskalationsschlag bleibt rein reaktiv — und der Restraum-Vortrag von 100 t wird vollstaendig ins Bodenkonto gebucht: Geheimdienstanteil 12 % (erreicht nach Z-2b die Hoechstzahl von 8 Operationsslots), Rest in Advanced-Punkte (1 t je Punkt, wirken im selben Zug) und kill-net-/Drohnenersatz, waehrend die Startkapazitaet von 100 t/a stehen bleibt und q_raum nach Z-1.5 NICHT gesenkt wird.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK — RUS"
+        },
+        {
+          "id": "O-russland-Z2-E1",
+          "fraktion": "russland",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          }
+        },
+        {
+          "id": "O-russland-Z3-01",
+          "fraktion": "russland",
+          "domaene": "wirtschaft",
+          "ziel": "russland",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — RUS",
+          "text": "Budgetverteilung wirtschaft 28%, militaer 45%, forschung 9%, verdeckt 18%"
+        },
+        {
+          "id": "O-russland-Z3-02",
+          "fraktion": "russland",
+          "domaene": "aussenpolitik",
+          "ziel": "china",
+          "text": "Das Energieabkommen aus Zug 2 wird nicht aufgekuendigt, sondern neu bepreist: Vorzugspreise fuer Gas, Oel und Nordroute laufen weiter, aber nur noch gegen feste Jahresliefermengen an K3/K4-Gut, eine Meistbeguenstigungsklausel, eine Ueberpruefungsklausel alle drei Jahre und die ausdrueckliche Zusage, dass Peking Russland in keinem Ausgleich mit Washington zur Verhandlungsmasse macht und meinen Gegnern keine Ruestungs- oder Techtransfers gibt.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — RUS"
+        },
+        {
+          "id": "O-russland-Z3-03",
+          "fraktion": "russland",
+          "domaene": "wirtschaft",
+          "ziel": "china",
+          "text": "Peking bekommt in seiner Bankenkrise, was es braucht — Energie auf Yuan-Kredit zu nachrangigen Konditionen und einen abnahmesicheren Grossverbraucher —, und zahlt dafuer in Sachwerten statt in Devisen: verbindliche Liefermengen Reifknoten-Halbleiter (>=28 nm), Advanced Packaging, Werkzeugmaschinen und Prozessgase (C-6b K3/K4) plus die dauerhafte Yuan-Clearingschiene, damit die Wiederherstellungsrate des kill-net nicht am Chipengpass haengt.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — RUS"
+        },
+        {
+          "id": "O-russland-Z3-04",
+          "fraktion": "russland",
+          "domaene": "aussenpolitik",
+          "ziel": "eu",
+          "text": "Oeffentliche Langfrist-Festpreisangebote fuer Gas an einzelne Mitgliedstaaten, ausdruecklich am Bruesseler Gemeinschaftsrahmen vorbei und offen als Ausweg aus der Rezession von -11,2 % beworben, gekoppelt an die Bedingung, die Verlaengerung der Sanktionspakete und die Geschlossenheit bei den China-Strafzoellen im Rat nicht mitzutragen — Ziel ist die gespaltene Abstimmung und die oeffentliche Begruendungsnot der Ablehnenden, nicht der Vertragsschluss.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — RUS"
+        },
+        {
+          "id": "O-russland-Z3-05",
+          "fraktion": "russland",
+          "domaene": "intel",
+          "ziel": "eu",
+          "text": "Die Kampagne aus Zug 2 wird abgeschlossen statt verlaengert und durch neue, kurze Operationen unter frischer falscher Flagge ersetzt, damit der Dauerterm 0,8*min(Zuege,4) in D-2 zurueckgesetzt wird; Umfang bleibt klein, Zielbild verschiebt sich von TAURUS auf die Sanktionsverlaengerung und die Zollgeschlossenheit, mit Schwerpunkt in genau den Hauptstaaten, denen ich offen Festpreisgas anbiete — Druck und Ausweg aus derselben Hand.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — RUS"
+        },
+        {
+          "id": "O-russland-Z3-06",
+          "fraktion": "russland",
+          "domaene": "intel",
+          "ziel": "russland",
+          "text": "Zweites OSINT-Eigenaudit nach D-4 auf Kriegswirtschaft, Mobilisierungsreserve und tatsaechliche Zustimmung, um die Lueckenmessung aus Zug 2 fortzuschreiben, dazu Gegenspionage gegen fremde Beschaffungs- und Abwerbungsversuche und Haertung H1 auf H2 auf Ruestungsforschung und die zwei Rechenstandorte — H3 bleibt aus, weil es Legitimitaet kostet und die Kaskadenluecke nach B-2 vergroessert.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — RUS"
+        },
+        {
+          "id": "O-russland-Z3-07",
+          "fraktion": "russland",
+          "domaene": "militaer",
+          "ziel": "russland",
+          "text": "Front halten statt erweitern: Kriegsstufe unveraendert, keine Eskalation aus eigenem Antrieb, Doktrin de_eskalationsschlag bleibt unveraendert und rein reaktiv — und der neue Restraum-Vortrag von 100 t (gilt fuer 2028, Herkunftsjahr 2027) geht vollstaendig ins Bodenkonto: Geheimdienstanteil nur noch so hoch, dass die bereits erreichten 8 Operationsslots gehalten werden, der gesamte Rest in kill-net- und Drohnenersatz und Advanced-Punkte, waehrend die Startkapazitaet von 100 t/a stehen bleibt und q_raum nach Z-1.5 NICHT gesenkt wird.",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — RUS"
+        },
+        {
+          "id": "O-russland-Z3-E1",
+          "fraktion": "russland",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A2 — RUS",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          }
+        }
+      ],
+      "befunde": []
+    },
+    "rest": {
+      "orders": [
+        {
+          "id": "O-rest-Z4-00",
+          "fraktion": "rest",
+          "domaene": "aussenpolitik",
+          "ziel": "-",
+          "text": "A1 status-quo: Budget fortschreiben, Haltung halten, rein reaktiv.",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A1"
+        },
+        {
+          "id": "O-rest-Z4-E1",
+          "fraktion": "rest",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 4,
+          "aufgeloest": false,
+          "herkunft": "STELLWERK A1",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          }
+        }
+      ],
+      "archiv": [
+        {
+          "id": "O-rest-Z2-00",
+          "fraktion": "rest",
+          "domaene": "aussenpolitik",
+          "ziel": "-",
+          "text": "A1-Doktrinbaum status-quo: Budget fortschreiben, Haltung halten, rein reaktiv.",
+          "zug": 2,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A1 (SB-1 Sammelblock)"
+        },
+        {
+          "id": "O-rest-Z3-01",
+          "fraktion": "rest",
+          "domaene": "wirtschaft",
+          "ziel": "rest",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A1 — status-quo",
+          "text": "Budgetverteilung wirtschaft 40%, militaer 30%, forschung 20%, verdeckt 10%"
+        },
+        {
+          "id": "O-rest-Z3-02",
+          "fraktion": "rest",
+          "domaene": "aussenpolitik",
+          "ziel": "-",
+          "text": "haltung: halten",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A1 — status-quo"
+        },
+        {
+          "id": "O-rest-Z3-E1",
+          "fraktion": "rest",
+          "domaene": "energie",
+          "ziel": "-",
+          "zug": 3,
+          "aufgeloest": true,
+          "herkunft": "STELLWERK A1 — status-quo",
+          "text": "Energiepolitik: Vorwahl ausgewogen, Budget 100%",
+          "parameter": {
+            "budgetanteil": 1.0,
+            "mischung": "ausgewogen"
+          }
+        }
+      ],
+      "befunde": []
+    }
+  },
+  "handoffs": [],
+  "audit": {
+    "wuerfe": [
+      {
+        "id": "W-001-0001",
+        "zug": 1,
+        "stufe": "aufloesung",
+        "seed": 20260107,
+        "wurf": "W10",
+        "ergebnis": 1,
+        "zweck": "Ereignistafel W10a",
+        "regelref": "G-5"
+      },
+      {
+        "id": "W-001-0002",
+        "zug": 1,
+        "stufe": "aufloesung",
+        "seed": 20260107,
+        "wurf": "W10",
+        "ergebnis": 1,
+        "zweck": "Ereignistafel W10b",
+        "regelref": "G-5"
+      },
+      {
+        "id": "W-001-0003",
+        "zug": 1,
+        "stufe": "coup",
+        "seed": 19269800000000,
+        "wurf": "W10000",
+        "ergebnis": 7179,
+        "zweck": "Coup-Wurf einparteien (china)",
+        "regelref": "A-2"
+      },
+      {
+        "id": "W-001-0004",
+        "zug": 1,
+        "stufe": "aufloesung",
+        "seed": 19269800000000,
+        "wurf": "W100",
+        "ergebnis": 47,
+        "zweck": "C-4 Verhaltensaenderung China unter EU-Sanktionen",
+        "regelref": "C-4"
+      }
+    ],
+    "rechenprotokolle": [
+      {
+        "id": "R-Z1-01",
+        "zug": 1,
+        "mechanik": "G-5",
+        "gegenstand": "Ereignistafel Summe 2 (1+1)",
+        "ergebnis": "REGELLUECKE — ereignisse.md fuehrt unter 'Ereignistafel' nur die Konvention '2W10, Oekosystem-Konvention', aber KEINE Ergebniszeilen. Zur Summe 2 existiert kein Eintrag. Nichts geschaetzt (Pflicht 5); kein Weltereignis in Zug 1.",
+        "regelref": "G-5 / ereignisse.md §Ereignistafel"
+      },
+      {
+        "id": "R-Z1-02",
+        "zweck": "Attribution D-2 — Indiens Einfluss-Op gegen die EU, falsche Flagge",
+        "eingaben": {
+          "umfang": 5,
+          "gegenspionage": 4,
+          "zuege": 1,
+          "falsche_flagge": true
+        },
+        "score": 11.8,
+        "admiralty": "B2",
+        "oeffentlich_erlaubt": true,
+        "eskalation_erlaubt": true,
+        "annahme": "umfang 5 aus Blatt 1 (Sonderbefehl Einfluss/5). gegenspionage 4 und zuege 1 sind GM-Bemessung: EU mit Repression 0,08 und Medienfreiheit 0,88 hat starke offene Institutionen und aktive Gegenspionage; die Operation lief einen Zug.",
+        "zug": 1,
+        "ergebnis": 11.8,
+        "regelref": "D-2",
+        "mechanik": "D-2"
+      },
+      {
+        "id": "R-Z1-03",
+        "zweck": "Attribution D-2 — Chinas Sabotage/Hackerangriff gegen die EU",
+        "eingaben": {
+          "umfang": 5,
+          "gegenspionage": 4,
+          "zuege": 1,
+          "falsche_flagge": false
+        },
+        "score": 14.8,
+        "admiralty": "A1",
+        "oeffentlich_erlaubt": true,
+        "eskalation_erlaubt": true,
+        "annahme": "umfang 5 aus Blatt 1 (Sonderbefehl Sabotage/5); gegenspionage/zuege wie Z1-W2.",
+        "zug": 1,
+        "ergebnis": 14.8,
+        "regelref": "D-2",
+        "mechanik": "D-2"
+      },
+      {
+        "id": "R-Z1-04",
+        "zweck": "Bias B-1 — Chinas Innenbericht Wirtschaft",
+        "eingaben": {
+          "repression": 0.8,
+          "medienfreiheit": 0.1,
+          "domaene": "wirtschaft",
+          "n_zuege": 0
+        },
+        "b": 0.2834,
+        "faktor_gemeldet": 1.2834,
+        "zug": 1,
+        "ergebnis": 0.2834,
+        "regelref": "B-1",
+        "mechanik": "B-1"
+      },
+      {
+        "id": "R-Z1-05",
+        "zug": 1,
+        "mechanik": "A-2",
+        "gegenstand": "Coup-Track China",
+        "p_je_zug": 0.012,
+        "wurf_beleg": "W-001-0003",
+        "ergebnis": "nicht ausgeloest (7179 von 10000)",
+        "regelref": "A-2"
+      },
+      {
+        "id": "R-Z1-06",
+        "zug": 1,
+        "mechanik": "C-7 §2",
+        "gegenstand": "Implosionspunkte Chinas Exportverbot gegen die EU",
+        "eingaben": {
+          "handelsanteil_zuender": 0.142,
+          "gezuendet": [
+            "I1"
+          ]
+        },
+        "rohausgabe": "I1=1.42  I2=1.0 (Markt 0.0 + Reserve 0.0 + Rekord 0.0 + FireSale 1.0)  I3=0.0  | IP=2.42 x1.0 = IP_eff=2.42",
+        "ergebnis": "IP = 1,42 (nur I1; §2 'Nur gezuendete Stufen zaehlen'). §3: kein Kaskadenwurf unter IP 2.",
+        "regelref": "implosion_regeln.md §2/§3"
+      },
+      {
+        "id": "R-Z1-07",
+        "zug": 1,
+        "mechanik": "C-7 §4",
+        "gegenstand": "Zuender- und Zielschaden",
+        "ergebnis": "China -8,0/-4,0 Pp und -3 Niveau; EU -10 x 0,145 = -1,45 Pp. Verhaeltnis 5,52 : 1.",
+        "annahme": "bilateraler Handelsanteil EU-China 0,145 — GM-Bemessung (EU-China rund 14-15 % des EU-Aussenhandels)",
+        "regelref": "implosion_regeln.md §4 + c7_implosion.json ziel_ohne_kaskade"
+      },
+      {
+        "id": "R-Z1-11",
+        "zug": 1,
+        "mechanik": "C-4",
+        "gegenstand": "EU-Massnahmen gegen China",
+        "ergebnis": "Strafzoelle -0,7 Pp/a x 7 a = -4,9 Pp kumuliert; Huawei -0,39 % Niveau; Verhaltensaenderung W100=47 gegen p=0,26 -> nein.",
+        "regelref": "C-4"
+      },
+      {
+        "id": "R-Z1-08",
+        "zug": 1,
+        "mechanik": "B-2",
+        "gegenstand": "Kaskadenrisiko aus Repression",
+        "ergebnis": "eu L=0,20 p=0,0075/Zug (7,25 %/10) · china L=0,80 p=0,0975/Zug (64,15 %/10) · indien L=0,40 p=0,0375/Zug (31,76 %/10)",
+        "regelref": "B-2"
+      },
+      {
+        "id": "R-Z1-09",
+        "zug": 1,
+        "mechanik": "F-3",
+        "gegenstand": "Safety-Slider",
+        "ergebnis": "eu s=0,6 Fortschritt 0,4804 Risiko 0,00064/Zug · china und indien s=0,0 Fortschritt 1,0 Risiko 0,004/Zug",
+        "regelref": "F-3"
+      },
+      {
+        "id": "R-Z1-10",
+        "zug": 1,
+        "mechanik": "WN-01 Pflicht 4",
+        "gegenstand": "BIP-Konto angelegt, C-7 und C-4 gebucht",
+        "ergebnis": "china 19,5 -> 17,7449 · eu 20,3 -> 20,0056 · indien 4,3 unveraendert",
+        "regelref": "LW-01 startlage + C-7 §4 + C-4"
+      }
+    ],
+    "validator": {
+      "rev": "A",
+      "befunde": [],
+      "bestanden": false
+    }
+  }
+}
