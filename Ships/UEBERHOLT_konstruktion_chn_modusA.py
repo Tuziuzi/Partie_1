@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""OW-01 Modus A — Rekonstruktion der drei chinesischen Entwuerfe.
-
-Anker sind die in stand/gamestate.json gebuchten Groessen:
-  masse_t  (Startmasse, ZH-01-Bodenkonto)   und   dv_kms (Manoeverbudget der Schwarm-Eintraege).
-Gesucht ist die Massenaufteilung, NICHT die Masse. Deshalb Modus A:
-K1 (Strukturabgabe) laeuft, K2 (Nutzlastmultiplikator) wird uebersprungen,
-K3 mit realen Hardwaremassen.  Quelle: nachbau_regeln.md §1.
-
-Loeser: bisection ueber (payload + bus), bis nachbau.build() die Ankermasse trifft.
+"""UEBERHOLT — diese Fassung lief in Modus A und nahm damit die Nachbau-Ausnahme
+in Anspruch, die diesen Entwuerfen nicht zusteht (construction.md §Weight Penalty 3:
+die Ausnahme gilt nur fuer designMode "reconstruction", also fuer ein reales System
+mit veroeffentlichter Startmasse). Ersetzt durch konstruktion_chn_modusB.py.
+Bleibt als Beleg des korrigierten Fehlers erhalten (Journal Z5-063).
 """
+
 import math, json, sys, importlib.util
 
 OW = ("/root/.claude/skills/synced/2c0e114f-f980-4879-be59-84347099c9f5_"
