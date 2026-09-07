@@ -1,0 +1,27 @@
+{
+ "modus": "A",
+ "payload_kg": 1400,
+ "struct_class": "ruggedized",
+ "adv": 2,
+ "disadv": 0,
+ "isp": 230,
+ "prop": "hydrazine",
+ "dv_target": 750,
+ "engines": [
+  {
+   "mass_kg": 36.0,
+   "thrust_n": 132.0,
+   "count": 1,
+   "p_kw": 0
+  }
+ ],
+ "house_kw": 8.0,
+ "pp_type": "solar",
+ "pp_alpha": 15.0,
+ "au": 1.0,
+ "batt_hours": 1.2,
+ "batt_alpha": 5,
+ "rad_alpha": 5.0,
+ "ld": 2.5,
+ "misc_kg": 0
+}

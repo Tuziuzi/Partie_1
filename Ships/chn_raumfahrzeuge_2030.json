@@ -1,0 +1,839 @@
+{
+ "version": "2.2",
+ "type": "ship_export",
+ "timestamp": "2026-09-07T16:43:13.775938Z",
+ "ships": [
+  {
+   "name": "Himmelsauge",
+   "class": "Corvette",
+   "isp": 230,
+   "thrust": 88,
+   "engineType": "custom_hydrazine_22n",
+   "dryMass": 1.9562,
+   "maxPropellant": 0.0438,
+   "currentPropellant": 0.0438,
+   "maxDeltaV": 50.0,
+   "designDeltaV": 50.0,
+   "currentDeltaV": 50.0,
+   "boiloffRate": 0.0,
+   "originalDryMass": 1.9562,
+   "originalMaxPropellant": 0.0438,
+   "coreDryMass": null,
+   "corePropellant": null,
+   "source": "skill",
+   "engines": [
+    {
+     "name": "Hydrazin-Monergol 22 N",
+     "key": "custom_hydrazine_22n",
+     "isp": 230,
+     "thrust_n": 22,
+     "count": 4,
+     "simultaneous": 4,
+     "propType": "hydrazine",
+     "mass_kg": 6
+    }
+   ],
+   "propellantPools": {
+    "hydrazine": 0.0438
+   },
+   "maxPropellantPools": {
+    "hydrazine": 0.0438
+   },
+   "poolDeltaV": {
+    "hydrazine": 50.0
+   },
+   "wasteHeat": 5.0,
+   "powerBudget": 5500,
+   "powerUsed": 5000,
+   "armor": {
+    "material": null,
+    "thickness_cm": 0,
+    "mass_tonnes": 0,
+    "whipple": false,
+    "whippleGap_cm": 0
+   },
+   "geometry": {
+    "D_out": 1.2808,
+    "L_out": 3.2019,
+    "A_front": 1.2883,
+    "A_side": 12.8832,
+    "volume_m3": 4.125,
+    "ldRatio": 2.5
+   },
+   "signatures": {
+    "stealthEngOff": {
+     "wasteHeat": 5,
+     "radTemp": 50,
+     "irArea": 0.1288,
+     "emissivity": 0.1,
+     "optArea": 0.6442,
+     "albedo": 0.02,
+     "rcs": 0.0193,
+     "rfEmit": 0,
+     "stealthDuration": 0,
+     "mode": "stealth"
+    },
+    "normalEngOff": {
+     "wasteHeat": 5.0,
+     "radTemp": 300,
+     "irArea": 3.8649,
+     "emissivity": 0.9,
+     "optArea": 1.2883,
+     "albedo": 0.2,
+     "rcs": 0.6442,
+     "rfEmit": 10,
+     "mode": "coast"
+    },
+    "normalEngOn": {
+     "wasteHeat": 8.0,
+     "radTemp": 2800,
+     "plumeTemp": 2800,
+     "irArea": 3.9785,
+     "plumeIRArea": 0.1136,
+     "emissivity": 0.15,
+     "plumeEps": 0.15,
+     "optArea": 1.3451,
+     "albedo": 0.2,
+     "rcs": 0.7925,
+     "plumeRCS": 0.1483,
+     "rfEmit": 10,
+     "engineType": "custom_hydrazine_22n",
+     "thrustN": 88,
+     "mode": "thrust"
+    },
+    "stealth": {
+     "wasteHeat": 5,
+     "radTemp": 50,
+     "irArea": 0.1288,
+     "emissivity": 0.1,
+     "optArea": 0.6442,
+     "albedo": 0.02,
+     "rcs": 0.0193,
+     "rfEmit": 0,
+     "stealthDuration": 0,
+     "mode": "stealth"
+    },
+    "coast": {
+     "wasteHeat": 5.0,
+     "radTemp": 300,
+     "irArea": 3.8649,
+     "emissivity": 0.9,
+     "optArea": 1.2883,
+     "albedo": 0.2,
+     "rcs": 0.6442,
+     "rfEmit": 10,
+     "mode": "coast"
+    },
+    "thrust": {
+     "wasteHeat": 8.0,
+     "radTemp": 2800,
+     "plumeTemp": 2800,
+     "irArea": 3.9785,
+     "plumeIRArea": 0.1136,
+     "emissivity": 0.15,
+     "plumeEps": 0.15,
+     "optArea": 1.3451,
+     "albedo": 0.2,
+     "rcs": 0.7925,
+     "plumeRCS": 0.1483,
+     "rfEmit": 10,
+     "engineType": "custom_hydrazine_22n",
+     "thrustN": 88,
+     "mode": "thrust"
+    }
+   },
+   "installedSensors": {},
+   "cryoConfig": {},
+   "heatConfig": {
+    "mode": "kg_per_kw",
+    "alpha_kg_kw": 5.0,
+    "waste_kw": 5.0,
+    "rad_mass_kg": 25.0
+   },
+   "stealthConfig": {
+    "warmRadArea": 0,
+    "warmRadTemp": 15,
+    "h2CoolantMass": 0,
+    "h2LatentHeat": 446000,
+    "h2NoseTemp": 14,
+    "h2EmitArea": 20,
+    "h2Days": 0,
+    "heCoolantMass": 0,
+    "heLatentHeat": 20800,
+    "heHours": 0,
+    "rcsFaceted": "no",
+    "rcsAbsorb": 0.3,
+    "rcsBaseArea": 20,
+    "warmIRSmall": 0,
+    "warmIRLarge": 0,
+    "h2IRSmall": 2000,
+    "h2IRLarge": 10000,
+    "heIRSmall": 5,
+    "heIRLarge": 30,
+    "totalHeat": 0
+   },
+   "coolant": {
+    "h2Mass": 0,
+    "heMass": 0,
+    "h2MaxMass": 0,
+    "heMaxMass": 0
+   },
+   "stagingConfig": null,
+   "currentStaging": null,
+   "commSystems": [
+    {
+     "type": "comm",
+     "band": "Ka-Band (32 GHz)",
+     "aperture": 0.4,
+     "power_dbm": 40,
+     "bandwidth_hz": 10000,
+     "mass_kg": 19.5615,
+     "power_w": 220,
+     "ajConfig": {
+      "presets": [
+       "Raumschiff-Eigenschatten (genau ausgerichtet)",
+       "Comm mit Frequency Hopping",
+       "Tief eingelassenes System",
+       "Synthetic Aperture Nulling"
+      ],
+      "advantage_dB": -275
+     }
+    }
+   ],
+   "jamSystems": null,
+   "detectionData": {},
+   "notes": "OW-01 Modus A (Rekonstruktion) von Kampagnenentwurf CHN_aufklaerer 'Aufklaerungssatellit' (CHN). Anker: gebuchte Startmasse 2 t aus stand/gamestate.json, Abweichung 0,0000 %. Strukturklasse ruggedized + 2 Vorteile (Strahlungs-Haertung, Thermischer Betrieb) -> Struktur 17 %, Tank 12 %. Energie: solar, 5.50 kW, Kraftwerk 82.5 kg, Batterie 16.5 kg. AJ-Summe -275 dB. dv = 50 m/s (Bahnhaltung/Widerstandsausgleich LEO 600 km), Manoeverzeit 0.31 h. Grossapertur-Sensor 1000 kg (Stub-treu: construction.md §2, 'bis GEO alles aufdecken').",
+   "customData": {
+    "designMode": "A",
+    "kampagne": "SCHWARZE SEE",
+    "kampagnenDesign": "CHN_aufklaerer",
+    "kampagnenName": "Aufklaerungssatellit",
+    "nation": "CHN",
+    "rolle": "Aufklaerung bis GEO",
+    "advantages": [
+     "Strahlungs-Haertung",
+     "Thermischer Betrieb"
+    ],
+    "disadvantages": [],
+    "structureClass": "ruggedized",
+    "structureTax": {
+     "struct_pct": 17,
+     "tank_pct": 12
+    },
+    "massBreakdown_kg": {
+     "nutzlast": 1000.0,
+     "bus": 507.3883,
+     "triebwerke": 24,
+     "kraftwerk": 82.5,
+     "pmad": 11.275,
+     "batterie": 16.5,
+     "radiator": 25.0,
+     "tank": 5.2617,
+     "struktur": 284.2273,
+     "trocken": 1956.1523,
+     "treibstoff": 43.8477,
+     "nass": 2000.0
+    },
+    "powerPlant": {
+     "type": "solar",
+     "output_kw": 5.5,
+     "alpha_kg_kw": 15.0,
+     "battery_kg": 16.5,
+     "battery_hours": 0.6,
+     "house_kw": 5.0
+    },
+    "maneuverTime_s": 1123.9,
+    "thrust_simultaneous_N": 88,
+    "dv_manoever_kms": 0.0,
+    "dv_stationshaltung_kms": 0.05,
+    "huellkurve": {
+     "pay_dry": 51.1,
+     "paybus_dry": 77.1,
+     "struct_dry": 14.5,
+     "dry_wet": 97.8,
+     "pp_dry": 5.1
+    },
+    "impliziteBasis_kg": 200.0,
+    "antiJamming": {
+     "presets": [
+      [
+       "Raumschiff-Eigenschatten (genau ausgerichtet)",
+       -100
+      ],
+      [
+       "Comm mit Frequency Hopping",
+       -25
+      ],
+      [
+       "Tief eingelassenes System",
+       -110
+      ],
+      [
+       "Synthetic Aperture Nulling",
+       -40
+      ]
+     ],
+     "total_dB": -275
+    },
+    "realLaunchMass_kg": 1999.9999999999998,
+    "massDeviationPct": 0.0
+   }
+  },
+  {
+   "name": "Feldzeichen",
+   "class": "Corvette",
+   "isp": 230,
+   "thrust": 132,
+   "engineType": "custom_hydrazine_22n",
+   "dryMass": 1.2838,
+   "maxPropellant": 0.7162,
+   "currentPropellant": 0.7162,
+   "maxDeltaV": 1000.0,
+   "designDeltaV": 1000.0,
+   "currentDeltaV": 1000.0,
+   "boiloffRate": 0.0,
+   "originalDryMass": 1.2838,
+   "originalMaxPropellant": 0.7162,
+   "coreDryMass": null,
+   "corePropellant": null,
+   "source": "skill",
+   "engines": [
+    {
+     "name": "Hydrazin-Monergol 22 N",
+     "key": "custom_hydrazine_22n",
+     "isp": 230,
+     "thrust_n": 22,
+     "count": 6,
+     "simultaneous": 6,
+     "propType": "hydrazine",
+     "mass_kg": 6
+    }
+   ],
+   "propellantPools": {
+    "hydrazine": 0.7162
+   },
+   "maxPropellantPools": {
+    "hydrazine": 0.7162
+   },
+   "poolDeltaV": {
+    "hydrazine": 1000.0
+   },
+   "wasteHeat": 3.0,
+   "powerBudget": 3300,
+   "powerUsed": 3000,
+   "armor": {
+    "material": null,
+    "thickness_cm": 0,
+    "mass_tonnes": 0,
+    "whipple": false,
+    "whippleGap_cm": 0
+   },
+   "geometry": {
+    "D_out": 0.9193,
+    "L_out": 2.2983,
+    "A_front": 0.6638,
+    "A_side": 6.6375,
+    "volume_m3": 1.5255,
+    "ldRatio": 2.5
+   },
+   "signatures": {
+    "stealthEngOff": {
+     "wasteHeat": 5,
+     "radTemp": 50,
+     "irArea": 0.0664,
+     "emissivity": 0.1,
+     "optArea": 0.3319,
+     "albedo": 0.02,
+     "rcs": 0.01,
+     "rfEmit": 0,
+     "stealthDuration": 0,
+     "mode": "stealth"
+    },
+    "normalEngOff": {
+     "wasteHeat": 3.0,
+     "radTemp": 300,
+     "irArea": 1.9913,
+     "emissivity": 0.9,
+     "optArea": 0.6638,
+     "albedo": 0.2,
+     "rcs": 0.3319,
+     "rfEmit": 10,
+     "mode": "coast"
+    },
+    "normalEngOn": {
+     "wasteHeat": 4.8,
+     "radTemp": 2800,
+     "plumeTemp": 2800,
+     "irArea": 2.1304,
+     "plumeIRArea": 0.1391,
+     "emissivity": 0.15,
+     "plumeEps": 0.15,
+     "optArea": 0.7333,
+     "albedo": 0.2,
+     "rcs": 0.5135,
+     "plumeRCS": 0.1817,
+     "rfEmit": 10,
+     "engineType": "custom_hydrazine_22n",
+     "thrustN": 132,
+     "mode": "thrust"
+    },
+    "stealth": {
+     "wasteHeat": 5,
+     "radTemp": 50,
+     "irArea": 0.0664,
+     "emissivity": 0.1,
+     "optArea": 0.3319,
+     "albedo": 0.02,
+     "rcs": 0.01,
+     "rfEmit": 0,
+     "stealthDuration": 0,
+     "mode": "stealth"
+    },
+    "coast": {
+     "wasteHeat": 3.0,
+     "radTemp": 300,
+     "irArea": 1.9913,
+     "emissivity": 0.9,
+     "optArea": 0.6638,
+     "albedo": 0.2,
+     "rcs": 0.3319,
+     "rfEmit": 10,
+     "mode": "coast"
+    },
+    "thrust": {
+     "wasteHeat": 4.8,
+     "radTemp": 2800,
+     "plumeTemp": 2800,
+     "irArea": 2.1304,
+     "plumeIRArea": 0.1391,
+     "emissivity": 0.15,
+     "plumeEps": 0.15,
+     "optArea": 0.7333,
+     "albedo": 0.2,
+     "rcs": 0.5135,
+     "plumeRCS": 0.1817,
+     "rfEmit": 10,
+     "engineType": "custom_hydrazine_22n",
+     "thrustN": 132,
+     "mode": "thrust"
+    }
+   },
+   "installedSensors": {},
+   "cryoConfig": {},
+   "heatConfig": {
+    "mode": "kg_per_kw",
+    "alpha_kg_kw": 5.0,
+    "waste_kw": 3.0,
+    "rad_mass_kg": 15.0
+   },
+   "stealthConfig": {
+    "warmRadArea": 0,
+    "warmRadTemp": 15,
+    "h2CoolantMass": 0,
+    "h2LatentHeat": 446000,
+    "h2NoseTemp": 14,
+    "h2EmitArea": 20,
+    "h2Days": 0,
+    "heCoolantMass": 0,
+    "heLatentHeat": 20800,
+    "heHours": 0,
+    "rcsFaceted": "no",
+    "rcsAbsorb": 0.3,
+    "rcsBaseArea": 20,
+    "warmIRSmall": 0,
+    "warmIRLarge": 0,
+    "h2IRSmall": 2000,
+    "h2IRLarge": 10000,
+    "heIRSmall": 5,
+    "heIRLarge": 30,
+    "totalHeat": 0
+   },
+   "coolant": {
+    "h2Mass": 0,
+    "heMass": 0,
+    "h2MaxMass": 0,
+    "heMaxMass": 0
+   },
+   "stagingConfig": null,
+   "currentStaging": null,
+   "commSystems": [
+    {
+     "type": "comm",
+     "band": "Ka-Band (32 GHz)",
+     "aperture": 0.37,
+     "power_dbm": 40,
+     "bandwidth_hz": 10000,
+     "mass_kg": 12.8376,
+     "power_w": 132,
+     "ajConfig": {
+      "presets": [
+       "Raumschiff-Eigenschatten (genau ausgerichtet)",
+       "Comm mit Frequency Hopping",
+       "Tief eingelassenes System",
+       "Synthetic Aperture Nulling"
+      ],
+      "advantage_dB": -275
+     }
+    }
+   ],
+   "jamSystems": null,
+   "detectionData": {},
+   "notes": "OW-01 Modus A (Rekonstruktion) von Kampagnenentwurf CHN_scorer 'Scoring-Raumschiff' (CHN). Anker: gebuchte Startmasse 2 t aus stand/gamestate.json, Abweichung 0,0000 %. Strukturklasse ruggedized + 3 Vorteile (Strahlungs-Haertung, Thermischer Betrieb, Magnetfeld-Toleranz) -> Struktur 18 %, Tank 13 %. Energie: solar, 3.30 kW, Kraftwerk 49.5 kg, Batterie 19.8 kg. AJ-Summe -275 dB. dv = 1000 m/s (genau ein Scoring-Versuch (scoring.md: 1 km/s je Versuch)), Manoeverzeit 3.46 h. Ops-/Wirkpaket 200 kg, unbewaffnet.",
+   "customData": {
+    "designMode": "A",
+    "kampagne": "SCHWARZE SEE",
+    "kampagnenDesign": "CHN_scorer",
+    "kampagnenName": "Scoring-Raumschiff",
+    "nation": "CHN",
+    "rolle": "Zonenpraesenz und Scoring",
+    "advantages": [
+     "Strahlungs-Haertung",
+     "Thermischer Betrieb",
+     "Magnetfeld-Toleranz"
+    ],
+    "disadvantages": [],
+    "structureClass": "ruggedized",
+    "structureTax": {
+     "struct_pct": 18,
+     "tank_pct": 13
+    },
+    "massBreakdown_kg": {
+     "nutzlast": 200.0,
+     "bus": 667.7548,
+     "triebwerke": 36,
+     "kraftwerk": 49.5,
+     "pmad": 6.765,
+     "batterie": 19.8,
+     "radiator": 15.0,
+     "tank": 93.1114,
+     "struktur": 195.8276,
+     "trocken": 1283.7588,
+     "treibstoff": 716.2412,
+     "nass": 2000.0
+    },
+    "powerPlant": {
+     "type": "solar",
+     "output_kw": 3.3,
+     "alpha_kg_kw": 15.0,
+     "battery_kg": 19.8,
+     "battery_hours": 1.2,
+     "house_kw": 3.0
+    },
+    "maneuverTime_s": 12438.5,
+    "thrust_simultaneous_N": 132,
+    "dv_manoever_kms": 1.0,
+    "dv_stationshaltung_kms": -0.0,
+    "huellkurve": {
+     "pay_dry": 15.6,
+     "paybus_dry": 67.6,
+     "struct_dry": 15.3,
+     "dry_wet": 64.2,
+     "pp_dry": 5.4
+    },
+    "impliziteBasis_kg": 33.3,
+    "antiJamming": {
+     "presets": [
+      [
+       "Raumschiff-Eigenschatten (genau ausgerichtet)",
+       -100
+      ],
+      [
+       "Comm mit Frequency Hopping",
+       -25
+      ],
+      [
+       "Tief eingelassenes System",
+       -110
+      ],
+      [
+       "Synthetic Aperture Nulling",
+       -40
+      ]
+     ],
+     "total_dB": -275
+    },
+    "realLaunchMass_kg": 2000.0,
+    "massDeviationPct": 0.0
+   }
+  },
+  {
+   "name": "Himmelsbruecke",
+   "class": "Frigate",
+   "isp": 1600,
+   "thrust": 0.332,
+   "engineType": "custom_spd100",
+   "dryMass": 4.7666,
+   "maxPropellant": 0.2334,
+   "currentPropellant": 0.2334,
+   "maxDeltaV": 750.0,
+   "designDeltaV": 750.0,
+   "currentDeltaV": 750.0,
+   "boiloffRate": 0.0,
+   "originalDryMass": 4.7666,
+   "originalMaxPropellant": 0.2334,
+   "coreDryMass": null,
+   "corePropellant": null,
+   "source": "skill",
+   "engines": [
+    {
+     "name": "Hall-Triebwerk SPD-100",
+     "key": "custom_spd100",
+     "isp": 1600,
+     "thrust_n": 0.083,
+     "count": 4,
+     "simultaneous": 2,
+     "propType": "xenon",
+     "mass_kg": 45,
+     "p_kw": 1.35,
+     "waste_kw": 0.54
+    }
+   ],
+   "propellantPools": {
+    "xenon": 0.2334
+   },
+   "maxPropellantPools": {
+    "xenon": 0.2334
+   },
+   "poolDeltaV": {
+    "xenon": 750.0
+   },
+   "wasteHeat": 17.16,
+   "powerBudget": 19470,
+   "powerUsed": 17700,
+   "armor": {
+    "material": null,
+    "thickness_cm": 0,
+    "mass_tonnes": 0,
+    "whipple": false,
+    "whippleGap_cm": 0
+   },
+   "geometry": {
+    "D_out": 1.2321,
+    "L_out": 3.2034,
+    "A_front": 1.1923,
+    "A_side": 12.3995,
+    "volume_m3": 3.8193,
+    "ldRatio": 2.6
+   },
+   "signatures": {
+    "stealthEngOff": {
+     "wasteHeat": 5,
+     "radTemp": 50,
+     "irArea": 0.1192,
+     "emissivity": 0.1,
+     "optArea": 0.5961,
+     "albedo": 0.02,
+     "rcs": 0.0179,
+     "rfEmit": 0,
+     "stealthDuration": 0,
+     "mode": "stealth"
+    },
+    "normalEngOff": {
+     "wasteHeat": 17.16,
+     "radTemp": 300,
+     "irArea": 3.7199,
+     "emissivity": 0.9,
+     "optArea": 1.1923,
+     "albedo": 0.2,
+     "rcs": 0.5961,
+     "rfEmit": 10,
+     "mode": "coast"
+    },
+    "normalEngOn": {
+     "wasteHeat": 27.456,
+     "radTemp": 400,
+     "plumeTemp": 400,
+     "irArea": 3.7203,
+     "plumeIRArea": 0.0004,
+     "emissivity": 0.15,
+     "plumeEps": 0.15,
+     "optArea": 1.1925,
+     "albedo": 0.2,
+     "rcs": 0.6052,
+     "plumeRCS": 0.0091,
+     "rfEmit": 10,
+     "engineType": "custom_spd100",
+     "thrustN": 0.332,
+     "mode": "thrust"
+    },
+    "stealth": {
+     "wasteHeat": 5,
+     "radTemp": 50,
+     "irArea": 0.1192,
+     "emissivity": 0.1,
+     "optArea": 0.5961,
+     "albedo": 0.02,
+     "rcs": 0.0179,
+     "rfEmit": 0,
+     "stealthDuration": 0,
+     "mode": "stealth"
+    },
+    "coast": {
+     "wasteHeat": 17.16,
+     "radTemp": 300,
+     "irArea": 3.7199,
+     "emissivity": 0.9,
+     "optArea": 1.1923,
+     "albedo": 0.2,
+     "rcs": 0.5961,
+     "rfEmit": 10,
+     "mode": "coast"
+    },
+    "thrust": {
+     "wasteHeat": 27.456,
+     "radTemp": 400,
+     "plumeTemp": 400,
+     "irArea": 3.7203,
+     "plumeIRArea": 0.0004,
+     "emissivity": 0.15,
+     "plumeEps": 0.15,
+     "optArea": 1.1925,
+     "albedo": 0.2,
+     "rcs": 0.6052,
+     "plumeRCS": 0.0091,
+     "rfEmit": 10,
+     "engineType": "custom_spd100",
+     "thrustN": 0.332,
+     "mode": "thrust"
+    }
+   },
+   "installedSensors": {},
+   "cryoConfig": {},
+   "heatConfig": {
+    "mode": "kg_per_kw",
+    "alpha_kg_kw": 5.0,
+    "waste_kw": 17.16,
+    "rad_mass_kg": 85.8
+   },
+   "stealthConfig": {
+    "warmRadArea": 0,
+    "warmRadTemp": 15,
+    "h2CoolantMass": 0,
+    "h2LatentHeat": 446000,
+    "h2NoseTemp": 14,
+    "h2EmitArea": 20,
+    "h2Days": 0,
+    "heCoolantMass": 0,
+    "heLatentHeat": 20800,
+    "heHours": 0,
+    "rcsFaceted": "no",
+    "rcsAbsorb": 0.3,
+    "rcsBaseArea": 20,
+    "warmIRSmall": 0,
+    "warmIRLarge": 0,
+    "h2IRSmall": 2000,
+    "h2IRLarge": 10000,
+    "heIRSmall": 5,
+    "heIRLarge": 30,
+    "totalHeat": 0
+   },
+   "coolant": {
+    "h2Mass": 0,
+    "heMass": 0,
+    "h2MaxMass": 0,
+    "heMaxMass": 0
+   },
+   "stagingConfig": null,
+   "currentStaging": null,
+   "commSystems": [
+    {
+     "type": "comm",
+     "band": "Ka-Band (32 GHz)",
+     "aperture": 0.47,
+     "power_dbm": 40,
+     "bandwidth_hz": 10000,
+     "mass_kg": 47.6663,
+     "power_w": 779,
+     "ajConfig": {
+      "presets": [
+       "Raumschiff-Eigenschatten (genau ausgerichtet)",
+       "Comm mit Frequency Hopping",
+       "Tief eingelassenes System",
+       "Synthetic Aperture Nulling"
+      ],
+      "advantage_dB": -275
+     }
+    }
+   ],
+   "jamSystems": null,
+   "detectionData": {},
+   "notes": "OW-01 Modus A (Rekonstruktion) von Kampagnenentwurf CHN_geo_relais 'GEO-Relais' (CHN). Anker: gebuchte Startmasse 5 t aus stand/gamestate.json, Abweichung 0,0000 %. Strukturklasse ruggedized + 3 Vorteile (Strahlungs-Haertung, Thermischer Betrieb, Magnetfeld-Toleranz) -> Struktur 18 %, Tank 13 %. Energie: solar, 19.47 kW, Kraftwerk 292.1 kg, Batterie 116.8 kg. AJ-Summe -275 dB. dv = 750 m/s (Nord-Sued-Bahnhaltung GEO, 50 m/s je Jahr x 15 Jahre), Manoeverzeit 6128.66 h. C2-Relaisnutzlast 900 kg.",
+   "customData": {
+    "designMode": "A",
+    "kampagne": "SCHWARZE SEE",
+    "kampagnenDesign": "CHN_geo_relais",
+    "kampagnenName": "GEO-Relais",
+    "nation": "CHN",
+    "rolle": "+1 C2-Slot je Stueck (launch_c2 §2.1)",
+    "advantages": [
+     "Strahlungs-Haertung",
+     "Thermischer Betrieb",
+     "Magnetfeld-Toleranz"
+    ],
+    "disadvantages": [],
+    "structureClass": "ruggedized",
+    "structureTax": {
+     "struct_pct": 18,
+     "tank_pct": 13
+    },
+    "massBreakdown_kg": {
+     "nutzlast": 900.0,
+     "bus": 2394.5914,
+     "triebwerke": 180,
+     "kraftwerk": 292.05,
+     "pmad": 39.9135,
+     "batterie": 116.82,
+     "radiator": 85.8,
+     "tank": 30.3386,
+     "struktur": 727.1124,
+     "trocken": 4766.626,
+     "treibstoff": 233.374,
+     "nass": 5000.0
+    },
+    "powerPlant": {
+     "type": "solar",
+     "output_kw": 19.47,
+     "alpha_kg_kw": 15.0,
+     "battery_kg": 116.82,
+     "battery_hours": 1.2,
+     "house_kw": 15.0
+    },
+    "maneuverTime_s": 22063161.1,
+    "thrust_simultaneous_N": 0.166,
+    "dv_manoever_kms": 0.0,
+    "dv_stationshaltung_kms": 0.75,
+    "huellkurve": {
+     "pay_dry": 18.9,
+     "paybus_dry": 69.1,
+     "struct_dry": 15.3,
+     "dry_wet": 95.3,
+     "pp_dry": 8.6
+    },
+    "impliziteBasis_kg": 150.0,
+    "antiJamming": {
+     "presets": [
+      [
+       "Raumschiff-Eigenschatten (genau ausgerichtet)",
+       -100
+      ],
+      [
+       "Comm mit Frequency Hopping",
+       -25
+      ],
+      [
+       "Tief eingelassenes System",
+       -110
+      ],
+      [
+       "Synthetic Aperture Nulling",
+       -40
+      ]
+     ],
+     "total_dB": -275
+    },
+    "realLaunchMass_kg": 4999.999999999999,
+    "massDeviationPct": 0.0
+   }
+  }
+ ]
+}
