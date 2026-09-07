@@ -44,13 +44,15 @@ ENT = {
 "CHN_scorer": dict(
   bauname="Feldzeichen", anker=2000.0, klasse="Corvette", zone_bemerkung="LEO/MEO/HEO/SSO/GEO",
   basis=[("custom_opspaket","Ops-Paket: Transponder, Nahbereichssensor, Praesenznachweis",50.0)],
-  adv=["Strahlungs-Haertung","Thermischer Betrieb"], dis=[], no_he=False,
+  adv=["Strahlungs-Haertung","Thermischer Betrieb"], dis=["Doktrinaer gebunden"], no_he=True,
   begr={"Strahlungs-Haertung":"Die fuenf Scorer stehen in LEO 600, MEO 20 000, HEO 39 000, SSO 700 "
           "und GEO 35 786 km. MEO liegt im Kern des aeusseren Strahlungsguertels, HEO und GEO im "
           "Feld solarer Teilchenereignisse. 27 von 32 realen Systemen im OW-01-Katalog tragen "
           "diesen Vorteil, Chinas eigene GEO-Systeme TJS und Shijian-21/25 ebenfalls.",
         "Thermischer Betrieb":"Bis zu 72 min Kernschatten gegen volle Sonne, jeden Tag ueber die "
-          "Einsatzdauer. Die Basis der Tax-Tabelle (-200 C) deckt das nicht ab."},
+          "Einsatzdauer. Die Basis der Tax-Tabelle (-200 C) deckt das nicht ab.",
+        "Doktrinaer gebunden":"Vorgeplanter Scoring-Korridor, bodengefuehrt, unbewaffnet — das "
+          "Schiff fuehrt kein eigenstaendiges Gefecht und braucht Begleitschutz."},
   isp=315, prop="mmh_nto", dv=1000.0, ld=2.5, house=3.6, batt=1.2,
   eng=[dict(name="Bipropellant MMH/NTO 490 N", key="custom_490n_bipro", isp=315, thrust_n=490,
             mass_kg=16, count=1, simultaneous=1, propType="mmh_nto"),
@@ -84,11 +86,16 @@ ENT = {
 "CHN_geo_relais": dict(
   bauname="Himmelsbruecke", anker=5000.0, klasse="Frigate", zone_bemerkung="GEO",
   basis=[("custom_c2relais","C2-Relaisnutzlast: Antennen, Transponder, Kreuzverbindung",150.0)],
-  adv=["Strahlungs-Haertung","Thermischer Betrieb","Magnetfeld-Toleranz"], dis=[], no_he=False,
+  adv=["Strahlungs-Haertung","Thermischer Betrieb","Magnetfeld-Toleranz"],
+  dis=["Hoher EM-Abdruck","Doktrinaer gebunden"], no_he=True,
   begr={"Strahlungs-Haertung":"GEO im aeusseren Guertel, 15 Jahre Auslegungsdauer.",
         "Thermischer Betrieb":"72 min Kernschatten gegen volle Sonne.",
         "Magnetfeld-Toleranz":"Aufladung und Entladung im GEO-Plasma — das klassische "
-          "Ausfallmuster geostationaerer Nachrichtensatelliten."},
+          "Ausfallmuster geostationaerer Nachrichtensatelliten.",
+        "Hoher EM-Abdruck":"Ein Nachrichtenrelais ist ein dauerhafter, starker Sender. Es zu "
+          "verbergen ist unmoeglich und auch nicht beabsichtigt.",
+        "Doktrinaer gebunden":"Fester GEO-Platz, unbewaffnete Infrastruktur ohne eigenstaendige "
+          "Handlung."},
   isp=1600, prop="xenon", dv=750.0, ld=2.6, house=15.0, batt=1.2,
   eng=[dict(name="Hall-Triebwerk SPD-100", key="custom_spd100", isp=1600, thrust_n=0.083,
             mass_kg=45, count=4, simultaneous=2, propType="xenon", p_kw=1.35, p_count=2,

@@ -106,7 +106,7 @@ def pruefe(g, b):
 
             # S-2 — Penaltykette bei Modus B vollstaendig und richtig gerechnet
             if modus and norm(modus).upper() in ("B","NEU","NEUKONSTRUKTION"):
-                k = d.get("k2_penaltykette")
+                k = d.get("k2_penaltykette")  # noqa: F841 (oben schon gelesen)
                 if not k:
                     b.fehler("S-2", ref, "Modus B ohne k2_penaltykette. Der Nutzlastmultiplikator "
                         "ist der Kanal, der bei Modus A entfaellt — in Modus B muss er belegt sein.",
@@ -147,6 +147,29 @@ def pruefe(g, b):
                     elif jahr and jahr < jahr_frei:
                         b.fehler("S-6", ref, f"{stufe} beansprucht im Jahr {jahr}, freigeschaltet "
                             f"erst ab {jahr_frei}.", "research.md §Techstufen")
+
+            # S-8 — Hochenergie ist eine Tatsache ueber das Schiff, keine Wahl.
+            # construction.md: "High-Energy-Systeme (ab ~50 kW, z.B. Laser): ... Zusaetzlich:
+            # Dv / 3 UND 3x Gewicht" — die Strafe hat ZWEI Haelften und gilt erst ab ~50 kW.
+            k = d.get("k2_penaltykette") or {}
+            leist = d.get("spitzenlast_kw")
+            if k and leist is not None:
+                he = (k.get("hochenergie_faktor") or 1) > 1
+                if leist < 50 and he:
+                    b.fehler("S-8", ref, f"Hochenergie-Faktor x{k.get('hochenergie_faktor')} "
+                        f"aufgeschlagen, aber die Spitzenlast betraegt nur {leist:.2f} kW. Die "
+                        "Strafe gilt erst ab ~50 kW — hier ist ctxNoHE zu deklarieren.",
+                        'construction.md §Weight Penalty 3: "High-Energy-Systeme (ab ~50 kW, '
+                        'z.B. Laser)"')
+                if leist >= 50 and he and not d.get("dv_hochenergie_geteilt"):
+                    b.fehler("S-8", ref, f"Hochenergie mit {leist:.2f} kW zu Recht angesetzt, aber "
+                        "nur die Gewichtshaelfte gebucht. Die Strafe hat zwei Haelften: 3x Gewicht "
+                        "UND Dv / 3. Entweder beide oder keine.",
+                        'construction.md: "Zusaetzlich: Dv / 3 und 3x Gewicht"')
+                if leist >= 50 and not he and not k.get("ctxNoHE"):
+                    b.warnung("S-8", ref, f"Spitzenlast {leist:.2f} kW liegt ueber der Schwelle, "
+                        "aber es ist weder Hochenergie noch ctxNoHE gebucht — Zustand unklar.",
+                        "construction.md §Weight Penalty 3")
 
             # S-7 — Autonomie ist ein Bauentscheid und muss dastehen
             st = norm(d.get("steuerung","")).lower()
@@ -330,6 +353,16 @@ FAELLE = [
  ("Z5-070  Bauauftrag ohne gebuchten Werftdurchsatz", "B-1",
   {"bz01": {"bauplan": [{"id": "T", "fraktion": "CHN", "design_ref": "X", "count": 2,
                          "stueck_masse_t": 2.0, "kosten_mult": 4.0}]}}),
+ ("Z5-082  Hochenergie-Gewicht ohne Hochenergie-Leistung (unter 50 kW)", "S-8",
+  {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
+     "steuerungBegruendung": "Link", "spitzenlast_kw": 3.6, "vorteile": [], "nachteile": [],
+     "k2_penaltykette": {"basis_kg": 50, "np": 3, "cm": 3, "hochenergie_faktor": 3,
+                         "disc": 1, "env": 0, "nutzlast_final_kg": 450}}}}}}),
+ ("Z5-082  Hochenergie zu Recht, aber nur die Gewichtshaelfte gebucht", "S-8",
+  {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
+     "steuerungBegruendung": "Link", "spitzenlast_kw": 200.0, "vorteile": [], "nachteile": [],
+     "k2_penaltykette": {"basis_kg": 50, "np": 3, "cm": 3, "hochenergie_faktor": 3,
+                         "disc": 1, "env": 0, "nutzlast_final_kg": 450}}}}}}),
  ("Z5-076  Steuerung nicht deklariert (Strukturtonne: Bauentscheid)", "S-7",
   {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "vorteile": [], "nachteile": [],
      "k2_penaltykette": {"basis_kg": 100, "np": 3, "cm": 3, "hochenergie_faktor": 3,
@@ -364,7 +397,7 @@ def selbsttest():
         "vorteile": [], "nachteile": [{"name": "Single-Use", "begruendung": "b", "spielwirkung": "w"},
                                       {"name": "Doktrinaer gebunden", "begruendung": "b", "spielwirkung": "w"},
                                       {"name": "Fragile Radiatoren", "begruendung": "b", "spielwirkung": "w"}],
-        "steuerung": "ferngelenkt", "steuerungBegruendung": "Link noetig",
+        "steuerung": "ferngelenkt", "steuerungBegruendung": "Link noetig", "spitzenlast_kw": 3.6,
         "k2_penaltykette": {"basis_kg": 1000, "np": 0, "cm": 1, "hochenergie_faktor": 1,
                             "disc": 1, "env": 0, "nutzlast_final_kg": 1000}}}}}}
     b = pruefe(sauber, Bericht())

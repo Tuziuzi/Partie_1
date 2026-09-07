@@ -108,7 +108,11 @@ for did, e in E.items():
                    "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; "
                              "final = basis * cm * disc * (1+env) * (3 ausser ctxNoHE; mit "
                              "ctxNoHE stattdessen cm zusaetzlich * np)"},
-       "nutzlastBasis_kg": d["base"],
+       "nutzlastBasis_kg": d["base"], "spitzenlast_kw": round(d["peak_kw"],2),
+       "hochenergieSchwelle_kw": 50.0,
+       "hochenergieBefund": ("Spitzenlast unter der Schwelle von ~50 kW (construction.md "
+         "§Weight Penalty 3) — kein Hochenergie-System. Also weder 3x Gewicht noch Dv/3; "
+         "ctxNoHE deklariert."),
        "nutzlastHerkunft": " + ".join(f"{b[1]} ({b[0]}, {b[2]:.0f} kg)" for b in e["basis"]),
        "massBreakdown_kg": {"nutzlast":r4(d["pay_final"]),"bus":r4(d["bus"]),
          "triebwerke":r4(d["thr_mass"]),"kraftwerk":r4(d["pp_mass"]),"pmad":r4(d["pmad_mass"]),

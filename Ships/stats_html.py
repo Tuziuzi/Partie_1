@@ -41,6 +41,26 @@ B.append('<div class="kopf">Kampagne SCHWARZE SEE · Stand nach Zug&nbsp;5 (2030
  'alle drei Schiffe <b>ferngelenkt</b> — und tragen dafür volle Härtung. '
  f'Erzeugt {datetime.date.today().isoformat()}.</div>')
 
+B.append('<div class="karte warn"><h2>Keine Hochenergie — und deshalb auch kein Δv-Malus</h2>'
+ '<p><code>construction.md</code> §Weight Penalty 3: <i>«<b>High-Energy-Systeme (ab ~50&nbsp;kW, '
+ 'z.B. Laser):</b> Reaktor + Heatsinks extra berechnen. Zusätzlich: <b>Δv ÷ 3</b> und '
+ '<b>3× Gewicht</b>»</i></p>'
+ '<p>Das ist <b>eine Strafe mit zwei Hälften</b>, und sie greift erst ab ~50&nbsp;kW. Meine vorige '
+ 'Fassung hatte zwei Schiffen die Gewichtshälfte aufgeladen, ohne dass sie die Schwelle erreichen — '
+ 'und die Δv-Hälfte nie angewandt. Beides ist korrigiert: alle drei deklarieren jetzt '
+ '<code>ctxNoHE</code>, tragen <b>weder ×3 noch ÷3</b>.</p><div class="wrap"><table>'
+ '<tr><th>Schiff</th><th class="n">Spitzenlast</th><th class="n">Schwelle</th><th>Folge</th></tr>'
+ '<tr><td>Feldzeichen</td><td class="n">3,60 kW</td><td class="n">50 kW</td>'
+ '<td class="ok">kein Hochenergie-System — ctxNoHE</td></tr>'
+ '<tr><td>Himmelsauge</td><td class="n">11,00 kW</td><td class="n">50 kW</td>'
+ '<td class="ok">kein Hochenergie-System — ctxNoHE</td></tr>'
+ '<tr><td>Himmelsbrücke</td><td class="n">17,70 kW</td><td class="n">50 kW</td>'
+ '<td class="ok">kein Hochenergie-System — ctxNoHE</td></tr></table></div>'
+ '<p class="q">Mit <code>ctxNoHE</code> entfällt das ×3, dafür wird cm zusätzlich mit np '
+ 'multipliziert (cm = np²). Das kehrt den Anreiz um: niedriges np wird günstig, hohes teuer. '
+ 'Deshalb tragen jetzt alle drei Schiffe Nachteile — nicht um Masse zu sparen, sondern weil die '
+ 'ehrliche Deklaration sie dorthin führt. Die Startmassen bleiben unverändert 2,0 / 3,6 / 5,0&nbsp;t.</p></div>')
+
 B.append('<div class="karte fern"><h2>Was Fernlenkung bedeutet</h2>'
  '<p><code>construction.md</code> §«Struktur = Autonomie (Kernregel)»: <i>«Die Strukturtonne kauft '
  'nicht Rumpf, sondern <b>Autonomie</b>: Bordrechner, Selbststeuerung, eigene Feuerleitung. Sie ist '
