@@ -1,0 +1,9 @@
+{
+ "Strahlungs-Haertung": "x10 Strahlungsbelastung tragbar (construction.md Tax-Tabelle, Stufe 1)",
+ "Thermischer Betrieb": "Betrieb ueber der Basis von -200 C (Tax-Tabelle T1)",
+ "Hoher EM-Abdruck": "+1 auf gegnerische Aufklaerung gegen dieses Schiff",
+ "Doktrinaer gebunden": "-1 Initiative oder Begleitschutz noetig",
+ "Single-Use": "einmal einsatzfaehig; nicht betankbar, nicht wartbar",
+ "Fragile Radiatoren": "+50 % Ausfall bei Kuehlungstreffer",
+ "Magnetfeld-Toleranz": "Aufladung/Entladung im GEO-Plasma beherrscht"
+}

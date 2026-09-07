@@ -1,0 +1,158 @@
+{
+ "CHN_scorer": {
+  "bauname": "Feldzeichen",
+  "anker": 2000.0,
+  "klasse": "Corvette",
+  "basis": [
+   [
+    "custom_opspaket",
+    "Ops-Paket: Transponder, Nahbereichssensor, Praesenznachweis",
+    50.0
+   ]
+  ],
+  "adv": [
+   "Strahlungs-Haertung",
+   "Thermischer Betrieb"
+  ],
+  "dis": [],
+  "no_he": false,
+  "begr": {
+   "Strahlungs-Haertung": "Die fuenf Scorer stehen in LEO 600, MEO 20 000, HEO 39 000, SSO 700 und GEO 35 786 km. MEO liegt im Kern des aeusseren Strahlungsguertels, HEO und GEO im Feld solarer Teilchenereignisse. 27 von 32 realen Systemen im OW-01-Katalog tragen diesen Vorteil, Chinas eigene GEO-Systeme TJS und Shijian-21/25 ebenfalls.",
+   "Thermischer Betrieb": "Bis zu 72 min Kernschatten gegen volle Sonne, jeden Tag ueber die Einsatzdauer. Die Basis der Tax-Tabelle (-200 C) deckt das nicht ab."
+  },
+  "isp": 315,
+  "prop": "mmh_nto",
+  "dv": 1000.0,
+  "ld": 2.5,
+  "house": 3.6,
+  "batt": 1.2,
+  "eng": [
+   {
+    "name": "Bipropellant MMH/NTO 490 N",
+    "key": "custom_490n_bipro",
+    "isp": 315,
+    "thrust_n": 490,
+    "mass_kg": 16,
+    "count": 1,
+    "simultaneous": 1,
+    "propType": "mmh_nto"
+   },
+   {
+    "name": "Lageregelung MMH/NTO 22 N",
+    "key": "custom_bipro_22n",
+    "isp": 315,
+    "thrust_n": 22,
+    "mass_kg": 6,
+    "count": 4,
+    "simultaneous": 4,
+    "propType": "mmh_nto"
+   }
+  ],
+  "dv_man": 1.0,
+  "dv_zweck": "genau ein Scoring-Versuch (scoring.md: 1 km/s je Versuch)",
+  "rolle": "Zonenpraesenz und Scoring",
+  "zone_bemerkung": "LEO/MEO/HEO/SSO/GEO"
+ },
+ "CHN_aufklaerer": {
+  "bauname": "Himmelsauge",
+  "anker": 3600.0,
+  "klasse": "Corvette",
+  "basis": [
+   [
+    "sensor_geo",
+    "comps 'Sensor: to GEO' — construction.md §2 'Bis GEO alles aufdecken'",
+    1000.0
+   ]
+  ],
+  "adv": [
+   "Strahlungs-Haertung",
+   "Thermischer Betrieb"
+  ],
+  "dis": [
+   "Hoher EM-Abdruck",
+   "Doktrinaer gebunden",
+   "Single-Use",
+   "Fragile Radiatoren"
+  ],
+  "no_he": true,
+  "begr": {
+   "Strahlungs-Haertung": "LEO 600 km, mehrjaehrige Auslegung, Suedatlantische Anomalie und Polarpassagen. Auch Indiens SPADEX in LEO traegt ihn.",
+   "Thermischer Betrieb": "35 min Kernschatten je Umlauf gegen volle Sonne, rund 15 Zyklen am Tag. Die Basis (-200 C) deckt das nicht ab.",
+   "Hoher EM-Abdruck": "Eine Grossapertur, die 'bis GEO alles aufdeckt', ist ein aktiver Hochleistungs-Emitter. payload_catalog.md §Suite coupling nennt die Buchung dieses Nachteils neben einem aktiven Sensor ausdruecklich als empfohlene Praxis.",
+   "Doktrinaer gebunden": "Fester Aufklaerungsorbit, bodengefuehrte Auftragssteuerung, kein eigenstaendiges Manoever — deckt sich mit dem gebuchten Manoeverbudget 0,0 km/s.",
+   "Single-Use": "Nicht betankbar, nicht wartbar, nicht bergbar — eine Aussetzung.",
+   "Fragile Radiatoren": "Minimaler, ungeschuetzter Radiator an einem Serienbau."
+  },
+  "isp": 230,
+  "prop": "hydrazine",
+  "dv": 50.0,
+  "ld": 2.5,
+  "house": 11.0,
+  "batt": 0.6,
+  "eng": [
+   {
+    "name": "Hydrazin-Monergol 22 N",
+    "key": "custom_hydrazine_22n",
+    "isp": 230,
+    "thrust_n": 22,
+    "mass_kg": 6,
+    "count": 4,
+    "simultaneous": 4,
+    "propType": "hydrazine"
+   }
+  ],
+  "dv_man": 0.0,
+  "dv_zweck": "Bahnhaltung/Widerstandsausgleich LEO 600 km",
+  "rolle": "Aufklaerung bis GEO",
+  "zone_bemerkung": "LEO 600 km"
+ },
+ "CHN_geo_relais": {
+  "bauname": "Himmelsbruecke",
+  "anker": 5000.0,
+  "klasse": "Frigate",
+  "basis": [
+   [
+    "custom_c2relais",
+    "C2-Relaisnutzlast: Antennen, Transponder, Kreuzverbindung",
+    150.0
+   ]
+  ],
+  "adv": [
+   "Strahlungs-Haertung",
+   "Thermischer Betrieb",
+   "Magnetfeld-Toleranz"
+  ],
+  "dis": [],
+  "no_he": false,
+  "begr": {
+   "Strahlungs-Haertung": "GEO im aeusseren Guertel, 15 Jahre Auslegungsdauer.",
+   "Thermischer Betrieb": "72 min Kernschatten gegen volle Sonne.",
+   "Magnetfeld-Toleranz": "Aufladung und Entladung im GEO-Plasma — das klassische Ausfallmuster geostationaerer Nachrichtensatelliten."
+  },
+  "isp": 1600,
+  "prop": "xenon",
+  "dv": 750.0,
+  "ld": 2.6,
+  "house": 15.0,
+  "batt": 1.2,
+  "eng": [
+   {
+    "name": "Hall-Triebwerk SPD-100",
+    "key": "custom_spd100",
+    "isp": 1600,
+    "thrust_n": 0.083,
+    "mass_kg": 45,
+    "count": 4,
+    "simultaneous": 2,
+    "propType": "xenon",
+    "p_kw": 1.35,
+    "p_count": 2,
+    "waste_kw": 0.54
+   }
+  ],
+  "dv_man": 0.0,
+  "dv_zweck": "Nord-Sued-Bahnhaltung GEO, 50 m/s je Jahr x 15 Jahre",
+  "rolle": "+1 C2-Slot je Stueck (launch_c2 §2.1) · zugleich Steuerstelle der ferngelenkten Schiffe",
+  "zone_bemerkung": "GEO"
+ }
+}

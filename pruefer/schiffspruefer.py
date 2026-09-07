@@ -114,16 +114,22 @@ def pruefe(g, b):
                 else:
                     np_soll = 3 + len(nv) - len(nn)
                     cm_soll, x3_soll = cm_regel(np_soll)
+                    if k.get("ctxNoHE") and np_soll >= 1:
+                        cm_soll, x3_soll = cm_soll * np_soll, 1.0
                     if k.get("np") != np_soll:
                         b.fehler("S-2", ref, f"np ist {k.get('np')}, muss 3 + {len(nv)} - {len(nn)} "
                             f"= {np_soll} sein.", "payload_catalog.md: np = 3 + adv - disadv")
                     if abs((k.get("cm") or 0) - cm_soll) > 1e-9:
                         b.fehler("S-2", ref, f"cm ist {k.get('cm')}, muss bei np={np_soll} "
-                            f"{cm_soll:.0f} sein.", "payload_catalog.md: np>=2 -> np; np==1 -> 2; np<=0 -> 1")
+                            f"{cm_soll:.0f} sein"
+                            f"{' (ctxNoHE: cm zusaetzlich x np)' if k.get('ctxNoHE') else ''}.",
+                            "payload_catalog.md: np>=2 -> np; np==1 -> 2; np<=0 -> 1")
                     if abs((k.get("hochenergie_faktor") or 0) - x3_soll) > 1e-9:
                         b.fehler("S-2", ref, f"Hochenergie-Faktor ist {k.get('hochenergie_faktor')}, "
-                            f"muss {x3_soll:.0f} sein.",
-                            "payload_catalog.md: dann x3, ausser ctxNoHE; bei np<=0 geklemmt")
+                            f"muss {x3_soll:.0f} sein"
+                            f"{' (ctxNoHE deklariert)' if k.get('ctxNoHE') else ''}.",
+                            "payload_catalog.md: dann x3, ausser ctxNoHE; mit ctxNoHE entfaellt "
+                            "das x3 und cm wird zusaetzlich mit np multipliziert; bei np<=0 geklemmt")
                     soll = (k.get("basis_kg") or 0)*(k.get("cm") or 0)*(k.get("disc") or 1) \
                            *(1+(k.get("env") or 0))*(k.get("hochenergie_faktor") or 1)
                     if abs(soll - (k.get("nutzlast_final_kg") or 0)) > 1e-6:
@@ -141,6 +147,27 @@ def pruefe(g, b):
                     elif jahr and jahr < jahr_frei:
                         b.fehler("S-6", ref, f"{stufe} beansprucht im Jahr {jahr}, freigeschaltet "
                             f"erst ab {jahr_frei}.", "research.md §Techstufen")
+
+            # S-7 — Autonomie ist ein Bauentscheid und muss dastehen
+            st = norm(d.get("steuerung","")).lower()
+            if st not in ("autonom","ferngelenkt"):
+                b.fehler("S-7", ref, "Keine Steuerung deklariert. Die Strukturtonne ist ein "
+                    "Bauentscheid: mit ihr autonom, ohne sie ferngelenkt. Beides hat Folgen im "
+                    "Spiel, also muss dastehen, welches gilt.",
+                    'construction.md §"Struktur = Autonomie (Kernregel)": "Sie ist ein '
+                    'Bauentscheid und muss explizit verbaut sein."')
+            elif st == "ferngelenkt" and not d.get("steuerungBegruendung"):
+                b.warnung("S-7", ref, "Ferngelenkt erklaert, aber die Folgen sind nicht "
+                    "hinterlegt. Ohne aktiven Link ist das Schiff handlungsunfaehig und im "
+                    "Kampf wehrloses Ziel — das gehoert an den Entwurf.",
+                    "construction.md §Ferngelenkte Fahrzeuge")
+            elif st == "autonom" and modus and norm(modus).upper() in ("B","NEU","NEUKONSTRUKTION"):
+                k = d.get("k2_penaltykette") or {}
+                nl = str(d.get("nutzlastHerkunft","")).lower()
+                if k and "shipframe" not in nl and (d.get("masse_t") or 0) < 10:
+                    b.fehler("S-7", ref, "Autonom erklaert, aber unter 10 t und ohne die "
+                        "Strukturtonne in der Nutzlast. Gratis gibt es sie erst ab 10 t.",
+                        'construction.md: "ab 10 t gratis (Synergieregel), darunter 1 t"')
 
             # S-4 — Massenschluss und Ziolkowski
             dry, prop, nass = d.get("dryMass_t"), d.get("propellantMass_t"), d.get("nassMasse_t")
@@ -202,6 +229,29 @@ def pruefe(g, b):
         elif abs(e["werft_gebucht_t"] - preis) > 1e-6:
             b.fehler("B-1", f"{e.get('fraktion')}/{e.get('design_ref')}",
                 f"werft_gebucht_t {e['werft_gebucht_t']} t weicht vom Preis {preis:.1f} t ab.",
+                "BZ-01 §1")
+
+    # ---------------- B-2: passt die Summe in die Werft? --------------------
+    from collections import defaultdict
+    je_fraktion = defaultdict(lambda: [0.0, set()])
+    for e in (g.get("bz01") or {}).get("bauplan", []):
+        w = e.get("werft_gebucht_t")
+        if w is None: continue
+        f = e.get("fraktion"); je_fraktion[f][0] += w
+        for z in range(int(e.get("gestartet_zug", 0) or 0), int(e.get("fertig_zug", 0) or 0)):
+            je_fraktion[f][1].add(z)
+    for f, (summe, jahre) in je_fraktion.items():
+        kap = (((g.get("factions") or {}).get(f) or {}).get("economy", {})
+               .get("resources", {}).get("industrial", {}).get("capacity_t_year"))
+        if not kap or not jahre: continue
+        deckel = kap * len(jahre)
+        if summe > deckel + 1e-6:
+            b.fehler("B-2", f, f"Bauauftraege binden {summe:.1f} t Werftdurchsatz, verfuegbar sind "
+                f"{deckel:.1f} t ({kap:.1f} t/a x {len(jahre)} Baujahre). Engpass.",
+                "BZ-01 §1 · launch_c2.md §5.2 Pkt. 2: im Baujahr den Werftdurchsatz pruefen")
+        elif summe > 0.9 * deckel:
+            b.hinweis("B-2", f, f"Werft zu {100*summe/deckel:.0f} % ausgelastet "
+                f"({summe:.1f} von {deckel:.1f} t) — kein Spielraum fuer weitere Auftraege.",
                 "BZ-01 §1")
 
     # ---------------- C-Gatter: C2-Erhaltungssatz ---------------------------
@@ -280,6 +330,20 @@ FAELLE = [
  ("Z5-070  Bauauftrag ohne gebuchten Werftdurchsatz", "B-1",
   {"bz01": {"bauplan": [{"id": "T", "fraktion": "CHN", "design_ref": "X", "count": 2,
                          "stueck_masse_t": 2.0, "kosten_mult": 4.0}]}}),
+ ("Z5-076  Steuerung nicht deklariert (Strukturtonne: Bauentscheid)", "S-7",
+  {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "vorteile": [], "nachteile": [],
+     "k2_penaltykette": {"basis_kg": 100, "np": 3, "cm": 3, "hochenergie_faktor": 3,
+                         "disc": 1, "env": 0, "nutzlast_final_kg": 900}}}}}}),
+ ("Autonom unter 10 t ohne Strukturtonne in der Nutzlast", "S-7",
+  {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "autonom",
+     "masse_t": 2.0, "nutzlastHerkunft": "comps sensor_geo", "vorteile": [], "nachteile": [],
+     "k2_penaltykette": {"basis_kg": 100, "np": 3, "cm": 3, "hochenergie_faktor": 3,
+                         "disc": 1, "env": 0, "nutzlast_final_kg": 900}}}}}}),
+ ("Werftengpass: Auftraege sprengen die Kapazitaet", "B-2",
+  {"factions": {"CHN": {"economy": {"resources": {"industrial": {"capacity_t_year": 40.0}}}}},
+   "bz01": {"bauplan": [{"id": "T", "fraktion": "CHN", "design_ref": "X", "count": 2,
+     "stueck_masse_t": 10.0, "kosten_mult": 4.0, "werft_gebucht_t": 80.0,
+     "gestartet_zug": 2026, "fertig_zug": 2027}]}}),
  ("Z5-071  C2-Bestand ungleich Buchungssumme", "C-1",
   {"factions": {"CHN": {"economy": {"resources": {"c2": {"slots_total": 14, "geo_relays": 0,
      "ground_stations": 0, "deep_space_relays": 0}}}}}}),
@@ -300,6 +364,7 @@ def selbsttest():
         "vorteile": [], "nachteile": [{"name": "Single-Use", "begruendung": "b", "spielwirkung": "w"},
                                       {"name": "Doktrinaer gebunden", "begruendung": "b", "spielwirkung": "w"},
                                       {"name": "Fragile Radiatoren", "begruendung": "b", "spielwirkung": "w"}],
+        "steuerung": "ferngelenkt", "steuerungBegruendung": "Link noetig",
         "k2_penaltykette": {"basis_kg": 1000, "np": 0, "cm": 1, "hochenergie_faktor": 1,
                             "disc": 1, "env": 0, "nutzlast_final_kg": 1000}}}}}}
     b = pruefe(sauber, Bericht())

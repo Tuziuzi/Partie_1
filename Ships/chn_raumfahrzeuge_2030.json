@@ -1,303 +1,8 @@
 {
  "version": "2.2",
  "type": "ship_export",
- "timestamp": "2026-09-07T19:04:49.060329Z",
+ "timestamp": "2026-09-07T19:38:42.339512Z",
  "ships": [
-  {
-   "name": "Himmelsauge",
-   "class": "Corvette",
-   "isp": 230,
-   "thrust": 88,
-   "engineType": "custom_hydrazine_22n",
-   "dryMass": 1.9562,
-   "maxPropellant": 0.0438,
-   "currentPropellant": 0.0438,
-   "maxDeltaV": 50.0,
-   "designDeltaV": 50.0,
-   "currentDeltaV": 50.0,
-   "boiloffRate": 0.0,
-   "originalDryMass": 1.9562,
-   "originalMaxPropellant": 0.0438,
-   "coreDryMass": null,
-   "corePropellant": null,
-   "source": "skill",
-   "engines": [
-    {
-     "name": "Hydrazin-Monergol 22 N",
-     "key": "custom_hydrazine_22n",
-     "isp": 230,
-     "thrust_n": 22,
-     "count": 4,
-     "simultaneous": 4,
-     "propType": "hydrazine",
-     "mass_kg": 6
-    }
-   ],
-   "propellantPools": {
-    "hydrazine": 0.0438
-   },
-   "maxPropellantPools": {
-    "hydrazine": 0.0438
-   },
-   "poolDeltaV": {
-    "hydrazine": 50.0
-   },
-   "wasteHeat": 6.0,
-   "powerBudget": 6600,
-   "powerUsed": 6000,
-   "armor": {
-    "material": null,
-    "thickness_cm": 0,
-    "mass_tonnes": 0,
-    "whipple": false,
-    "whippleGap_cm": 0
-   },
-   "geometry": {
-    "D_out": 1.2808,
-    "L_out": 3.2019,
-    "A_front": 1.2883,
-    "A_side": 12.8832,
-    "volume_m3": 4.125,
-    "ldRatio": 2.5
-   },
-   "signatures": {
-    "stealthEngOff": {
-     "wasteHeat": 5,
-     "radTemp": 50,
-     "irArea": 0.1288,
-     "emissivity": 0.1,
-     "optArea": 0.6442,
-     "albedo": 0.02,
-     "rcs": 0.0193,
-     "rfEmit": 0,
-     "stealthDuration": 0,
-     "mode": "stealth"
-    },
-    "normalEngOff": {
-     "wasteHeat": 6.0,
-     "radTemp": 300,
-     "irArea": 3.8649,
-     "emissivity": 0.9,
-     "optArea": 1.2883,
-     "albedo": 0.2,
-     "rcs": 0.6442,
-     "rfEmit": 10,
-     "mode": "coast"
-    },
-    "normalEngOn": {
-     "wasteHeat": 9.6,
-     "radTemp": 2800,
-     "plumeTemp": 2800,
-     "irArea": 3.9785,
-     "plumeIRArea": 0.1136,
-     "emissivity": 0.15,
-     "plumeEps": 0.15,
-     "optArea": 1.3451,
-     "albedo": 0.2,
-     "rcs": 0.7925,
-     "plumeRCS": 0.1483,
-     "rfEmit": 10,
-     "engineType": "custom_hydrazine_22n",
-     "thrustN": 88,
-     "mode": "thrust"
-    },
-    "stealth": {
-     "wasteHeat": 5,
-     "radTemp": 50,
-     "irArea": 0.1288,
-     "emissivity": 0.1,
-     "optArea": 0.6442,
-     "albedo": 0.02,
-     "rcs": 0.0193,
-     "rfEmit": 0,
-     "stealthDuration": 0,
-     "mode": "stealth"
-    },
-    "coast": {
-     "wasteHeat": 6.0,
-     "radTemp": 300,
-     "irArea": 3.8649,
-     "emissivity": 0.9,
-     "optArea": 1.2883,
-     "albedo": 0.2,
-     "rcs": 0.6442,
-     "rfEmit": 10,
-     "mode": "coast"
-    },
-    "thrust": {
-     "wasteHeat": 9.6,
-     "radTemp": 2800,
-     "plumeTemp": 2800,
-     "irArea": 3.9785,
-     "plumeIRArea": 0.1136,
-     "emissivity": 0.15,
-     "plumeEps": 0.15,
-     "optArea": 1.3451,
-     "albedo": 0.2,
-     "rcs": 0.7925,
-     "plumeRCS": 0.1483,
-     "rfEmit": 10,
-     "engineType": "custom_hydrazine_22n",
-     "thrustN": 88,
-     "mode": "thrust"
-    }
-   },
-   "installedSensors": {},
-   "cryoConfig": {},
-   "heatConfig": {
-    "mode": "kg_per_kw",
-    "alpha_kg_kw": 5.0,
-    "waste_kw": 6.0,
-    "rad_mass_kg": 30.0
-   },
-   "stealthConfig": {
-    "warmRadArea": 0,
-    "warmRadTemp": 15,
-    "h2CoolantMass": 0,
-    "h2LatentHeat": 446000,
-    "h2NoseTemp": 14,
-    "h2EmitArea": 20,
-    "h2Days": 0,
-    "heCoolantMass": 0,
-    "heLatentHeat": 20800,
-    "heHours": 0,
-    "rcsFaceted": "no",
-    "rcsAbsorb": 0.3,
-    "rcsBaseArea": 20,
-    "warmIRSmall": 0,
-    "warmIRLarge": 0,
-    "h2IRSmall": 2000,
-    "h2IRLarge": 10000,
-    "heIRSmall": 5,
-    "heIRLarge": 30,
-    "totalHeat": 0
-   },
-   "coolant": {
-    "h2Mass": 0,
-    "heMass": 0,
-    "h2MaxMass": 0,
-    "heMaxMass": 0
-   },
-   "stagingConfig": null,
-   "currentStaging": null,
-   "commSystems": [
-    {
-     "type": "comm",
-     "band": "Ka-Band (32 GHz)",
-     "aperture": 0.4,
-     "power_dbm": 40,
-     "bandwidth_hz": 10000,
-     "mass_kg": 19.5615,
-     "power_w": 264,
-     "ajConfig": {
-      "presets": [
-       "Raumschiff-Eigenschatten (genau ausgerichtet)",
-       "Comm mit Frequency Hopping",
-       "Tief eingelassenes System",
-       "Synthetic Aperture Nulling"
-      ],
-      "advantage_dB": -275
-     }
-    }
-   ],
-   "jamSystems": null,
-   "detectionData": {},
-   "notes": "Unified Shipyard MODUS B (Neukonstruktion, volle Penalty) — Kampagnenentwurf CHN_aufklaerer 'Aufklaerungssatellit' (CHN). Anker: gebuchte Startmasse 2 t aus stand/gamestate.json, Abweichung 0,0000 %. K2: Basis 1000 kg x cm 1 x Hochenergie 1 = 1000 kg Nutzlast (np = 0). Vorteile: keine. Nachteile: Hoher EM-Abdruck, Doktrinaer gebunden, Single-Use. Strukturklasse ruggedized + 0 Vorteile / 3 Nachteile -> Struktur 15 %, Tank 10 %. Energie: solar, 6.60 kW, Kraftwerk 99.0 kg, Batterie 19.8 kg. AJ-Summe -275 dB. dv = 50 m/s (Bahnhaltung/Widerstandsausgleich LEO 600 km), Manoeverzeit 0.31 h. comps sensor_geo 'Sensor: to GEO' Basis 1000 kg -> K2 x1 -> 1000 kg.",
-   "customData": {
-    "designMode": "B",
-    "designModeBegruendung": "MODUS B (Neukonstruktion): kein reales Vorbild mit veroeffentlichter Startmasse. construction.md §Weight Penalty 3 gewaehrt die Ausnahme nur fuer designMode 'reconstruction'; hier laufen daher alle drei Kanaele K1+K2+K3 vollstaendig. Penalty-Reduktion durch L1/L2/L3 ist 2030 nicht verfuegbar (research.md: L1 ab 2035; factions.CHN.research.completedL1/L2/L3 leer) — es bleiben benannte Nachteile.",
-    "k2Kette": {
-     "basis_kg": 1000.0,
-     "np": 0,
-     "cm": 1.0,
-     "hochenergie_faktor": 1.0,
-     "disc": 1.0,
-     "env": 0.0,
-     "nutzlast_final_kg": 1000.0,
-     "vergleich_ohne_geheilte_penalty_kg": 9000.0,
-     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env) * (3 ausser ctxNoHE)"
-    },
-    "kampagne": "SCHWARZE SEE",
-    "kampagnenDesign": "CHN_aufklaerer",
-    "kampagnenName": "Aufklaerungssatellit",
-    "nation": "CHN",
-    "rolle": "Aufklaerung bis GEO",
-    "advantages": [],
-    "disadvantages": [
-     "Hoher EM-Abdruck",
-     "Doktrinaer gebunden",
-     "Single-Use"
-    ],
-    "structureClass": "ruggedized",
-    "structureTax": {
-     "struct_pct": 15,
-     "tank_pct": 10
-    },
-    "massBreakdown_kg": {
-     "nutzlast": 1000.0,
-     "bus": 510.2872,
-     "triebwerke": 24,
-     "kraftwerk": 99.0,
-     "pmad": 13.53,
-     "batterie": 19.8,
-     "radiator": 30.0,
-     "tank": 4.3848,
-     "struktur": 255.1503,
-     "trocken": 1956.1523,
-     "treibstoff": 43.8477,
-     "nass": 2000.0
-    },
-    "powerPlant": {
-     "type": "solar",
-     "output_kw": 6.6,
-     "alpha_kg_kw": 15.0,
-     "battery_kg": 19.8,
-     "battery_hours": 0.6,
-     "house_kw": 6.0
-    },
-    "maneuverTime_s": 1123.9,
-    "thrust_simultaneous_N": 88,
-    "dv_manoever_kms": 0.0,
-    "dv_stationshaltung_kms": 0.05,
-    "huellkurve": {
-     "pay_dry": 51.1,
-     "paybus_dry": 77.2,
-     "struct_dry": 13.0,
-     "dry_wet": 97.8,
-     "pp_dry": 6.1
-    },
-    "nutzlastBasis_kg": 1000.0,
-    "nutzlastHerkunft": "comps sensor_geo 'Sensor: to GEO' Basis 1000 kg -> K2 x1 -> 1000 kg",
-    "antiJamming": {
-     "presets": [
-      [
-       "Raumschiff-Eigenschatten (genau ausgerichtet)",
-       -100
-      ],
-      [
-       "Comm mit Frequency Hopping",
-       -25
-      ],
-      [
-       "Tief eingelassenes System",
-       -110
-      ],
-      [
-       "Synthetic Aperture Nulling",
-       -40
-      ]
-     ],
-     "total_dB": -275
-    },
-    "gebuchteStartmasse_kg": 2000.0,
-    "abweichungProzent": 0.0,
-    "begruendungVorNachteile": {
-     "Hoher EM-Abdruck": "Der Sensor 'bis GEO alles aufdecken' ist ein aktiver Hochleistungs-Emitter. payload_catalog.md §Suite coupling: einen aktiven Sensor ohne diesen Nachteil zu buchen ist regelwidrig-nah. Spielwirkung: +1 auf gegnerische Aufklaerung gegen dieses Schiff.",
-     "Doktrinaer gebunden": "Fester Aufklaerungsorbit, bodengefuehrte Auftragssteuerung, kein eigenstaendiges Manoever. Deckt sich mit dem gebuchten dv_kms 0,0. Spielwirkung: -1 Initiative oder Begleitschutz noetig.",
-     "Single-Use": "Nicht betankbar, nicht wartbar, nicht bergbar — eine Aussetzung. Spielwirkung: einmal einsatzfaehig."
-    }
-   }
-  },
   {
    "name": "Feldzeichen",
    "class": "Corvette",
@@ -358,22 +63,22 @@
     "whippleGap_cm": 0
    },
    "geometry": {
-    "D_out": 1.3226,
-    "L_out": 3.3065,
-    "A_front": 1.3738,
-    "A_side": 13.7384,
-    "volume_m3": 4.5425,
+    "D_out": 1.215,
+    "L_out": 3.0376,
+    "A_front": 1.1595,
+    "A_side": 11.5951,
+    "volume_m3": 3.5221,
     "ldRatio": 2.5
    },
    "signatures": {
     "stealthEngOff": {
      "wasteHeat": 5,
      "radTemp": 50,
-     "irArea": 0.1374,
+     "irArea": 0.116,
      "emissivity": 0.1,
-     "optArea": 0.6869,
+     "optArea": 0.5798,
      "albedo": 0.02,
-     "rcs": 0.0206,
+     "rcs": 0.0174,
      "rfEmit": 0,
      "stealthDuration": 0,
      "mode": "stealth"
@@ -381,11 +86,11 @@
     "normalEngOff": {
      "wasteHeat": 3.6,
      "radTemp": 300,
-     "irArea": 4.1215,
+     "irArea": 3.4785,
      "emissivity": 0.9,
-     "optArea": 1.3738,
+     "optArea": 1.1595,
      "albedo": 0.2,
-     "rcs": 0.6869,
+     "rcs": 0.5798,
      "rfEmit": 10,
      "mode": "coast"
     },
@@ -393,13 +98,13 @@
      "wasteHeat": 5.76,
      "radTemp": 2800,
      "plumeTemp": 2800,
-     "irArea": 4.4126,
+     "irArea": 3.7696,
      "plumeIRArea": 0.2911,
      "emissivity": 0.15,
      "plumeEps": 0.15,
-     "optArea": 1.5194,
+     "optArea": 1.305,
      "albedo": 0.2,
-     "rcs": 1.0671,
+     "rcs": 0.9599,
      "plumeRCS": 0.3801,
      "rfEmit": 10,
      "engineType": "custom_490n_bipro",
@@ -409,11 +114,11 @@
     "stealth": {
      "wasteHeat": 5,
      "radTemp": 50,
-     "irArea": 0.1374,
+     "irArea": 0.116,
      "emissivity": 0.1,
-     "optArea": 0.6869,
+     "optArea": 0.5798,
      "albedo": 0.02,
-     "rcs": 0.0206,
+     "rcs": 0.0174,
      "rfEmit": 0,
      "stealthDuration": 0,
      "mode": "stealth"
@@ -421,11 +126,11 @@
     "coast": {
      "wasteHeat": 3.6,
      "radTemp": 300,
-     "irArea": 4.1215,
+     "irArea": 3.4785,
      "emissivity": 0.9,
-     "optArea": 1.3738,
+     "optArea": 1.1595,
      "albedo": 0.2,
-     "rcs": 0.6869,
+     "rcs": 0.5798,
      "rfEmit": 10,
      "mode": "coast"
     },
@@ -433,13 +138,13 @@
      "wasteHeat": 5.76,
      "radTemp": 2800,
      "plumeTemp": 2800,
-     "irArea": 4.4126,
+     "irArea": 3.7696,
      "plumeIRArea": 0.2911,
      "emissivity": 0.15,
      "plumeEps": 0.15,
-     "optArea": 1.5194,
+     "optArea": 1.305,
      "albedo": 0.2,
-     "rcs": 1.0671,
+     "rcs": 0.9599,
      "plumeRCS": 0.3801,
      "rfEmit": 10,
      "engineType": "custom_490n_bipro",
@@ -507,47 +212,59 @@
    ],
    "jamSystems": null,
    "detectionData": {},
-   "notes": "Unified Shipyard MODUS B (Neukonstruktion, volle Penalty) — Kampagnenentwurf CHN_scorer 'Scoring-Raumschiff' (CHN). Anker: gebuchte Startmasse 2 t aus stand/gamestate.json, Abweichung 0,0000 %. K2: Basis 1000 kg x cm 1 x Hochenergie 1 = 1000 kg Nutzlast (np = 0). Vorteile: keine. Nachteile: Single-Use, Doktrinaer gebunden, Fragile Radiatoren. Strukturklasse ruggedized + 0 Vorteile / 3 Nachteile -> Struktur 15 %, Tank 10 %. Energie: solar, 3.96 kW, Kraftwerk 59.4 kg, Batterie 23.8 kg. AJ-Summe -275 dB. dv = 1000 m/s (genau ein Scoring-Versuch (scoring.md: 1 km/s je Versuch)), Manoeverzeit 0.83 h. comps shipframe 'Spaceship frame' Basis 1000 kg -> K2 x1 -> 1000 kg, unbewaffnet.",
+   "notes": "Unified Shipyard MODUS B (Neukonstruktion, volle Penaltykette) — Kampagnenentwurf CHN_scorer 'Scoring-Raumschiff' (CHN), Einsatz LEO/MEO/HEO/SSO/GEO. FERNGELENKT: keine Strukturtonne. K2: Basis 50 kg x cm 5 x Hochenergie 3 = 750 kg Nutzlast (np 5). Vorteile: Strahlungs-Haertung, Thermischer Betrieb. Nachteile: keine. Struktur 17 % / Tank 12 %. Energie solar 3.96 kW, Kraftwerk 59.4 kg, Batterie 23.8 kg. dv 1000 m/s (genau ein Scoring-Versuch (scoring.md: 1 km/s je Versuch)), Manoeverzeit 0.83 h. Gebuchte Startmasse 2.0 t, Abweichung 0,0000 %.",
    "customData": {
     "designMode": "B",
-    "designModeBegruendung": "MODUS B (Neukonstruktion): kein reales Vorbild mit veroeffentlichter Startmasse. construction.md §Weight Penalty 3 gewaehrt die Ausnahme nur fuer designMode 'reconstruction'; hier laufen daher alle drei Kanaele K1+K2+K3 vollstaendig. Penalty-Reduktion durch L1/L2/L3 ist 2030 nicht verfuegbar (research.md: L1 ab 2035; factions.CHN.research.completedL1/L2/L3 leer) — es bleiben benannte Nachteile.",
-    "k2Kette": {
-     "basis_kg": 1000.0,
-     "np": 0,
-     "cm": 1.0,
-     "hochenergie_faktor": 1.0,
-     "disc": 1.0,
-     "env": 0.0,
-     "nutzlast_final_kg": 1000.0,
-     "vergleich_ohne_geheilte_penalty_kg": 9000.0,
-     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env) * (3 ausser ctxNoHE)"
-    },
+    "designModeBegruendung": "MODUS B: kein reales Vorbild mit veroeffentlichter Startmasse. construction.md gewaehrt die Ausnahme von Weight Penalty 3 nur fuer designMode 'reconstruction'; hier laufen alle drei Kanaele K1+K2+K3. Penalty-Reduktion durch L1/L2/L3 ist 2030 nicht verfuegbar (research.md: L1 ab 2035).",
+    "steuerung": "ferngelenkt",
+    "steuerungBegruendung": "FERNGELENKT — keine Strukturtonne verbaut. construction.md §'Struktur = Autonomie': 'Die Strukturtonne kauft nicht Rumpf, sondern Autonomie: Bordrechner, Selbststeuerung, eigene Feuerleitung.' Folge: jede Aktion — Manoever, Feuer, Sensorbetrieb, Response — setzt einen aktiven Kommandolink zu einer Steuerstelle voraus (Erde, Traegerschiff, Relais). Bei gejammtem oder unterbrochenem Link vollstaendig handlungsunfaehig, driftet ballistisch weiter und gilt im Kampf als wehrloses Ziel (no_response).",
     "kampagne": "SCHWARZE SEE",
     "kampagnenDesign": "CHN_scorer",
     "kampagnenName": "Scoring-Raumschiff",
     "nation": "CHN",
     "rolle": "Zonenpraesenz und Scoring",
-    "advantages": [],
-    "disadvantages": [
-     "Single-Use",
-     "Doktrinaer gebunden",
-     "Fragile Radiatoren"
+    "einsatzzonen": "LEO/MEO/HEO/SSO/GEO",
+    "advantages": [
+     "Strahlungs-Haertung",
+     "Thermischer Betrieb"
     ],
+    "disadvantages": [],
+    "begruendungVorNachteile": {
+     "Strahlungs-Haertung": "Die fuenf Scorer stehen in LEO 600, MEO 20 000, HEO 39 000, SSO 700 und GEO 35 786 km. MEO liegt im Kern des aeusseren Strahlungsguertels, HEO und GEO im Feld solarer Teilchenereignisse. 27 von 32 realen Systemen im OW-01-Katalog tragen diesen Vorteil, Chinas eigene GEO-Systeme TJS und Shijian-21/25 ebenfalls.",
+     "Thermischer Betrieb": "Bis zu 72 min Kernschatten gegen volle Sonne, jeden Tag ueber die Einsatzdauer. Die Basis der Tax-Tabelle (-200 C) deckt das nicht ab."
+    },
+    "spielwirkungen": {
+     "Strahlungs-Haertung": "x10 Strahlungsbelastung tragbar (construction.md Tax-Tabelle, Stufe 1)",
+     "Thermischer Betrieb": "Betrieb ueber der Basis von -200 C (Tax-Tabelle T1)"
+    },
     "structureClass": "ruggedized",
     "structureTax": {
-     "struct_pct": 15,
-     "tank_pct": 10
+     "struct_pct": 17,
+     "tank_pct": 12
     },
+    "k2Kette": {
+     "basis_kg": 50.0,
+     "np": 5,
+     "cm": 5.0,
+     "hochenergie_faktor": 3.0,
+     "ctxNoHE": false,
+     "disc": 1.0,
+     "env": 0.0,
+     "nutzlast_final_kg": 750.0,
+     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env) * (3 ausser ctxNoHE; mit ctxNoHE stattdessen cm zusaetzlich * np)"
+    },
+    "nutzlastBasis_kg": 50.0,
+    "nutzlastHerkunft": "Ops-Paket: Transponder, Nahbereichssensor, Praesenznachweis (custom_opspaket, 50 kg)",
     "massBreakdown_kg": {
-     "nutzlast": 1000.0,
-     "bus": 53.5921,
+     "nutzlast": 750.0,
+     "bus": 271.0229,
      "triebwerke": 40,
      "kraftwerk": 59.4,
      "pmad": 8.118,
      "batterie": 23.76,
      "radiator": 18.0,
-     "tank": 55.3094,
-     "struktur": 188.7269,
+     "tank": 66.3712,
+     "struktur": 210.2343,
      "trocken": 1446.9064,
      "treibstoff": 553.0936,
      "nass": 2000.0
@@ -563,16 +280,14 @@
     "maneuverTime_s": 2981.8,
     "thrust_simultaneous_N": 578,
     "dv_manoever_kms": 1.0,
-    "dv_stationshaltung_kms": -0.0,
+    "dv_stationshaltung_kms": 0.0,
     "huellkurve": {
-     "pay_dry": 69.1,
-     "paybus_dry": 72.8,
-     "struct_dry": 13.0,
+     "pay_dry": 51.8,
+     "paybus_dry": 70.6,
+     "struct_dry": 14.5,
      "dry_wet": 72.3,
      "pp_dry": 5.7
     },
-    "nutzlastBasis_kg": 1000.0,
-    "nutzlastHerkunft": "comps shipframe 'Spaceship frame' Basis 1000 kg -> K2 x1 -> 1000 kg, unbewaffnet",
     "antiJamming": {
      "presets": [
       [
@@ -595,12 +310,320 @@
      "total_dB": -275
     },
     "gebuchteStartmasse_kg": 2000.0,
-    "abweichungProzent": 0.0,
-    "begruendungVorNachteile": {
-     "Single-Use": "scoring.md: 1 km/s je Scoring-Versuch. Mit 1,0 km/s an Bord ist nach EINEM Versuch das gesamte Budget fort — das Schiff ist danach traege Masse. Der Nachteil beschreibt genau den gebuchten Zustand.",
-     "Doktrinaer gebunden": "Vorgeplanter Scoring-Korridor, keine eigenstaendige Gefechtsfuehrung; unbewaffnet. Spielwirkung: -1 Initiative oder Begleitschutz noetig.",
-     "Fragile Radiatoren": "Minimaler, ungeschuetzter Radiator an einem billigen Wegwerftraeger. Spielwirkung: +50 % Ausfall bei Kuehlungstreffer."
+    "abweichungProzent": 0.0
+   }
+  },
+  {
+   "name": "Himmelsauge",
+   "class": "Corvette",
+   "isp": 230,
+   "thrust": 88,
+   "engineType": "custom_hydrazine_22n",
+   "dryMass": 3.5211,
+   "maxPropellant": 0.0789,
+   "currentPropellant": 0.0789,
+   "maxDeltaV": 50.0,
+   "designDeltaV": 50.0,
+   "currentDeltaV": 50.0,
+   "boiloffRate": 0.0,
+   "originalDryMass": 3.5211,
+   "originalMaxPropellant": 0.0789,
+   "coreDryMass": null,
+   "corePropellant": null,
+   "source": "skill",
+   "engines": [
+    {
+     "name": "Hydrazin-Monergol 22 N",
+     "key": "custom_hydrazine_22n",
+     "isp": 230,
+     "thrust_n": 22,
+     "count": 4,
+     "simultaneous": 4,
+     "propType": "hydrazine",
+     "mass_kg": 6
     }
+   ],
+   "propellantPools": {
+    "hydrazine": 0.0789
+   },
+   "maxPropellantPools": {
+    "hydrazine": 0.0789
+   },
+   "poolDeltaV": {
+    "hydrazine": 50.0
+   },
+   "wasteHeat": 11.0,
+   "powerBudget": 12100,
+   "powerUsed": 11000,
+   "armor": {
+    "material": null,
+    "thickness_cm": 0,
+    "mass_tonnes": 0,
+    "whipple": false,
+    "whippleGap_cm": 0
+   },
+   "geometry": {
+    "D_out": 1.6131,
+    "L_out": 4.0327,
+    "A_front": 2.0436,
+    "A_side": 20.4364,
+    "volume_m3": 8.2414,
+    "ldRatio": 2.5
+   },
+   "signatures": {
+    "stealthEngOff": {
+     "wasteHeat": 5,
+     "radTemp": 50,
+     "irArea": 0.2044,
+     "emissivity": 0.1,
+     "optArea": 1.0218,
+     "albedo": 0.02,
+     "rcs": 0.0307,
+     "rfEmit": 0,
+     "stealthDuration": 0,
+     "mode": "stealth"
+    },
+    "normalEngOff": {
+     "wasteHeat": 11.0,
+     "radTemp": 300,
+     "irArea": 6.1309,
+     "emissivity": 0.9,
+     "optArea": 2.0436,
+     "albedo": 0.2,
+     "rcs": 1.0218,
+     "rfEmit": 10,
+     "mode": "coast"
+    },
+    "normalEngOn": {
+     "wasteHeat": 17.6,
+     "radTemp": 2800,
+     "plumeTemp": 2800,
+     "irArea": 6.2445,
+     "plumeIRArea": 0.1136,
+     "emissivity": 0.15,
+     "plumeEps": 0.15,
+     "optArea": 2.1004,
+     "albedo": 0.2,
+     "rcs": 1.1701,
+     "plumeRCS": 0.1483,
+     "rfEmit": 10,
+     "engineType": "custom_hydrazine_22n",
+     "thrustN": 88,
+     "mode": "thrust"
+    },
+    "stealth": {
+     "wasteHeat": 5,
+     "radTemp": 50,
+     "irArea": 0.2044,
+     "emissivity": 0.1,
+     "optArea": 1.0218,
+     "albedo": 0.02,
+     "rcs": 0.0307,
+     "rfEmit": 0,
+     "stealthDuration": 0,
+     "mode": "stealth"
+    },
+    "coast": {
+     "wasteHeat": 11.0,
+     "radTemp": 300,
+     "irArea": 6.1309,
+     "emissivity": 0.9,
+     "optArea": 2.0436,
+     "albedo": 0.2,
+     "rcs": 1.0218,
+     "rfEmit": 10,
+     "mode": "coast"
+    },
+    "thrust": {
+     "wasteHeat": 17.6,
+     "radTemp": 2800,
+     "plumeTemp": 2800,
+     "irArea": 6.2445,
+     "plumeIRArea": 0.1136,
+     "emissivity": 0.15,
+     "plumeEps": 0.15,
+     "optArea": 2.1004,
+     "albedo": 0.2,
+     "rcs": 1.1701,
+     "plumeRCS": 0.1483,
+     "rfEmit": 10,
+     "engineType": "custom_hydrazine_22n",
+     "thrustN": 88,
+     "mode": "thrust"
+    }
+   },
+   "installedSensors": {},
+   "cryoConfig": {},
+   "heatConfig": {
+    "mode": "kg_per_kw",
+    "alpha_kg_kw": 5.0,
+    "waste_kw": 11.0,
+    "rad_mass_kg": 55.0
+   },
+   "stealthConfig": {
+    "warmRadArea": 0,
+    "warmRadTemp": 15,
+    "h2CoolantMass": 0,
+    "h2LatentHeat": 446000,
+    "h2NoseTemp": 14,
+    "h2EmitArea": 20,
+    "h2Days": 0,
+    "heCoolantMass": 0,
+    "heLatentHeat": 20800,
+    "heHours": 0,
+    "rcsFaceted": "no",
+    "rcsAbsorb": 0.3,
+    "rcsBaseArea": 20,
+    "warmIRSmall": 0,
+    "warmIRLarge": 0,
+    "h2IRSmall": 2000,
+    "h2IRLarge": 10000,
+    "heIRSmall": 5,
+    "heIRLarge": 30,
+    "totalHeat": 0
+   },
+   "coolant": {
+    "h2Mass": 0,
+    "heMass": 0,
+    "h2MaxMass": 0,
+    "heMaxMass": 0
+   },
+   "stagingConfig": null,
+   "currentStaging": null,
+   "commSystems": [
+    {
+     "type": "comm",
+     "band": "Ka-Band (32 GHz)",
+     "aperture": 0.45,
+     "power_dbm": 40,
+     "bandwidth_hz": 10000,
+     "mass_kg": 35.2107,
+     "power_w": 484,
+     "ajConfig": {
+      "presets": [
+       "Raumschiff-Eigenschatten (genau ausgerichtet)",
+       "Comm mit Frequency Hopping",
+       "Tief eingelassenes System",
+       "Synthetic Aperture Nulling"
+      ],
+      "advantage_dB": -275
+     }
+    }
+   ],
+   "jamSystems": null,
+   "detectionData": {},
+   "notes": "Unified Shipyard MODUS B (Neukonstruktion, volle Penaltykette) — Kampagnenentwurf CHN_aufklaerer 'Aufklaerungssatellit' (CHN), Einsatz LEO 600 km. FERNGELENKT: keine Strukturtonne. K2: Basis 1000 kg x cm 2 x Hochenergie 1 (ctxNoHE) = 2000 kg Nutzlast (np 1). Vorteile: Strahlungs-Haertung, Thermischer Betrieb. Nachteile: Hoher EM-Abdruck, Doktrinaer gebunden, Single-Use, Fragile Radiatoren. Struktur 15 % / Tank 10 %. Energie solar 12.10 kW, Kraftwerk 181.5 kg, Batterie 36.3 kg. dv 50 m/s (Bahnhaltung/Widerstandsausgleich LEO 600 km), Manoeverzeit 0.56 h. Gebuchte Startmasse 3.6 t, Abweichung 0,0000 %.",
+   "customData": {
+    "designMode": "B",
+    "designModeBegruendung": "MODUS B: kein reales Vorbild mit veroeffentlichter Startmasse. construction.md gewaehrt die Ausnahme von Weight Penalty 3 nur fuer designMode 'reconstruction'; hier laufen alle drei Kanaele K1+K2+K3. Penalty-Reduktion durch L1/L2/L3 ist 2030 nicht verfuegbar (research.md: L1 ab 2035).",
+    "steuerung": "ferngelenkt",
+    "steuerungBegruendung": "FERNGELENKT — keine Strukturtonne verbaut. construction.md §'Struktur = Autonomie': 'Die Strukturtonne kauft nicht Rumpf, sondern Autonomie: Bordrechner, Selbststeuerung, eigene Feuerleitung.' Folge: jede Aktion — Manoever, Feuer, Sensorbetrieb, Response — setzt einen aktiven Kommandolink zu einer Steuerstelle voraus (Erde, Traegerschiff, Relais). Bei gejammtem oder unterbrochenem Link vollstaendig handlungsunfaehig, driftet ballistisch weiter und gilt im Kampf als wehrloses Ziel (no_response).",
+    "kampagne": "SCHWARZE SEE",
+    "kampagnenDesign": "CHN_aufklaerer",
+    "kampagnenName": "Aufklaerungssatellit",
+    "nation": "CHN",
+    "rolle": "Aufklaerung bis GEO",
+    "einsatzzonen": "LEO 600 km",
+    "advantages": [
+     "Strahlungs-Haertung",
+     "Thermischer Betrieb"
+    ],
+    "disadvantages": [
+     "Hoher EM-Abdruck",
+     "Doktrinaer gebunden",
+     "Single-Use",
+     "Fragile Radiatoren"
+    ],
+    "begruendungVorNachteile": {
+     "Strahlungs-Haertung": "LEO 600 km, mehrjaehrige Auslegung, Suedatlantische Anomalie und Polarpassagen. Auch Indiens SPADEX in LEO traegt ihn.",
+     "Thermischer Betrieb": "35 min Kernschatten je Umlauf gegen volle Sonne, rund 15 Zyklen am Tag. Die Basis (-200 C) deckt das nicht ab.",
+     "Hoher EM-Abdruck": "Eine Grossapertur, die 'bis GEO alles aufdeckt', ist ein aktiver Hochleistungs-Emitter. payload_catalog.md §Suite coupling nennt die Buchung dieses Nachteils neben einem aktiven Sensor ausdruecklich als empfohlene Praxis.",
+     "Doktrinaer gebunden": "Fester Aufklaerungsorbit, bodengefuehrte Auftragssteuerung, kein eigenstaendiges Manoever — deckt sich mit dem gebuchten Manoeverbudget 0,0 km/s.",
+     "Single-Use": "Nicht betankbar, nicht wartbar, nicht bergbar — eine Aussetzung.",
+     "Fragile Radiatoren": "Minimaler, ungeschuetzter Radiator an einem Serienbau."
+    },
+    "spielwirkungen": {
+     "Strahlungs-Haertung": "x10 Strahlungsbelastung tragbar (construction.md Tax-Tabelle, Stufe 1)",
+     "Thermischer Betrieb": "Betrieb ueber der Basis von -200 C (Tax-Tabelle T1)",
+     "Hoher EM-Abdruck": "+1 auf gegnerische Aufklaerung gegen dieses Schiff",
+     "Doktrinaer gebunden": "-1 Initiative oder Begleitschutz noetig",
+     "Single-Use": "einmal einsatzfaehig; nicht betankbar, nicht wartbar",
+     "Fragile Radiatoren": "+50 % Ausfall bei Kuehlungstreffer"
+    },
+    "structureClass": "ruggedized",
+    "structureTax": {
+     "struct_pct": 15,
+     "tank_pct": 10
+    },
+    "k2Kette": {
+     "basis_kg": 1000.0,
+     "np": 1,
+     "cm": 2.0,
+     "hochenergie_faktor": 1.0,
+     "ctxNoHE": true,
+     "disc": 1.0,
+     "env": 0.0,
+     "nutzlast_final_kg": 2000.0,
+     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env) * (3 ausser ctxNoHE; mit ctxNoHE stattdessen cm zusaetzlich * np)"
+    },
+    "nutzlastBasis_kg": 1000.0,
+    "nutzlastHerkunft": "comps 'Sensor: to GEO' — construction.md §2 'Bis GEO alles aufdecken' (sensor_geo, 1000 kg)",
+    "massBreakdown_kg": {
+     "nutzlast": 2000.0,
+     "bus": 732.306,
+     "triebwerke": 24,
+     "kraftwerk": 181.5,
+     "pmad": 24.805,
+     "batterie": 36.3,
+     "radiator": 55.0,
+     "tank": 7.8926,
+     "struktur": 459.2705,
+     "trocken": 3521.0742,
+     "treibstoff": 78.9258,
+     "nass": 3600.0
+    },
+    "powerPlant": {
+     "type": "solar",
+     "output_kw": 12.1,
+     "alpha_kg_kw": 15.0,
+     "battery_kg": 36.3,
+     "battery_hours": 0.6,
+     "house_kw": 11.0
+    },
+    "maneuverTime_s": 2023.0,
+    "thrust_simultaneous_N": 88,
+    "dv_manoever_kms": 0.0,
+    "dv_stationshaltung_kms": 0.05,
+    "huellkurve": {
+     "pay_dry": 56.8,
+     "paybus_dry": 77.6,
+     "struct_dry": 13.0,
+     "dry_wet": 97.8,
+     "pp_dry": 6.2
+    },
+    "antiJamming": {
+     "presets": [
+      [
+       "Raumschiff-Eigenschatten (genau ausgerichtet)",
+       -100
+      ],
+      [
+       "Comm mit Frequency Hopping",
+       -25
+      ],
+      [
+       "Tief eingelassenes System",
+       -110
+      ],
+      [
+       "Synthetic Aperture Nulling",
+       -40
+      ]
+     ],
+     "total_dB": -275
+    },
+    "gebuchteStartmasse_kg": 3600.0,
+    "abweichungProzent": 0.0
    }
   },
   {
@@ -804,37 +827,52 @@
    ],
    "jamSystems": null,
    "detectionData": {},
-   "notes": "Unified Shipyard MODUS B (Neukonstruktion, volle Penalty) — Kampagnenentwurf CHN_geo_relais 'GEO-Relais' (CHN). Anker: gebuchte Startmasse 5 t aus stand/gamestate.json, Abweichung 0,0000 %. K2: Basis 150 kg x cm 6 x Hochenergie 3 = 2700 kg Nutzlast (np = 6). Vorteile: Strahlungs-Haertung, Thermischer Betrieb, Magnetfeld-Toleranz. Nachteile: keine. Strukturklasse ruggedized + 3 Vorteile / 0 Nachteile -> Struktur 18 %, Tank 13 %. Energie: solar, 19.47 kW, Kraftwerk 292.1 kg, Batterie 116.8 kg. AJ-Summe -275 dB. dv = 750 m/s (Nord-Sued-Bahnhaltung GEO, 50 m/s je Jahr x 15 Jahre), Manoeverzeit 6128.66 h. C2-Relaisnutzlast Basis 150 kg -> K2 cm 6 x Hochenergie 3 = x18 -> 2700 kg.",
+   "notes": "Unified Shipyard MODUS B (Neukonstruktion, volle Penaltykette) — Kampagnenentwurf CHN_geo_relais 'GEO-Relais' (CHN), Einsatz GEO. FERNGELENKT: keine Strukturtonne. K2: Basis 150 kg x cm 6 x Hochenergie 3 = 2700 kg Nutzlast (np 6). Vorteile: Strahlungs-Haertung, Thermischer Betrieb, Magnetfeld-Toleranz. Nachteile: keine. Struktur 18 % / Tank 13 %. Energie solar 19.47 kW, Kraftwerk 292.1 kg, Batterie 116.8 kg. dv 750 m/s (Nord-Sued-Bahnhaltung GEO, 50 m/s je Jahr x 15 Jahre), Manoeverzeit 6128.66 h. Gebuchte Startmasse 5.0 t, Abweichung 0,0000 %.",
    "customData": {
     "designMode": "B",
-    "designModeBegruendung": "MODUS B (Neukonstruktion): kein reales Vorbild mit veroeffentlichter Startmasse. construction.md §Weight Penalty 3 gewaehrt die Ausnahme nur fuer designMode 'reconstruction'; hier laufen daher alle drei Kanaele K1+K2+K3 vollstaendig. Penalty-Reduktion durch L1/L2/L3 ist 2030 nicht verfuegbar (research.md: L1 ab 2035; factions.CHN.research.completedL1/L2/L3 leer) — es bleiben benannte Nachteile.",
-    "k2Kette": {
-     "basis_kg": 150.0,
-     "np": 6,
-     "cm": 6.0,
-     "hochenergie_faktor": 3.0,
-     "disc": 1.0,
-     "env": 0.0,
-     "nutzlast_final_kg": 2700.0,
-     "vergleich_ohne_geheilte_penalty_kg": 1350.0,
-     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env) * (3 ausser ctxNoHE)"
-    },
+    "designModeBegruendung": "MODUS B: kein reales Vorbild mit veroeffentlichter Startmasse. construction.md gewaehrt die Ausnahme von Weight Penalty 3 nur fuer designMode 'reconstruction'; hier laufen alle drei Kanaele K1+K2+K3. Penalty-Reduktion durch L1/L2/L3 ist 2030 nicht verfuegbar (research.md: L1 ab 2035).",
+    "steuerung": "ferngelenkt",
+    "steuerungBegruendung": "FERNGELENKT — keine Strukturtonne verbaut. construction.md §'Struktur = Autonomie': 'Die Strukturtonne kauft nicht Rumpf, sondern Autonomie: Bordrechner, Selbststeuerung, eigene Feuerleitung.' Folge: jede Aktion — Manoever, Feuer, Sensorbetrieb, Response — setzt einen aktiven Kommandolink zu einer Steuerstelle voraus (Erde, Traegerschiff, Relais). Bei gejammtem oder unterbrochenem Link vollstaendig handlungsunfaehig, driftet ballistisch weiter und gilt im Kampf als wehrloses Ziel (no_response).",
     "kampagne": "SCHWARZE SEE",
     "kampagnenDesign": "CHN_geo_relais",
     "kampagnenName": "GEO-Relais",
     "nation": "CHN",
-    "rolle": "+1 C2-Slot je Stueck (launch_c2 §2.1)",
+    "rolle": "+1 C2-Slot je Stueck (launch_c2 §2.1) · zugleich Steuerstelle der ferngelenkten Schiffe",
+    "einsatzzonen": "GEO",
     "advantages": [
      "Strahlungs-Haertung",
      "Thermischer Betrieb",
      "Magnetfeld-Toleranz"
     ],
     "disadvantages": [],
+    "begruendungVorNachteile": {
+     "Strahlungs-Haertung": "GEO im aeusseren Guertel, 15 Jahre Auslegungsdauer.",
+     "Thermischer Betrieb": "72 min Kernschatten gegen volle Sonne.",
+     "Magnetfeld-Toleranz": "Aufladung und Entladung im GEO-Plasma — das klassische Ausfallmuster geostationaerer Nachrichtensatelliten."
+    },
+    "spielwirkungen": {
+     "Strahlungs-Haertung": "x10 Strahlungsbelastung tragbar (construction.md Tax-Tabelle, Stufe 1)",
+     "Thermischer Betrieb": "Betrieb ueber der Basis von -200 C (Tax-Tabelle T1)",
+     "Magnetfeld-Toleranz": "Aufladung/Entladung im GEO-Plasma beherrscht"
+    },
     "structureClass": "ruggedized",
     "structureTax": {
      "struct_pct": 18,
      "tank_pct": 13
     },
+    "k2Kette": {
+     "basis_kg": 150.0,
+     "np": 6,
+     "cm": 6.0,
+     "hochenergie_faktor": 3.0,
+     "ctxNoHE": false,
+     "disc": 1.0,
+     "env": 0.0,
+     "nutzlast_final_kg": 2700.0,
+     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env) * (3 ausser ctxNoHE; mit ctxNoHE stattdessen cm zusaetzlich * np)"
+    },
+    "nutzlastBasis_kg": 150.0,
+    "nutzlastHerkunft": "C2-Relaisnutzlast: Antennen, Transponder, Kreuzverbindung (custom_c2relais, 150 kg)",
     "massBreakdown_kg": {
      "nutzlast": 2700.0,
      "bus": 594.5914,
@@ -868,8 +906,6 @@
      "dry_wet": 95.3,
      "pp_dry": 8.6
     },
-    "nutzlastBasis_kg": 150.0,
-    "nutzlastHerkunft": "C2-Relaisnutzlast Basis 150 kg -> K2 cm 6 x Hochenergie 3 = x18 -> 2700 kg",
     "antiJamming": {
      "presets": [
       [
@@ -891,13 +927,8 @@
      ],
      "total_dB": -275
     },
-    "gebuchteStartmasse_kg": 4999.999999999999,
-    "abweichungProzent": 0.0,
-    "begruendungVorNachteile": {
-     "Strahlungs-Haertung": "GEO liegt im aeusseren Strahlungsguertel und im Feld solarer Teilchenereignisse; 15 Jahre Auslegungsdauer. construction.md Tax-Tabelle: x10 Belastung.",
-     "Thermischer Betrieb": "72 min Kernschatten taeglich gegen volle Sonne — die Basis (-200 C) deckt das nicht ab.",
-     "Magnetfeld-Toleranz": "Aufladung und Entladung im GEO-Plasma, das klassische Ausfallmuster geostationaerer Nachrichtensatelliten."
-    }
+    "gebuchteStartmasse_kg": 5000.0,
+    "abweichungProzent": 0.0
    }
   }
  ]
