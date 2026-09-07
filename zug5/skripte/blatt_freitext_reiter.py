@@ -38,13 +38,7 @@ Begruendungen, Absprachen, Bedingungen, Reden, Drohungen, alles, was die Zahlen 
 auf den Blaettern 1 bis 4 nicht ausdruecken. Der Text reist mit dem Knopf \
 &raquo;Zug kopieren&laquo; als <code>felder.freitext</code> mit und wird vom \
 Leser unveraendert uebernommen &mdash; der GM kuerzt ihn nicht.</div>\
-<div class="band rot"><b>Dieser Reiter ist offen, nicht verdeckt.</b>Er gehoert \
-zum BLATT: bei einer Demokratie werden Blattwerte im Folgezug bekannt (Z-8.2). \
-Was niemand ausser dem GM lesen soll &mdash; Taeuschung, verdeckte Absicht, das \
-Ziel einer Operation &mdash; gehoert weiterhin in das <b>Geheimschreiben</b> auf \
-Blatt 3. Das Geheimschreiben reist in einem eigenen Block und wird nie \
-veroeffentlicht.</div>\
-<label class="f"><span class="lab">Freitext fuer den ganzen Zug &mdash; so lang Sie wollen</span>\
+<div class="band blau"><b>Vertraulich wie das ganze Blatt.</b>Dieser Text geht an den GM und an niemanden sonst. Kein Mitspieler liest ihn &mdash; SITREPs sind asymmetrisch, und was eine Fraktion nicht wissen kann, steht nicht darin.</div><div class="band rot"><b>Eines darf hier nicht stehen: Zahlen, die anderswo hingeh&ouml;ren.</b>Bei einer Demokratie werden im Folgezug die <i>Werte</i> des Blatts bekannt &mdash; die Summen, nicht die Absicht. Wer eine Ausgabe in den Freitext schreibt, statt sie in ihr Feld zu setzen, entzieht sie der Ver&ouml;ffentlichungspflicht. Genau das verhindert Z-8.2 mit dem Satz: <i>&raquo;die Summe wird bekannt, die Absicht nicht&laquo;</i>. Absichten, Begr&uuml;ndungen, Reden, Drohungen, Bedingungen &mdash; alles richtig hier. Zahlen geh&ouml;ren in ihre Felder.</div><div class="band gruen"><b>Wof&uuml;r dann noch das Geheimschreiben?</b>F&uuml;r den Fall, dass der Text auch <i>strukturell</i> getrennt reisen soll: es f&auml;hrt in einem eigenen Block mit eigenem Schema, nie im selben JSON wie die Blattwerte. Ein Unterschied im Transportweg, nicht in der Vertraulichkeit.</div><label class="f"><span class="lab">Freitext fuer den ganzen Zug &mdash; so lang Sie wollen</span>\
 <textarea id="f_freitext" rows="26" placeholder="Was Sie in diesem Zug vorhaben und warum. \
 Worauf Sie reagieren. Was Sie den anderen sagen und was Sie ihnen nicht sagen. \
 Bedingungen (&raquo;falls X, dann Y&laquo;) bitte mit dem Zug nennen, in dem sie verfallen."></textarea></label>\
