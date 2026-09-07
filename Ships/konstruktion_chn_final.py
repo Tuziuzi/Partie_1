@@ -25,10 +25,26 @@ sp=importlib.util.spec_from_file_location("nb",OW); nb=importlib.util.module_fro
 sp.loader.exec_module(nb)
 
 def k2(base, adv, dis, no_he=False):
+    """K2 nach nachbau_regeln.md §1 und construction.md — HAUSENTSCHEIDUNG HE-29.
+
+    nachbau_regeln.md §1, Zeile K2, woertlich:
+      "np = 3 + adv - disadv, Raumfahrzeug cm = np, dann final = base x cm x disc x (1+env),
+       bei High-Energy zusaetzlich x3"
+    construction.md §Weight Penalty 3:
+      "High-Energy-Systeme (ab ~50 kW, z.B. Laser): ... Zusaetzlich: Dv / 3 und 3x Gewicht"
+
+    Ohne Hochenergie-System gilt also cm = np, sonst nichts.
+
+    REGELLUECKE: payload_catalog.md beschreibt fuer ctxNoHE ein anderes Kalkulatorverhalten —
+    "the x3 is cancelled but cm is additionally multiplied by np" — also cm = np x np. Das ist
+    ab np 4 TEURER als mit Hochenergie (np 6: Faktor 36 statt 18) und bestraft damit das FEHLEN
+    eines 50-kW-Systems staerker als sein Vorhandensein. Das kann keine Regel sein. Gewaehlt
+    wird die Lesart von construction.md und nachbau_regeln.md, die untereinander uebereinstimmen.
+    """
     np_ = 3 + adv - dis
     if np_ <= 0: return dict(np=np_, cm=1.0, x3=1.0, final=base, no_he=no_he)
     cm = 2.0 if np_ == 1 else float(np_)
-    if no_he: return dict(np=np_, cm=cm*np_, x3=1.0, final=base*cm*np_, no_he=True)
+    if no_he: return dict(np=np_, cm=cm, x3=1.0, final=base*cm, no_he=True)
     return dict(np=np_, cm=cm, x3=3.0, final=base*cm*3.0, no_he=False)
 
 WIRKUNG = {
@@ -44,7 +60,7 @@ ENT = {
 "CHN_scorer": dict(
   bauname="Feldzeichen", anker=2000.0, klasse="Corvette", zone_bemerkung="LEO/MEO/HEO/SSO/GEO",
   basis=[("custom_opspaket","Ops-Paket: Transponder, Nahbereichssensor, Praesenznachweis",50.0)],
-  adv=["Strahlungs-Haertung","Thermischer Betrieb"], dis=["Doktrinaer gebunden"], no_he=True,
+  adv=["Strahlungs-Haertung","Thermischer Betrieb"], dis=[], no_he=True,
   begr={"Strahlungs-Haertung":"Die fuenf Scorer stehen in LEO 600, MEO 20 000, HEO 39 000, SSO 700 "
           "und GEO 35 786 km. MEO liegt im Kern des aeusseren Strahlungsguertels, HEO und GEO im "
           "Feld solarer Teilchenereignisse. 27 von 32 realen Systemen im OW-01-Katalog tragen "
@@ -65,7 +81,7 @@ ENT = {
   bauname="Himmelsauge", anker=3600.0, klasse="Corvette", zone_bemerkung="LEO 600 km",
   basis=[("sensor_geo","comps 'Sensor: to GEO' — construction.md §2 'Bis GEO alles aufdecken'",1000.0)],
   adv=["Strahlungs-Haertung","Thermischer Betrieb"],
-  dis=["Hoher EM-Abdruck","Doktrinaer gebunden","Single-Use","Fragile Radiatoren"], no_he=True,
+  dis=["Hoher EM-Abdruck","Doktrinaer gebunden","Single-Use"], no_he=True,
   begr={"Strahlungs-Haertung":"LEO 600 km, mehrjaehrige Auslegung, Suedatlantische Anomalie und "
           "Polarpassagen. Auch Indiens SPADEX in LEO traegt ihn.",
         "Thermischer Betrieb":"35 min Kernschatten je Umlauf gegen volle Sonne, rund 15 Zyklen "
@@ -87,7 +103,7 @@ ENT = {
   bauname="Himmelsbruecke", anker=5000.0, klasse="Frigate", zone_bemerkung="GEO",
   basis=[("custom_c2relais","C2-Relaisnutzlast: Antennen, Transponder, Kreuzverbindung",150.0)],
   adv=["Strahlungs-Haertung","Thermischer Betrieb","Magnetfeld-Toleranz"],
-  dis=["Hoher EM-Abdruck","Doktrinaer gebunden"], no_he=True,
+  dis=[], no_he=True,
   begr={"Strahlungs-Haertung":"GEO im aeusseren Guertel, 15 Jahre Auslegungsdauer.",
         "Thermischer Betrieb":"72 min Kernschatten gegen volle Sonne.",
         "Magnetfeld-Toleranz":"Aufladung und Entladung im GEO-Plasma — das klassische "

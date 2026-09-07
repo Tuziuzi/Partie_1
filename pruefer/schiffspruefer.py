@@ -114,8 +114,13 @@ def pruefe(g, b):
                 else:
                     np_soll = 3 + len(nv) - len(nn)
                     cm_soll, x3_soll = cm_regel(np_soll)
+                    # HAUSENTSCHEIDUNG HE-29: ohne Hochenergie gilt cm = np, sonst nichts.
+                    # nachbau_regeln.md §1 und construction.md stimmen darin ueberein.
+                    # payload_catalog.md beschreibt fuer ctxNoHE ein cm = np x np — das ist ab
+                    # np 4 teurer als MIT Hochenergie und bestraft das Fehlen eines 50-kW-
+                    # Systems staerker als sein Vorhandensein. Werkzeugartefakt, keine Regel.
                     if k.get("ctxNoHE") and np_soll >= 1:
-                        cm_soll, x3_soll = cm_soll * np_soll, 1.0
+                        x3_soll = 1.0
                     if k.get("np") != np_soll:
                         b.fehler("S-2", ref, f"np ist {k.get('np')}, muss 3 + {len(nv)} - {len(nn)} "
                             f"= {np_soll} sein.", "payload_catalog.md: np = 3 + adv - disadv")
@@ -123,7 +128,7 @@ def pruefe(g, b):
                         b.fehler("S-2", ref, f"cm ist {k.get('cm')}, muss bei np={np_soll} "
                             f"{cm_soll:.0f} sein"
                             f"{' (ctxNoHE: cm zusaetzlich x np)' if k.get('ctxNoHE') else ''}.",
-                            "payload_catalog.md: np>=2 -> np; np==1 -> 2; np<=0 -> 1")
+                            "nachbau_regeln.md §1 (HE-29): cm = np; np==1 -> 2; np<=0 -> 1")
                     if abs((k.get("hochenergie_faktor") or 0) - x3_soll) > 1e-9:
                         b.fehler("S-2", ref, f"Hochenergie-Faktor ist {k.get('hochenergie_faktor')}, "
                             f"muss {x3_soll:.0f} sein"
@@ -353,6 +358,14 @@ FAELLE = [
  ("Z5-070  Bauauftrag ohne gebuchten Werftdurchsatz", "B-1",
   {"bz01": {"bauplan": [{"id": "T", "fraktion": "CHN", "design_ref": "X", "count": 2,
                          "stueck_masse_t": 2.0, "kosten_mult": 4.0}]}}),
+ ("Z5-084  ctxNoHE mit quadriertem cm (Werkzeugartefakt statt Regel)", "S-2",
+  {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
+     "steuerungBegruendung": "Link", "spitzenlast_kw": 3.6,
+     "vorteile": [{"name": "Strahlungs-Haertung", "spielwirkung": "w", "begruendung": "b"},
+                  {"name": "Thermischer Betrieb", "spielwirkung": "w", "begruendung": "b"}],
+     "nachteile": [],
+     "k2_penaltykette": {"basis_kg": 50, "np": 5, "cm": 25, "hochenergie_faktor": 1,
+                         "ctxNoHE": True, "disc": 1, "env": 0, "nutzlast_final_kg": 1250}}}}}}),
  ("Z5-082  Hochenergie-Gewicht ohne Hochenergie-Leistung (unter 50 kW)", "S-8",
   {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
      "steuerungBegruendung": "Link", "spitzenlast_kw": 3.6, "vorteile": [], "nachteile": [],
