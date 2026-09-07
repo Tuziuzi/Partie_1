@@ -1,1 +1,3 @@
 stand/
+__pycache__/
+*.pyc
