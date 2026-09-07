@@ -119,20 +119,19 @@ def pruefe(g, b):
                     # payload_catalog.md beschreibt fuer ctxNoHE ein cm = np x np — das ist ab
                     # np 4 teurer als MIT Hochenergie und bestraft das Fehlen eines 50-kW-
                     # Systems staerker als sein Vorhandensein. Werkzeugartefakt, keine Regel.
-                    if k.get("ctxNoHE") and np_soll >= 1:
+                    if not k.get("hochenergie", True) and np_soll >= 1:
                         x3_soll = 1.0
                     if k.get("np") != np_soll:
                         b.fehler("S-2", ref, f"np ist {k.get('np')}, muss 3 + {len(nv)} - {len(nn)} "
                             f"= {np_soll} sein.", "payload_catalog.md: np = 3 + adv - disadv")
                     if abs((k.get("cm") or 0) - cm_soll) > 1e-9:
                         b.fehler("S-2", ref, f"cm ist {k.get('cm')}, muss bei np={np_soll} "
-                            f"{cm_soll:.0f} sein"
-                            f"{' (ctxNoHE: cm zusaetzlich x np)' if k.get('ctxNoHE') else ''}.",
+                            f"{cm_soll:.0f} sein.",
                             "nachbau_regeln.md §1 (HE-29): cm = np; np==1 -> 2; np<=0 -> 1")
                     if abs((k.get("hochenergie_faktor") or 0) - x3_soll) > 1e-9:
                         b.fehler("S-2", ref, f"Hochenergie-Faktor ist {k.get('hochenergie_faktor')}, "
                             f"muss {x3_soll:.0f} sein"
-                            f"{' (ctxNoHE deklariert)' if k.get('ctxNoHE') else ''}.",
+                            f"{' (unter 50 kW, keine Hochenergie)' if not k.get('hochenergie', True) else ''}.",
                             "payload_catalog.md: dann x3, ausser ctxNoHE; mit ctxNoHE entfaellt "
                             "das x3 und cm wird zusaetzlich mit np multipliziert; bei np<=0 geklemmt")
                     soll = (k.get("basis_kg") or 0)*(k.get("cm") or 0)*(k.get("disc") or 1) \
@@ -171,7 +170,7 @@ def pruefe(g, b):
                         "nur die Gewichtshaelfte gebucht. Die Strafe hat zwei Haelften: 3x Gewicht "
                         "UND Dv / 3. Entweder beide oder keine.",
                         'construction.md: "Zusaetzlich: Dv / 3 und 3x Gewicht"')
-                if leist >= 50 and not he and not k.get("ctxNoHE"):
+                if leist >= 50 and not he and k.get("hochenergie", True):
                     b.warnung("S-8", ref, f"Spitzenlast {leist:.2f} kW liegt ueber der Schwelle, "
                         "aber es ist weder Hochenergie noch ctxNoHE gebucht — Zustand unklar.",
                         "construction.md §Weight Penalty 3")
@@ -358,14 +357,14 @@ FAELLE = [
  ("Z5-070  Bauauftrag ohne gebuchten Werftdurchsatz", "B-1",
   {"bz01": {"bauplan": [{"id": "T", "fraktion": "CHN", "design_ref": "X", "count": 2,
                          "stueck_masse_t": 2.0, "kosten_mult": 4.0}]}}),
- ("Z5-084  ctxNoHE mit quadriertem cm (Werkzeugartefakt statt Regel)", "S-2",
+ ("Z5-084  quadriertes cm ohne Hochenergie (Werkzeugartefakt statt Regel)", "S-2",
   {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
      "steuerungBegruendung": "Link", "spitzenlast_kw": 3.6,
      "vorteile": [{"name": "Strahlungs-Haertung", "spielwirkung": "w", "begruendung": "b"},
                   {"name": "Thermischer Betrieb", "spielwirkung": "w", "begruendung": "b"}],
      "nachteile": [],
      "k2_penaltykette": {"basis_kg": 50, "np": 5, "cm": 25, "hochenergie_faktor": 1,
-                         "ctxNoHE": True, "disc": 1, "env": 0, "nutzlast_final_kg": 1250}}}}}}),
+                         "hochenergie": False, "disc": 1, "env": 0, "nutzlast_final_kg": 1250}}}}}}),
  ("Z5-082  Hochenergie-Gewicht ohne Hochenergie-Leistung (unter 50 kW)", "S-8",
   {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
      "steuerungBegruendung": "Link", "spitzenlast_kw": 3.6, "vorteile": [], "nachteile": [],

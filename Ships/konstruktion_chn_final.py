@@ -24,7 +24,7 @@ OW=("/root/.claude/skills/synced/2c0e114f-f980-4879-be59-84347099c9f5_"
 sp=importlib.util.spec_from_file_location("nb",OW); nb=importlib.util.module_from_spec(sp)
 sp.loader.exec_module(nb)
 
-def k2(base, adv, dis, no_he=False):
+def k2(base, adv, dis, hochenergie=True):
     """K2 nach nachbau_regeln.md §1 und construction.md — HAUSENTSCHEIDUNG HE-29.
 
     nachbau_regeln.md §1, Zeile K2, woertlich:
@@ -35,16 +35,21 @@ def k2(base, adv, dis, no_he=False):
 
     Ohne Hochenergie-System gilt also cm = np, sonst nichts.
 
-    REGELLUECKE: payload_catalog.md beschreibt fuer ctxNoHE ein anderes Kalkulatorverhalten —
-    "the x3 is cancelled but cm is additionally multiplied by np" — also cm = np x np. Das ist
-    ab np 4 TEURER als mit Hochenergie (np 6: Faktor 36 statt 18) und bestraft damit das FEHLEN
-    eines 50-kW-Systems staerker als sein Vorhandensein. Das kann keine Regel sein. Gewaehlt
-    wird die Lesart von construction.md und nachbau_regeln.md, die untereinander uebereinstimmen.
+    WICHTIG ZUR BENENNUNG: Wir beanspruchen NICHT die Kalkulatorfahne ctxNoHE. Die steht im
+    shipyard-designer neben ctxSpace, ctxSurfaceStat, ctxSurfaceMove und groundHalve, ist also
+    eine KONTEXTKLASSE mit eigener Preiskurve (cm x np, wie ctxSurfaceMove np^2) und nicht ein
+    Rabatt fuer "kein Laser an Bord". Angewandt wird stattdessen die physikalische Schwelle aus
+    construction.md: Hochenergie-Systeme beginnen bei ~50 kW. Darunter existiert die Strafe
+    nicht — weder ihre Gewichts- noch ihre Dv-Haelfte —, und cm bleibt np.
+
+    BEFUND ZUM SKILL (Z5-086): der shipyard-designer kennt die Dv-Haelfte ueberhaupt nicht und
+    behandelt Hochenergie als Voreinstellung fuer jedes np > 0, unabhaengig von der Bordleistung.
+    Wer allein mit dem Shipyard baut, wendet systematisch eine halbe Strafe an.
     """
     np_ = 3 + adv - dis
-    if np_ <= 0: return dict(np=np_, cm=1.0, x3=1.0, final=base, no_he=no_he)
+    if np_ <= 0: return dict(np=np_, cm=1.0, x3=1.0, final=base, no_he=not hochenergie)
     cm = 2.0 if np_ == 1 else float(np_)
-    if no_he: return dict(np=np_, cm=cm, x3=1.0, final=base*cm, no_he=True)
+    if not hochenergie: return dict(np=np_, cm=cm, x3=1.0, final=base*cm, no_he=True)
     return dict(np=np_, cm=cm, x3=3.0, final=base*cm*3.0, no_he=False)
 
 WIRKUNG = {
@@ -60,7 +65,7 @@ ENT = {
 "CHN_scorer": dict(
   bauname="Feldzeichen", anker=2000.0, klasse="Corvette", zone_bemerkung="LEO/MEO/HEO/SSO/GEO",
   basis=[("custom_opspaket","Ops-Paket: Transponder, Nahbereichssensor, Praesenznachweis",50.0)],
-  adv=["Strahlungs-Haertung","Thermischer Betrieb"], dis=[], no_he=True,
+  adv=["Strahlungs-Haertung","Thermischer Betrieb"], dis=[], hochenergie=False,
   begr={"Strahlungs-Haertung":"Die fuenf Scorer stehen in LEO 600, MEO 20 000, HEO 39 000, SSO 700 "
           "und GEO 35 786 km. MEO liegt im Kern des aeusseren Strahlungsguertels, HEO und GEO im "
           "Feld solarer Teilchenereignisse. 27 von 32 realen Systemen im OW-01-Katalog tragen "
@@ -81,7 +86,7 @@ ENT = {
   bauname="Himmelsauge", anker=3600.0, klasse="Corvette", zone_bemerkung="LEO 600 km",
   basis=[("sensor_geo","comps 'Sensor: to GEO' — construction.md §2 'Bis GEO alles aufdecken'",1000.0)],
   adv=["Strahlungs-Haertung","Thermischer Betrieb"],
-  dis=["Hoher EM-Abdruck","Doktrinaer gebunden","Single-Use"], no_he=True,
+  dis=["Hoher EM-Abdruck","Doktrinaer gebunden","Single-Use"], hochenergie=False,
   begr={"Strahlungs-Haertung":"LEO 600 km, mehrjaehrige Auslegung, Suedatlantische Anomalie und "
           "Polarpassagen. Auch Indiens SPADEX in LEO traegt ihn.",
         "Thermischer Betrieb":"35 min Kernschatten je Umlauf gegen volle Sonne, rund 15 Zyklen "
@@ -103,7 +108,7 @@ ENT = {
   bauname="Himmelsbruecke", anker=5000.0, klasse="Frigate", zone_bemerkung="GEO",
   basis=[("custom_c2relais","C2-Relaisnutzlast: Antennen, Transponder, Kreuzverbindung",150.0)],
   adv=["Strahlungs-Haertung","Thermischer Betrieb","Magnetfeld-Toleranz"],
-  dis=[], no_he=True,
+  dis=[], hochenergie=False,
   begr={"Strahlungs-Haertung":"GEO im aeusseren Guertel, 15 Jahre Auslegungsdauer.",
         "Thermischer Betrieb":"72 min Kernschatten gegen volle Sonne.",
         "Magnetfeld-Toleranz":"Aufladung und Entladung im GEO-Plasma — das klassische "
@@ -131,7 +136,7 @@ def spec(e, pay, bus):
 erg={}
 for did,e in ENT.items():
     base=sum(b[2] for b in e["basis"])
-    m=k2(base, len(e["adv"]), len(e["dis"]), e["no_he"])
+    m=k2(base, len(e["adv"]), len(e["dis"]), e["hochenergie"])
     lo,hi=-e["anker"]*4, e["anker"]*4
     for _ in range(200):
         mid=(lo+hi)/2
@@ -161,7 +166,7 @@ for did,e in ENT.items():
     print(f"  Vorteile ({len(e['adv'])}): {', '.join(e['adv'])}")
     print(f"  Nachteile({len(e['dis'])}): {', '.join(e['dis']) or '— keine —'}")
     print(f"  K2  np {m['np']} · cm {m['cm']:.0f} · Hochenergie x{m['x3']:.0f}"
-          f"{' (ctxNoHE deklariert)' if m['no_he'] else ''} -> {base:.0f} -> {m['final']:.0f} kg")
+          f"{' — unter 50 kW, keine Hochenergie-Strafe' if m['no_he'] else ''} -> {base:.0f} -> {m['final']:.0f} kg")
     print(f"  K1  Struktur {r['structPct']:.0f} % / Tank {r['tankPct']:.0f} %")
     print(f"  trocken {r['dry']:8.1f} + Treibstoff {r['prop']:7.1f} = nass {r['wet']:8.1f} kg "
           f"(Anker {e['anker']:.0f}, Abweichung {r['wet']-e['anker']:+.4f})")
@@ -171,7 +176,7 @@ for did,e in ENT.items():
 
 json.dump(erg, open("Ships/entwuerfe/loesung_chn_final.json","w"), indent=1, ensure_ascii=False)
 json.dump({k:dict(bauname=v["bauname"], anker=v["anker"], klasse=v["klasse"], basis=v["basis"],
-                  adv=v["adv"], dis=v["dis"], no_he=v["no_he"], begr=v["begr"], isp=v["isp"],
+                  adv=v["adv"], dis=v["dis"], hochenergie=v["hochenergie"], begr=v["begr"], isp=v["isp"],
                   prop=v["prop"], dv=v["dv"], ld=v["ld"], house=v["house"], batt=v["batt"],
                   eng=v["eng"], dv_man=v["dv_man"], dv_zweck=v["dv_zweck"], rolle=v["rolle"],
                   zone_bemerkung=v["zone_bemerkung"])

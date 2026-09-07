@@ -1,7 +1,7 @@
 {
  "version": "2.2",
  "type": "ship_export",
- "timestamp": "2026-09-07T20:02:41.679989Z",
+ "timestamp": "2026-09-07T20:11:08.853858Z",
  "ships": [
   {
    "name": "Feldzeichen",
@@ -248,16 +248,17 @@
      "np": 5,
      "cm": 5.0,
      "hochenergie_faktor": 1.0,
-     "ctxNoHE": true,
+     "hochenergie": false,
      "disc": 1.0,
      "env": 0.0,
      "nutzlast_final_kg": 250.0,
-     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env) * (3 ausser ctxNoHE; mit ctxNoHE stattdessen cm zusaetzlich * np)"
+     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env), bei Hochenergie zusaetzlich *3 UND dv/3 (construction.md §Weight Penalty 3, Schwelle ~50 kW). HE-29: unterhalb der Schwelle existiert die Strafe nicht, cm bleibt np. Die Kalkulatorfahne ctxNoHE wird NICHT beansprucht — sie ist eine Kontextklasse mit eigener Preiskurve (cm * np), kein Rabatt.",
+     "ctxNoHE_beansprucht": false
     },
     "nutzlastBasis_kg": 50.0,
     "spitzenlast_kw": 3.6,
     "hochenergieSchwelle_kw": 50.0,
-    "hochenergieBefund": "Spitzenlast unter der Schwelle von ~50 kW (construction.md §Weight Penalty 3) — kein Hochenergie-System. Also weder 3x Gewicht noch Dv/3; ctxNoHE deklariert.",
+    "hochenergieBefund": "Spitzenlast unter der Schwelle von ~50 kW (construction.md §Weight Penalty 3) — kein Hochenergie-System. Also weder 3x Gewicht noch Dv/3. Die Kalkulatorfahne ctxNoHE wird dafuer NICHT beansprucht (Z5-086).",
     "nutzlastHerkunft": "Ops-Paket: Transponder, Nahbereichssensor, Praesenznachweis (custom_opspaket, 50 kg)",
     "massBreakdown_kg": {
      "nutzlast": 250.0,
@@ -562,16 +563,17 @@
      "np": 2,
      "cm": 2.0,
      "hochenergie_faktor": 1.0,
-     "ctxNoHE": true,
+     "hochenergie": false,
      "disc": 1.0,
      "env": 0.0,
      "nutzlast_final_kg": 2000.0,
-     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env) * (3 ausser ctxNoHE; mit ctxNoHE stattdessen cm zusaetzlich * np)"
+     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env), bei Hochenergie zusaetzlich *3 UND dv/3 (construction.md §Weight Penalty 3, Schwelle ~50 kW). HE-29: unterhalb der Schwelle existiert die Strafe nicht, cm bleibt np. Die Kalkulatorfahne ctxNoHE wird NICHT beansprucht — sie ist eine Kontextklasse mit eigener Preiskurve (cm * np), kein Rabatt.",
+     "ctxNoHE_beansprucht": false
     },
     "nutzlastBasis_kg": 1000.0,
     "spitzenlast_kw": 11.0,
     "hochenergieSchwelle_kw": 50.0,
-    "hochenergieBefund": "Spitzenlast unter der Schwelle von ~50 kW (construction.md §Weight Penalty 3) — kein Hochenergie-System. Also weder 3x Gewicht noch Dv/3; ctxNoHE deklariert.",
+    "hochenergieBefund": "Spitzenlast unter der Schwelle von ~50 kW (construction.md §Weight Penalty 3) — kein Hochenergie-System. Also weder 3x Gewicht noch Dv/3. Die Kalkulatorfahne ctxNoHE wird dafuer NICHT beansprucht (Z5-086).",
     "nutzlastHerkunft": "comps 'Sensor: to GEO' — construction.md §2 'Bis GEO alles aufdecken' (sensor_geo, 1000 kg)",
     "massBreakdown_kg": {
      "nutzlast": 2000.0,
@@ -872,16 +874,17 @@
      "np": 6,
      "cm": 6.0,
      "hochenergie_faktor": 1.0,
-     "ctxNoHE": true,
+     "hochenergie": false,
      "disc": 1.0,
      "env": 0.0,
      "nutzlast_final_kg": 900.0,
-     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env) * (3 ausser ctxNoHE; mit ctxNoHE stattdessen cm zusaetzlich * np)"
+     "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env), bei Hochenergie zusaetzlich *3 UND dv/3 (construction.md §Weight Penalty 3, Schwelle ~50 kW). HE-29: unterhalb der Schwelle existiert die Strafe nicht, cm bleibt np. Die Kalkulatorfahne ctxNoHE wird NICHT beansprucht — sie ist eine Kontextklasse mit eigener Preiskurve (cm * np), kein Rabatt.",
+     "ctxNoHE_beansprucht": false
     },
     "nutzlastBasis_kg": 150.0,
     "spitzenlast_kw": 17.7,
     "hochenergieSchwelle_kw": 50.0,
-    "hochenergieBefund": "Spitzenlast unter der Schwelle von ~50 kW (construction.md §Weight Penalty 3) — kein Hochenergie-System. Also weder 3x Gewicht noch Dv/3; ctxNoHE deklariert.",
+    "hochenergieBefund": "Spitzenlast unter der Schwelle von ~50 kW (construction.md §Weight Penalty 3) — kein Hochenergie-System. Also weder 3x Gewicht noch Dv/3. Die Kalkulatorfahne ctxNoHE wird dafuer NICHT beansprucht (Z5-086).",
     "nutzlastHerkunft": "C2-Relaisnutzlast: Antennen, Transponder, Kreuzverbindung (custom_c2relais, 150 kg)",
     "massBreakdown_kg": {
      "nutzlast": 900.0,
