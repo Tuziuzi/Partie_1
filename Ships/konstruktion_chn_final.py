@@ -24,33 +24,37 @@ OW=("/root/.claude/skills/synced/2c0e114f-f980-4879-be59-84347099c9f5_"
 sp=importlib.util.spec_from_file_location("nb",OW); nb=importlib.util.module_from_spec(sp)
 sp.loader.exec_module(nb)
 
-def k2(base, adv, dis, hochenergie=True):
-    """K2 nach nachbau_regeln.md §1 und construction.md — HAUSENTSCHEIDUNG HE-29.
+def k2(base, adv, dis, ctx_no_he=False, leistung_kw=None):
+    """K2 nach shipyard-designer v5.22-HE, Schritt 2.
 
-    nachbau_regeln.md §1, Zeile K2, woertlich:
-      "np = 3 + adv - disadv, Raumfahrzeug cm = np, dann final = base x cm x disc x (1+env),
-       bei High-Energy zusaetzlich x3"
-    construction.md §Weight Penalty 3:
-      "High-Energy-Systeme (ab ~50 kW, z.B. Laser): ... Zusaetzlich: Dv / 3 und 3x Gewicht"
+    SKILL.md woertlich: "The calculator's ctxNoHE checkbox and the Delta-V game rule are NOT
+    the same thing." Die Spielregel (construction.md §Hochenergie) greift ab ~50 kW und kostet
+    Dv/3 UND 3x Gewicht. Der Kalkulator-x3 ist etwas anderes: "a payload guard coupled to np,
+    nothing more" — er beruehrt das Dv nicht.
 
-    Ohne Hochenergie-System gilt also cm = np, sonst nichts.
+    Schritt 2 fuer powerUsed < 50 kW: "the game rule does NOT apply ... The calculator still
+    offers only x3 or cm x np; pick the state closest to the rule, record the difference as [S]
+    ... and declare the mismatch as RULES-GAP to the player (options: calculator default x3 /
+    ctxNoHE cm x np / house-rule flat base marked [S])."
 
-    WICHTIG ZUR BENENNUNG: Wir beanspruchen NICHT die Kalkulatorfahne ctxNoHE. Die steht im
-    shipyard-designer neben ctxSpace, ctxSurfaceStat, ctxSurfaceMove und groundHalve, ist also
-    eine KONTEXTKLASSE mit eigener Preiskurve (cm x np, wie ctxSurfaceMove np^2) und nicht ein
-    Rabatt fuer "kein Laser an Bord". Angewandt wird stattdessen die physikalische Schwelle aus
-    construction.md: Hochenergie-Systeme beginnen bei ~50 kW. Darunter existiert die Strafe
-    nicht — weder ihre Gewichts- noch ihre Dv-Haelfte —, und cm bleibt np.
-
-    BEFUND ZUM SKILL (Z5-086): der shipyard-designer kennt die Dv-Haelfte ueberhaupt nicht und
-    behandelt Hochenergie als Voreinstellung fuer jedes np > 0, unabhaengig von der Bordleistung.
-    Wer allein mit dem Shipyard baut, wendet systematisch eine halbe Strafe an.
+    Da die Spielregel unterhalb der Schwelle GAR KEINE Strafe kennt, ist der kleinere der beiden
+    Kalkulatorfaktoren der naehere. Gewaehlt wird er hier je Schiff; die Differenz zur Spielregel
+    wird als [S] mitgefuehrt und dem Tisch als RULES-GAP vorgelegt.
     """
     np_ = 3 + adv - dis
-    if np_ <= 0: return dict(np=np_, cm=1.0, x3=1.0, final=base, no_he=not hochenergie)
-    cm = 2.0 if np_ == 1 else float(np_)
-    if not hochenergie: return dict(np=np_, cm=cm, x3=1.0, final=base*cm, no_he=True)
-    return dict(np=np_, cm=cm, x3=3.0, final=base*cm*3.0, no_he=False)
+    cm  = 1.0 if np_ <= 0 else (2.0 if np_ == 1 else float(np_))
+    f_x3   = cm if np_ <= 0 else cm*3.0
+    f_nohe = cm if np_ <= 0 else cm*np_
+    f_haus = cm
+    faktor = f_nohe if ctx_no_he else f_x3
+    spielregel_greift = bool(leistung_kw is not None and leistung_kw >= 50.0)
+    return dict(np=np_, cm=cm, ctx_no_he=ctx_no_he, faktor=faktor, final=base*faktor,
+                x3=1.0 if ctx_no_he else 3.0,
+                naeher=("ctxNoHE" if f_nohe < f_x3 else ("x3" if f_x3 < f_nohe else "gleich")),
+                alternative_faktor=f_x3 if ctx_no_he else f_nohe,
+                hausregel_faktor=f_haus,
+                spielregel_greift=spielregel_greift,
+                dv_geteilt=spielregel_greift, no_he=ctx_no_he)
 
 WIRKUNG = {
  "Strahlungs-Haertung": "x10 Strahlungsbelastung tragbar (construction.md Tax-Tabelle, Stufe 1)",
@@ -65,7 +69,7 @@ ENT = {
 "CHN_scorer": dict(
   bauname="Feldzeichen", anker=2000.0, klasse="Corvette", zone_bemerkung="LEO/MEO/HEO/SSO/GEO",
   basis=[("custom_opspaket","Ops-Paket: Transponder, Nahbereichssensor, Praesenznachweis",50.0)],
-  adv=["Strahlungs-Haertung","Thermischer Betrieb"], dis=[], hochenergie=False,
+  adv=["Strahlungs-Haertung","Thermischer Betrieb"], dis=[], ctx_no_he=False,
   begr={"Strahlungs-Haertung":"Die fuenf Scorer stehen in LEO 600, MEO 20 000, HEO 39 000, SSO 700 "
           "und GEO 35 786 km. MEO liegt im Kern des aeusseren Strahlungsguertels, HEO und GEO im "
           "Feld solarer Teilchenereignisse. 27 von 32 realen Systemen im OW-01-Katalog tragen "
@@ -86,7 +90,8 @@ ENT = {
   bauname="Himmelsauge", anker=3600.0, klasse="Corvette", zone_bemerkung="LEO 600 km",
   basis=[("sensor_geo","comps 'Sensor: to GEO' — construction.md §2 'Bis GEO alles aufdecken'",1000.0)],
   adv=["Strahlungs-Haertung","Thermischer Betrieb"],
-  dis=["Hoher EM-Abdruck","Doktrinaer gebunden","Single-Use"], hochenergie=False,
+  dis=["Hoher EM-Abdruck","Doktrinaer gebunden","Single-Use","Fragile Radiatoren"],
+  ctx_no_he=True,
   begr={"Strahlungs-Haertung":"LEO 600 km, mehrjaehrige Auslegung, Suedatlantische Anomalie und "
           "Polarpassagen. Auch Indiens SPADEX in LEO traegt ihn.",
         "Thermischer Betrieb":"35 min Kernschatten je Umlauf gegen volle Sonne, rund 15 Zyklen "
@@ -108,7 +113,7 @@ ENT = {
   bauname="Himmelsbruecke", anker=5000.0, klasse="Frigate", zone_bemerkung="GEO",
   basis=[("custom_c2relais","C2-Relaisnutzlast: Antennen, Transponder, Kreuzverbindung",150.0)],
   adv=["Strahlungs-Haertung","Thermischer Betrieb","Magnetfeld-Toleranz"],
-  dis=[], hochenergie=False,
+  dis=[], ctx_no_he=False,
   begr={"Strahlungs-Haertung":"GEO im aeusseren Guertel, 15 Jahre Auslegungsdauer.",
         "Thermischer Betrieb":"72 min Kernschatten gegen volle Sonne.",
         "Magnetfeld-Toleranz":"Aufladung und Entladung im GEO-Plasma — das klassische "
@@ -136,7 +141,7 @@ def spec(e, pay, bus):
 erg={}
 for did,e in ENT.items():
     base=sum(b[2] for b in e["basis"])
-    m=k2(base, len(e["adv"]), len(e["dis"]), e["hochenergie"])
+    m=k2(base, len(e["adv"]), len(e["dis"]), e["ctx_no_he"], e["house"])
     lo,hi=-e["anker"]*4, e["anker"]*4
     for _ in range(200):
         mid=(lo+hi)/2
@@ -150,6 +155,9 @@ for did,e in ENT.items():
               struct_dry=100*r["struct_kg"]/r["dry"], dry_wet=100*r["dry"]/r["wet"],
               pp_dry=100*(r["pp_mass"]+r["batt_mass"])/r["dry"])
     erg[did]=dict(base=base, np=m["np"], cm=m["cm"], x3=m["x3"], no_he=m["no_he"],
+        faktor=m["faktor"], ctx_no_he=m["ctx_no_he"], naeher=m["naeher"],
+        alternative_faktor=m["alternative_faktor"], hausregel_faktor=m["hausregel_faktor"],
+        spielregel_greift=m["spielregel_greift"], dv_geteilt=m["dv_geteilt"],
         pay_final=m["final"], bus=max(bus,0.0), passt=bus>=0, dry=r["dry"], prop=r["prop"],
         wet=r["wet"], dv=r["dv"], mt_s=mt, schub_gl=schub, kenn=kenn,
         structPct=r["structPct"], tankPct=r["tankPct"], struct_kg=r["struct_kg"],
@@ -165,8 +173,13 @@ for did,e in ENT.items():
     print(f"  Basis      : " + " + ".join(f"{b[1]} {b[2]:.0f} kg" for b in e["basis"]))
     print(f"  Vorteile ({len(e['adv'])}): {', '.join(e['adv'])}")
     print(f"  Nachteile({len(e['dis'])}): {', '.join(e['dis']) or '— keine —'}")
-    print(f"  K2  np {m['np']} · cm {m['cm']:.0f} · Hochenergie x{m['x3']:.0f}"
-          f"{' — unter 50 kW, keine Hochenergie-Strafe' if m['no_he'] else ''} -> {base:.0f} -> {m['final']:.0f} kg")
+    print(f"  K2  np {m['np']} · cm {m['cm']:.0f} · Zustand "
+          f"{'ctxNoHE (cm x np)' if m['ctx_no_he'] else 'Kalkulator x3'} -> Faktor {m['faktor']:.0f}"
+          f"  ->  {base:.0f} -> {m['final']:.0f} kg")
+    print(f"      der Spielregel naeher: {m['naeher']} · Gegenzustand Faktor "
+          f"{m['alternative_faktor']:.0f} · Hausregel flach [S] Faktor {m['hausregel_faktor']:.0f}")
+    print(f"      Spielregel Hochenergie (>= 50 kW): greift {'JA' if m['spielregel_greift'] else 'NEIN'}"
+          f" bei {e['house']:.1f} kW  ->  {'dv/3 gebucht' if m['dv_geteilt'] else 'kein dv/3'}")
     print(f"  K1  Struktur {r['structPct']:.0f} % / Tank {r['tankPct']:.0f} %")
     print(f"  trocken {r['dry']:8.1f} + Treibstoff {r['prop']:7.1f} = nass {r['wet']:8.1f} kg "
           f"(Anker {e['anker']:.0f}, Abweichung {r['wet']-e['anker']:+.4f})")
@@ -176,7 +189,7 @@ for did,e in ENT.items():
 
 json.dump(erg, open("Ships/entwuerfe/loesung_chn_final.json","w"), indent=1, ensure_ascii=False)
 json.dump({k:dict(bauname=v["bauname"], anker=v["anker"], klasse=v["klasse"], basis=v["basis"],
-                  adv=v["adv"], dis=v["dis"], hochenergie=v["hochenergie"], begr=v["begr"], isp=v["isp"],
+                  adv=v["adv"], dis=v["dis"], ctx_no_he=v["ctx_no_he"], begr=v["begr"], isp=v["isp"],
                   prop=v["prop"], dv=v["dv"], ld=v["ld"], house=v["house"], batt=v["batt"],
                   eng=v["eng"], dv_man=v["dv_man"], dv_zweck=v["dv_zweck"], rolle=v["rolle"],
                   zone_bemerkung=v["zone_bemerkung"])

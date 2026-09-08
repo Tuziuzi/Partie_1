@@ -114,12 +114,8 @@ def pruefe(g, b):
                 else:
                     np_soll = 3 + len(nv) - len(nn)
                     cm_soll, x3_soll = cm_regel(np_soll)
-                    # HAUSENTSCHEIDUNG HE-29: ohne Hochenergie gilt cm = np, sonst nichts.
-                    # nachbau_regeln.md §1 und construction.md stimmen darin ueberein.
-                    # payload_catalog.md beschreibt fuer ctxNoHE ein cm = np x np — das ist ab
-                    # np 4 teurer als MIT Hochenergie und bestraft das Fehlen eines 50-kW-
-                    # Systems staerker als sein Vorhandensein. Werkzeugartefakt, keine Regel.
-                    if not k.get("hochenergie", True) and np_soll >= 1:
+                    # v5.22-HE: ctxNoHE hebt das x3 auf, dafuer cm zusaetzlich x np.
+                    if k.get("ctxNoHE") and np_soll >= 1:
                         x3_soll = 1.0
                     if k.get("np") != np_soll:
                         b.fehler("S-2", ref, f"np ist {k.get('np')}, muss 3 + {len(nv)} - {len(nn)} "
@@ -131,7 +127,7 @@ def pruefe(g, b):
                     if abs((k.get("hochenergie_faktor") or 0) - x3_soll) > 1e-9:
                         b.fehler("S-2", ref, f"Hochenergie-Faktor ist {k.get('hochenergie_faktor')}, "
                             f"muss {x3_soll:.0f} sein"
-                            f"{' (unter 50 kW, keine Hochenergie)' if not k.get('hochenergie', True) else ''}.",
+                            f"{' (ctxNoHE gebucht)' if k.get('ctxNoHE') else ''}.",
                             "payload_catalog.md: dann x3, ausser ctxNoHE; mit ctxNoHE entfaellt "
                             "das x3 und cm wird zusaetzlich mit np multipliziert; bei np<=0 geklemmt")
                     soll = (k.get("basis_kg") or 0)*(k.get("cm") or 0)*(k.get("disc") or 1) \
@@ -152,28 +148,46 @@ def pruefe(g, b):
                         b.fehler("S-6", ref, f"{stufe} beansprucht im Jahr {jahr}, freigeschaltet "
                             f"erst ab {jahr_frei}.", "research.md §Techstufen")
 
-            # S-8 — Hochenergie ist eine Tatsache ueber das Schiff, keine Wahl.
-            # construction.md: "High-Energy-Systeme (ab ~50 kW, z.B. Laser): ... Zusaetzlich:
-            # Dv / 3 UND 3x Gewicht" — die Strafe hat ZWEI Haelften und gilt erst ab ~50 kW.
+            # S-8 — Hochenergie nach shipyard-designer v5.22-HE, Schritt 2.
+            # Zwei getrennte Dinge: die SPIELREGEL (construction.md, ab ~50 kW, dv/3 UND 3x
+            # Gewicht) und der KALKULATOR-x3 ("a payload guard coupled to np, nothing more").
             k = d.get("k2_penaltykette") or {}
-            leist = d.get("spitzenlast_kw")
-            if k and leist is not None:
-                he = (k.get("hochenergie_faktor") or 1) > 1
-                if leist < 50 and he:
-                    b.fehler("S-8", ref, f"Hochenergie-Faktor x{k.get('hochenergie_faktor')} "
-                        f"aufgeschlagen, aber die Spitzenlast betraegt nur {leist:.2f} kW. Die "
-                        "Strafe gilt erst ab ~50 kW — hier ist ctxNoHE zu deklarieren.",
-                        'construction.md §Weight Penalty 3: "High-Energy-Systeme (ab ~50 kW, '
-                        'z.B. Laser)"')
-                if leist >= 50 and he and not d.get("dv_hochenergie_geteilt"):
-                    b.fehler("S-8", ref, f"Hochenergie mit {leist:.2f} kW zu Recht angesetzt, aber "
-                        "nur die Gewichtshaelfte gebucht. Die Strafe hat zwei Haelften: 3x Gewicht "
-                        "UND Dv / 3. Entweder beide oder keine.",
+            he = d.get("highEnergy") or {}
+            leist = he.get("powerUsed_kW", d.get("spitzenlast_kw"))
+            if k and leist is None:
+                b.fehler("S-8", ref, "Kein powerUsed_kW hinterlegt. v5.22-HE Schritt 1 verlangt die "
+                    "Spitzenlast, bevor ueber den Zustand entschieden wird.",
+                    "shipyard-designer SKILL.md v5.22-HE Schritt 1")
+            elif k:
+                greift_soll = leist >= 50.0
+                if he.get("spielregel_greift") != greift_soll:
+                    b.fehler("S-8", ref, f"spielregel_greift ist {he.get('spielregel_greift')}, "
+                        f"muss bei {leist:.2f} kW {greift_soll} sein (Schwelle 50 kW).",
+                        'construction.md: "High-Energy-Systeme (ab ~50 kW, z.B. Laser)"')
+                if greift_soll and not he.get("dv_geteilt_durch_3") and not he.get("entlastung"):
+                    b.fehler("S-8", ref, "Spielregel greift, aber dv/3 ist nicht gebucht und keine "
+                        "Entlastung dokumentiert. Die Strafe hat zwei Haelften.",
                         'construction.md: "Zusaetzlich: Dv / 3 und 3x Gewicht"')
-                if leist >= 50 and not he and k.get("hochenergie", True):
-                    b.warnung("S-8", ref, f"Spitzenlast {leist:.2f} kW liegt ueber der Schwelle, "
-                        "aber es ist weder Hochenergie noch ctxNoHE gebucht — Zustand unklar.",
-                        "construction.md §Weight Penalty 3")
+                if not greift_soll and he.get("dv_geteilt_durch_3"):
+                    b.fehler("S-8", ref, f"dv/3 gebucht, aber bei {leist:.2f} kW greift die "
+                        "Spielregel nicht.", "construction.md §Weight Penalty 3")
+                if not greift_soll and not he.get("marke"):
+                    b.warnung("S-8", ref, "Unter 50 kW kennt die Spielregel keine Strafe, der "
+                        "Kalkulator bietet nur zwei Zustaende. Die Differenz ist als [S] zu "
+                        "fuehren und dem Tisch als RULES-GAP vorzulegen.",
+                        "shipyard-designer SKILL.md v5.22-HE Schritt 2")
+                # der gewaehlte Zustand muss der naehere sein, sonst begruendet
+                f_ist = he.get("kalkulator_faktor"); f_alt = he.get("gegenzustand_faktor")
+                if f_ist is not None and f_alt is not None and f_ist > f_alt + 1e-9 \
+                        and not he.get("abweichung_begruendet"):
+                    b.warnung("S-8", ref, f"Gewaehlter Zustand hat Faktor {f_ist:.0f}, der "
+                        f"Gegenzustand nur {f_alt:.0f} — der ist der Spielregel naeher (sie kennt "
+                        "unter 50 kW gar keine Strafe). Wahl begruenden oder wechseln.",
+                        "shipyard-designer SKILL.md v5.22-HE Schritt 2")
+                if k.get("faktor_gesamt") is not None and f_ist is not None \
+                        and abs(k["faktor_gesamt"] - f_ist) > 1e-9:
+                    b.fehler("S-8", ref, f"k2_penaltykette.faktor_gesamt {k['faktor_gesamt']} passt "
+                        f"nicht zum gebuchten Zustand (Faktor {f_ist}).", "v5.22-HE Schritt 2")
 
             # S-7 — Autonomie ist ein Bauentscheid und muss dastehen
             st = norm(d.get("steuerung","")).lower()
@@ -364,15 +378,18 @@ FAELLE = [
                   {"name": "Thermischer Betrieb", "spielwirkung": "w", "begruendung": "b"}],
      "nachteile": [],
      "k2_penaltykette": {"basis_kg": 50, "np": 5, "cm": 25, "hochenergie_faktor": 1,
-                         "hochenergie": False, "disc": 1, "env": 0, "nutzlast_final_kg": 1250}}}}}}),
+                         "ctxNoHE": True, "disc": 1, "env": 0, "nutzlast_final_kg": 1250}}}}}}),
  ("Z5-082  Hochenergie-Gewicht ohne Hochenergie-Leistung (unter 50 kW)", "S-8",
   {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
-     "steuerungBegruendung": "Link", "spitzenlast_kw": 3.6, "vorteile": [], "nachteile": [],
+     "steuerungBegruendung": "Link", "vorteile": [], "nachteile": [],
+     "highEnergy": {"powerUsed_kW": 3.6, "spielregel_greift": True, "marke": "[S]"},
      "k2_penaltykette": {"basis_kg": 50, "np": 3, "cm": 3, "hochenergie_faktor": 3,
                          "disc": 1, "env": 0, "nutzlast_final_kg": 450}}}}}}),
  ("Z5-082  Hochenergie zu Recht, aber nur die Gewichtshaelfte gebucht", "S-8",
   {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
-     "steuerungBegruendung": "Link", "spitzenlast_kw": 200.0, "vorteile": [], "nachteile": [],
+     "steuerungBegruendung": "Link", "vorteile": [], "nachteile": [],
+     "highEnergy": {"powerUsed_kW": 200.0, "spielregel_greift": True,
+                    "dv_geteilt_durch_3": False, "marke": "[S]"},
      "k2_penaltykette": {"basis_kg": 50, "np": 3, "cm": 3, "hochenergie_faktor": 3,
                          "disc": 1, "env": 0, "nutzlast_final_kg": 450}}}}}}),
  ("Z5-076  Steuerung nicht deklariert (Strukturtonne: Bauentscheid)", "S-7",
@@ -409,7 +426,10 @@ def selbsttest():
         "vorteile": [], "nachteile": [{"name": "Single-Use", "begruendung": "b", "spielwirkung": "w"},
                                       {"name": "Doktrinaer gebunden", "begruendung": "b", "spielwirkung": "w"},
                                       {"name": "Fragile Radiatoren", "begruendung": "b", "spielwirkung": "w"}],
-        "steuerung": "ferngelenkt", "steuerungBegruendung": "Link noetig", "spitzenlast_kw": 3.6,
+        "steuerung": "ferngelenkt", "steuerungBegruendung": "Link noetig",
+        "highEnergy": {"powerUsed_kW": 3.6, "spielregel_greift": False,
+                       "dv_geteilt_durch_3": False, "marke": "[S]",
+                       "kalkulator_faktor": 1, "gegenzustand_faktor": 1},
         "k2_penaltykette": {"basis_kg": 1000, "np": 0, "cm": 1, "hochenergie_faktor": 1,
                             "disc": 1, "env": 0, "nutzlast_final_kg": 1000}}}}}}
     b = pruefe(sauber, Bericht())

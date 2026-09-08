@@ -45,6 +45,13 @@ Daraus folgt hart:
 - **Vorteile und Nachteile werden benannt, nie gezählt.** Nur die 26 bzw. 7
   Presets. Jede Zuschreibung braucht `begruendung` UND `spielwirkung`. Ein
   Vorteil ohne Wirkung ist Zierrat, ein Nachteil ohne Wirkung ist geschenkt.
+- **Hochenergie sind zwei Dinge, nicht eins** (shipyard-designer v5.22-HE Schritt 2).
+  Die *Spielregel* (`construction.md`) greift ab **~50 kW** und kostet **Δv ÷ 3 UND
+  3× Gewicht**. Der *Kalkulator*-×3 ist etwas anderes — „a payload guard coupled to
+  np, nothing more", er rührt das Δv nicht an. Erst `powerUsed` rechnen, dann
+  entscheiden. Unter 50 kW greift die Spielregel nicht; der Kalkulator bietet dann
+  nur ×3 oder cm × np — den näheren wählen, die Differenz als **[S]** führen und dem
+  Tisch als RULES-GAP vorlegen.
 - **Massenschluss und Ziolkowski müssen halten**, und die gebuchte Startmasse
   darf nie kleiner sein als die konstruierte Nassmasse.
 

@@ -103,7 +103,8 @@ for did, e in E.items():
        "structureClass": "ruggedized",
        "structureTax": {"struct_pct": d["structPct"], "tank_pct": d["tankPct"]},
        "k2Kette": {"basis_kg": d["base"], "np": d["np"], "cm": d["cm"],
-                   "hochenergie_faktor": d["x3"], "hochenergie": not d["no_he"], "disc": 1.0, "env": 0.0,
+                   "hochenergie_faktor": d["x3"], "faktor_gesamt": d["faktor"],
+                   "ctxNoHE": d["ctx_no_he"], "disc": 1.0, "env": 0.0,
                    "nutzlast_final_kg": d["pay_final"],
                    "formel": ("np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; "
                               "final = basis * cm * disc * (1+env), bei Hochenergie zusaetzlich *3 "
@@ -111,12 +112,30 @@ for did, e in E.items():
                               "HE-29: unterhalb der Schwelle existiert die Strafe nicht, cm bleibt np. "
                               "Die Kalkulatorfahne ctxNoHE wird NICHT beansprucht — sie ist eine "
                               "Kontextklasse mit eigener Preiskurve (cm * np), kein Rabatt."),
-                   "ctxNoHE_beansprucht": False},
+                   "spielregel_hochenergie_greift": d["spielregel_greift"]},
        "nutzlastBasis_kg": d["base"], "spitzenlast_kw": round(d["peak_kw"],2),
-       "hochenergieSchwelle_kw": 50.0,
-       "hochenergieBefund": ("Spitzenlast unter der Schwelle von ~50 kW (construction.md "
-         "§Weight Penalty 3) — kein Hochenergie-System. Also weder 3x Gewicht noch Dv/3. "
-         "Die Kalkulatorfahne ctxNoHE wird dafuer NICHT beansprucht (Z5-086)."),
+       "highEnergy": {
+         "powerUsed_kW": round(d["peak_kw"], 2),
+         "schwelle_kW": 50.0,
+         "spielregel_greift": d["spielregel_greift"],
+         "dv_geteilt_durch_3": d["dv_geteilt"],
+         "gewicht_verdreifacht_spielregel": d["dv_geteilt"],
+         "kalkulator_zustand": "ctxNoHE (cm x np)" if d["ctx_no_he"] else "Voreinstellung x3",
+         "kalkulator_faktor": d["faktor"],
+         "gegenzustand_faktor": d["alternative_faktor"],
+         "hausregel_flach_faktor_S": d["hausregel_faktor"],
+         "der_spielregel_naeher": d["naeher"],
+         "regelzitat": ("construction.md §Weight Penalty 3: 'High-Energy-Systeme (ab ~50 kW, "
+           "z.B. Laser): ... Zusaetzlich: Dv / 3 und 3x Gewicht.' shipyard-designer SKILL.md "
+           "v5.22-HE Schritt 2: 'powerUsed < 50 kW -> the game rule does NOT apply ... pick the "
+           "state closest to the rule, record the difference as [S] ... declare the mismatch as "
+           "RULES-GAP to the player.' Schritt 4: 'Never present the calculator's x3 as the "
+           "high-energy penalty — it is a payload guard coupled to np, nothing more.'"),
+         "RULES_GAP": ("Die Spielregel kennt unterhalb 50 kW GAR KEINE Strafe, der Kalkulator "
+           "bietet nur zwei Zustaende. Gewaehlt ist der naehere; die Differenz zur Spielregel "
+           "ist eine Setzung [S]. Drei Optionen liegen dem Tisch vor: (a) Kalkulator-"
+           "Voreinstellung x3, (b) ctxNoHE cm x np, (c) Hausregel flacher Basiswert [S]."),
+         "marke": "[S]"},
        "nutzlastHerkunft": " + ".join(f"{b[1]} ({b[0]}, {b[2]:.0f} kg)" for b in e["basis"]),
        "massBreakdown_kg": {"nutzlast":r4(d["pay_final"]),"bus":r4(d["bus"]),
          "triebwerke":r4(d["thr_mass"]),"kraftwerk":r4(d["pp_mass"]),"pmad":r4(d["pmad_mass"]),
