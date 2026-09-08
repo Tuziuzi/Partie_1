@@ -114,20 +114,26 @@ def pruefe(g, b):
                 else:
                     np_soll = 3 + len(nv) - len(nn)
                     cm_soll, x3_soll = cm_regel(np_soll)
-                    # v5.22-HE: ctxNoHE hebt das x3 auf, dafuer cm zusaetzlich x np.
-                    if k.get("ctxNoHE") and np_soll >= 1:
-                        x3_soll = 1.0
+                    # Drei zulaessige Zustaende (v5.22-HE Schritt 2 + HE-30):
+                    #   (a) Kalkulator x3   cm = cm, x3 = 3
+                    #   (b) ctxNoHE         cm = cm x np, x3 = 1
+                    #   (c) flach [S]       cm = cm, x3 = 1
+                    zust = ((d.get("highEnergy") or {}).get("zustand")
+                            or ("b" if k.get("ctxNoHE") else "a"))
+                    if np_soll >= 1:
+                        if zust == "b": cm_soll, x3_soll = cm_soll*np_soll, 1.0
+                        elif zust == "c": x3_soll = 1.0
                     if k.get("np") != np_soll:
                         b.fehler("S-2", ref, f"np ist {k.get('np')}, muss 3 + {len(nv)} - {len(nn)} "
                             f"= {np_soll} sein.", "payload_catalog.md: np = 3 + adv - disadv")
                     if abs((k.get("cm") or 0) - cm_soll) > 1e-9:
                         b.fehler("S-2", ref, f"cm ist {k.get('cm')}, muss bei np={np_soll} "
-                            f"{cm_soll:.0f} sein.",
-                            "nachbau_regeln.md §1 (HE-29): cm = np; np==1 -> 2; np<=0 -> 1")
+                            f"{cm_soll:.0f} sein (Zustand {zust}).",
+                            "payload_catalog.md + HE-30: (a) cm, (b) cm x np, (c) cm")
                     if abs((k.get("hochenergie_faktor") or 0) - x3_soll) > 1e-9:
                         b.fehler("S-2", ref, f"Hochenergie-Faktor ist {k.get('hochenergie_faktor')}, "
                             f"muss {x3_soll:.0f} sein"
-                            f"{' (ctxNoHE gebucht)' if k.get('ctxNoHE') else ''}.",
+                            f" (Zustand {zust}).",
                             "payload_catalog.md: dann x3, ausser ctxNoHE; mit ctxNoHE entfaellt "
                             "das x3 und cm wird zusaetzlich mit np multipliziert; bei np<=0 geklemmt")
                     soll = (k.get("basis_kg") or 0)*(k.get("cm") or 0)*(k.get("disc") or 1) \
@@ -176,14 +182,26 @@ def pruefe(g, b):
                         "Kalkulator bietet nur zwei Zustaende. Die Differenz ist als [S] zu "
                         "fuehren und dem Tisch als RULES-GAP vorzulegen.",
                         "shipyard-designer SKILL.md v5.22-HE Schritt 2")
-                # der gewaehlte Zustand muss der naehere sein, sonst begruendet
-                f_ist = he.get("kalkulator_faktor"); f_alt = he.get("gegenzustand_faktor")
-                if f_ist is not None and f_alt is not None and f_ist > f_alt + 1e-9 \
-                        and not he.get("abweichung_begruendet"):
-                    b.warnung("S-8", ref, f"Gewaehlter Zustand hat Faktor {f_ist:.0f}, der "
-                        f"Gegenzustand nur {f_alt:.0f} — der ist der Spielregel naeher (sie kennt "
-                        "unter 50 kW gar keine Strafe). Wahl begruenden oder wechseln.",
-                        "shipyard-designer SKILL.md v5.22-HE Schritt 2")
+                # HE-30 — Hausentscheidung des Tisches:
+                #   unter 50 kW darf der GUENSTIGSTE Zustand gewaehlt werden;
+                #   Zustand (b) ctxNoHE nur fuer Schiffe, die spaeter erst gebaut werden UND
+                #   ausschliesslich als Tochterschiffe dienen.
+                f_ist = he.get("kalkulator_faktor"); fak = he.get("faktoren") or {}
+                zust = he.get("zustand")
+                if zust == "b" and not (d.get("tochterschiff") and d.get("gebaut") is False):
+                    b.fehler("S-8", ref, "Zustand (b) ctxNoHE gewaehlt, aber der Entwurf ist kein "
+                        "noch ungebautes Tochterschiff. HE-30 behaelt (b) genau diesen vor.",
+                        "HE-30 (Tischentscheidung), shipyard-designer v5.22-HE Schritt 2")
+                if fak and f_ist is not None:
+                    erlaubt = {k: v for k, v in fak.items()
+                               if not (k.startswith("b_") and not
+                                       (d.get("tochterschiff") and d.get("gebaut") is False))}
+                    guenstigst = min(erlaubt.values()) if erlaubt else None
+                    if guenstigst is not None and f_ist > guenstigst + 1e-9 \
+                            and not he.get("abweichung_begruendet"):
+                        b.warnung("S-8", ref, f"Gewaehlter Faktor {f_ist:.0f}, der guenstigste "
+                            f"zulaessige waere {guenstigst:.0f}. HE-30 erlaubt den guenstigsten — "
+                            "Wahl begruenden oder wechseln.", "HE-30")
                 if k.get("faktor_gesamt") is not None and f_ist is not None \
                         and abs(k["faktor_gesamt"] - f_ist) > 1e-9:
                     b.fehler("S-8", ref, f"k2_penaltykette.faktor_gesamt {k['faktor_gesamt']} passt "
@@ -371,14 +389,28 @@ FAELLE = [
  ("Z5-070  Bauauftrag ohne gebuchten Werftdurchsatz", "B-1",
   {"bz01": {"bauplan": [{"id": "T", "fraktion": "CHN", "design_ref": "X", "count": 2,
                          "stueck_masse_t": 2.0, "kosten_mult": 4.0}]}}),
- ("Z5-084  quadriertes cm ohne Hochenergie (Werkzeugartefakt statt Regel)", "S-2",
+ ("HE-30  Zustand (b) an einem gebauten Schiff statt an einem Tochterschiff", "S-8",
   {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
-     "steuerungBegruendung": "Link", "spitzenlast_kw": 3.6,
+     "steuerungBegruendung": "Link", "tochterschiff": False, "gebaut": True,
+     "vorteile": [], "nachteile": [],
+     "highEnergy": {"powerUsed_kW": 3.6, "spielregel_greift": False, "dv_geteilt_durch_3": False,
+                    "marke": "[S]", "zustand": "b", "kalkulator_faktor": 9,
+                    "faktoren": {"a_x3": 9, "b_ctxNoHE": 9, "c_flach_S": 3}},
+     "k2_penaltykette": {"basis_kg": 50, "np": 3, "cm": 3, "hochenergie_faktor": 1,
+                         "ctxNoHE": True, "faktor_gesamt": 9,
+                         "disc": 1, "env": 0, "nutzlast_final_kg": 450}}}}}}),
+ ("HE-30  cm passt nicht zum deklarierten Zustand (c flach, aber quadriert gebucht)", "S-2",
+  {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
+     "steuerungBegruendung": "Link", "tochterschiff": False, "gebaut": True,
      "vorteile": [{"name": "Strahlungs-Haertung", "spielwirkung": "w", "begruendung": "b"},
                   {"name": "Thermischer Betrieb", "spielwirkung": "w", "begruendung": "b"}],
      "nachteile": [],
+     "highEnergy": {"powerUsed_kW": 3.6, "spielregel_greift": False, "dv_geteilt_durch_3": False,
+                    "marke": "[S]", "zustand": "c", "kalkulator_faktor": 5,
+                    "faktoren": {"a_x3": 15, "b_ctxNoHE": 25, "c_flach_S": 5}},
      "k2_penaltykette": {"basis_kg": 50, "np": 5, "cm": 25, "hochenergie_faktor": 1,
-                         "ctxNoHE": True, "disc": 1, "env": 0, "nutzlast_final_kg": 1250}}}}}}),
+                         "ctxNoHE": False, "faktor_gesamt": 5,
+                         "disc": 1, "env": 0, "nutzlast_final_kg": 1250}}}}}}),
  ("Z5-082  Hochenergie-Gewicht ohne Hochenergie-Leistung (unter 50 kW)", "S-8",
   {"factions": {"CHN": {"designs": {"X": {"designMode": "B", "steuerung": "ferngelenkt",
      "steuerungBegruendung": "Link", "vorteile": [], "nachteile": [],
@@ -429,7 +461,8 @@ def selbsttest():
         "steuerung": "ferngelenkt", "steuerungBegruendung": "Link noetig",
         "highEnergy": {"powerUsed_kW": 3.6, "spielregel_greift": False,
                        "dv_geteilt_durch_3": False, "marke": "[S]",
-                       "kalkulator_faktor": 1, "gegenzustand_faktor": 1},
+                       "kalkulator_faktor": 1, "gegenzustand_faktor": 1,
+                       "zustand": "c", "faktoren": {"a_x3": 1, "b_ctxNoHE": 1, "c_flach_S": 1}},
         "k2_penaltykette": {"basis_kg": 1000, "np": 0, "cm": 1, "hochenergie_faktor": 1,
                             "disc": 1, "env": 0, "nutzlast_final_kg": 1000}}}}}}
     b = pruefe(sauber, Bericht())

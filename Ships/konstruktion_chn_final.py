@@ -24,7 +24,7 @@ OW=("/root/.claude/skills/synced/2c0e114f-f980-4879-be59-84347099c9f5_"
 sp=importlib.util.spec_from_file_location("nb",OW); nb=importlib.util.module_from_spec(sp)
 sp.loader.exec_module(nb)
 
-def k2(base, adv, dis, ctx_no_he=False, leistung_kw=None):
+def k2(base, adv, dis, zustand="c", leistung_kw=None):
     """K2 nach shipyard-designer v5.22-HE, Schritt 2.
 
     SKILL.md woertlich: "The calculator's ctxNoHE checkbox and the Delta-V game rule are NOT
@@ -46,15 +46,18 @@ def k2(base, adv, dis, ctx_no_he=False, leistung_kw=None):
     f_x3   = cm if np_ <= 0 else cm*3.0
     f_nohe = cm if np_ <= 0 else cm*np_
     f_haus = cm
-    faktor = f_nohe if ctx_no_he else f_x3
+    faktor = {"a": f_x3, "b": f_nohe, "c": f_haus}[zustand]
     spielregel_greift = bool(leistung_kw is not None and leistung_kw >= 50.0)
-    return dict(np=np_, cm=cm, ctx_no_he=ctx_no_he, faktor=faktor, final=base*faktor,
-                x3=1.0 if ctx_no_he else 3.0,
-                naeher=("ctxNoHE" if f_nohe < f_x3 else ("x3" if f_x3 < f_nohe else "gleich")),
-                alternative_faktor=f_x3 if ctx_no_he else f_nohe,
+    return dict(np=np_, cm=cm, zustand=zustand, ctx_no_he=(zustand=="b"),
+                faktor=faktor, final=base*faktor,
+                x3=3.0 if zustand=="a" else 1.0,
+                f_x3=f_x3, f_nohe=f_nohe, f_haus=f_haus,
+                guenstigster=("c" if f_haus <= min(f_x3, f_nohe)
+                              else ("b" if f_nohe < f_x3 else "a")),
+                alternative_faktor=min(f_x3, f_nohe),
                 hausregel_faktor=f_haus,
                 spielregel_greift=spielregel_greift,
-                dv_geteilt=spielregel_greift, no_he=ctx_no_he)
+                dv_geteilt=spielregel_greift, no_he=(zustand!="a"))
 
 WIRKUNG = {
  "Strahlungs-Haertung": "x10 Strahlungsbelastung tragbar (construction.md Tax-Tabelle, Stufe 1)",
@@ -69,7 +72,7 @@ ENT = {
 "CHN_scorer": dict(
   bauname="Feldzeichen", anker=2000.0, klasse="Corvette", zone_bemerkung="LEO/MEO/HEO/SSO/GEO",
   basis=[("custom_opspaket","Ops-Paket: Transponder, Nahbereichssensor, Praesenznachweis",50.0)],
-  adv=["Strahlungs-Haertung","Thermischer Betrieb"], dis=[], ctx_no_he=False,
+  adv=["Strahlungs-Haertung","Thermischer Betrieb"], dis=[], zustand="c",
   begr={"Strahlungs-Haertung":"Die fuenf Scorer stehen in LEO 600, MEO 20 000, HEO 39 000, SSO 700 "
           "und GEO 35 786 km. MEO liegt im Kern des aeusseren Strahlungsguertels, HEO und GEO im "
           "Feld solarer Teilchenereignisse. 27 von 32 realen Systemen im OW-01-Katalog tragen "
@@ -90,8 +93,7 @@ ENT = {
   bauname="Himmelsauge", anker=3600.0, klasse="Corvette", zone_bemerkung="LEO 600 km",
   basis=[("sensor_geo","comps 'Sensor: to GEO' — construction.md §2 'Bis GEO alles aufdecken'",1000.0)],
   adv=["Strahlungs-Haertung","Thermischer Betrieb"],
-  dis=["Hoher EM-Abdruck","Doktrinaer gebunden","Single-Use","Fragile Radiatoren"],
-  ctx_no_he=True,
+  dis=["Hoher EM-Abdruck","Doktrinaer gebunden","Single-Use"], zustand="c",
   begr={"Strahlungs-Haertung":"LEO 600 km, mehrjaehrige Auslegung, Suedatlantische Anomalie und "
           "Polarpassagen. Auch Indiens SPADEX in LEO traegt ihn.",
         "Thermischer Betrieb":"35 min Kernschatten je Umlauf gegen volle Sonne, rund 15 Zyklen "
@@ -113,7 +115,7 @@ ENT = {
   bauname="Himmelsbruecke", anker=5000.0, klasse="Frigate", zone_bemerkung="GEO",
   basis=[("custom_c2relais","C2-Relaisnutzlast: Antennen, Transponder, Kreuzverbindung",150.0)],
   adv=["Strahlungs-Haertung","Thermischer Betrieb","Magnetfeld-Toleranz"],
-  dis=[], ctx_no_he=False,
+  dis=[], zustand="c",
   begr={"Strahlungs-Haertung":"GEO im aeusseren Guertel, 15 Jahre Auslegungsdauer.",
         "Thermischer Betrieb":"72 min Kernschatten gegen volle Sonne.",
         "Magnetfeld-Toleranz":"Aufladung und Entladung im GEO-Plasma — das klassische "
@@ -141,7 +143,7 @@ def spec(e, pay, bus):
 erg={}
 for did,e in ENT.items():
     base=sum(b[2] for b in e["basis"])
-    m=k2(base, len(e["adv"]), len(e["dis"]), e["ctx_no_he"], e["house"])
+    m=k2(base, len(e["adv"]), len(e["dis"]), e["zustand"], e["house"])
     lo,hi=-e["anker"]*4, e["anker"]*4
     for _ in range(200):
         mid=(lo+hi)/2
@@ -155,7 +157,8 @@ for did,e in ENT.items():
               struct_dry=100*r["struct_kg"]/r["dry"], dry_wet=100*r["dry"]/r["wet"],
               pp_dry=100*(r["pp_mass"]+r["batt_mass"])/r["dry"])
     erg[did]=dict(base=base, np=m["np"], cm=m["cm"], x3=m["x3"], no_he=m["no_he"],
-        faktor=m["faktor"], ctx_no_he=m["ctx_no_he"], naeher=m["naeher"],
+        faktor=m["faktor"], ctx_no_he=m["ctx_no_he"], zustand=m["zustand"],
+        guenstigster=m["guenstigster"], f_x3=m["f_x3"], f_nohe=m["f_nohe"], f_haus=m["f_haus"],
         alternative_faktor=m["alternative_faktor"], hausregel_faktor=m["hausregel_faktor"],
         spielregel_greift=m["spielregel_greift"], dv_geteilt=m["dv_geteilt"],
         pay_final=m["final"], bus=max(bus,0.0), passt=bus>=0, dry=r["dry"], prop=r["prop"],
@@ -173,11 +176,11 @@ for did,e in ENT.items():
     print(f"  Basis      : " + " + ".join(f"{b[1]} {b[2]:.0f} kg" for b in e["basis"]))
     print(f"  Vorteile ({len(e['adv'])}): {', '.join(e['adv'])}")
     print(f"  Nachteile({len(e['dis'])}): {', '.join(e['dis']) or '— keine —'}")
-    print(f"  K2  np {m['np']} · cm {m['cm']:.0f} · Zustand "
-          f"{'ctxNoHE (cm x np)' if m['ctx_no_he'] else 'Kalkulator x3'} -> Faktor {m['faktor']:.0f}"
-          f"  ->  {base:.0f} -> {m['final']:.0f} kg")
-    print(f"      der Spielregel naeher: {m['naeher']} · Gegenzustand Faktor "
-          f"{m['alternative_faktor']:.0f} · Hausregel flach [S] Faktor {m['hausregel_faktor']:.0f}")
+    ZN={"a":"(a) Kalkulator x3","b":"(b) ctxNoHE cm x np","c":"(c) Hausregel flach [S]"}
+    print(f"  K2  np {m['np']} · cm {m['cm']:.0f} · Zustand {ZN[m['zustand']]} -> "
+          f"Faktor {m['faktor']:.0f}  ->  {base:.0f} -> {m['final']:.0f} kg")
+    print(f"      Faktoren der drei Optionen: (a) {m['f_x3']:.0f} · (b) {m['f_nohe']:.0f} · "
+          f"(c) {m['f_haus']:.0f}  ->  guenstigster gewaehlt (HE-30)")
     print(f"      Spielregel Hochenergie (>= 50 kW): greift {'JA' if m['spielregel_greift'] else 'NEIN'}"
           f" bei {e['house']:.1f} kW  ->  {'dv/3 gebucht' if m['dv_geteilt'] else 'kein dv/3'}")
     print(f"  K1  Struktur {r['structPct']:.0f} % / Tank {r['tankPct']:.0f} %")
@@ -189,7 +192,7 @@ for did,e in ENT.items():
 
 json.dump(erg, open("Ships/entwuerfe/loesung_chn_final.json","w"), indent=1, ensure_ascii=False)
 json.dump({k:dict(bauname=v["bauname"], anker=v["anker"], klasse=v["klasse"], basis=v["basis"],
-                  adv=v["adv"], dis=v["dis"], ctx_no_he=v["ctx_no_he"], begr=v["begr"], isp=v["isp"],
+                  adv=v["adv"], dis=v["dis"], zustand=v["zustand"], begr=v["begr"], isp=v["isp"],
                   prop=v["prop"], dv=v["dv"], ld=v["ld"], house=v["house"], batt=v["batt"],
                   eng=v["eng"], dv_man=v["dv_man"], dv_zweck=v["dv_zweck"], rolle=v["rolle"],
                   zone_bemerkung=v["zone_bemerkung"])

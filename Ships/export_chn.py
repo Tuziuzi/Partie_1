@@ -120,21 +120,24 @@ for did, e in E.items():
          "spielregel_greift": d["spielregel_greift"],
          "dv_geteilt_durch_3": d["dv_geteilt"],
          "gewicht_verdreifacht_spielregel": d["dv_geteilt"],
-         "kalkulator_zustand": "ctxNoHE (cm x np)" if d["ctx_no_he"] else "Voreinstellung x3",
+         "zustand": d["zustand"],
+         "zustand_klartext": {"a":"(a) Kalkulator x3","b":"(b) ctxNoHE cm x np",
+                              "c":"(c) Hausregel flacher Basiswert [S]"}[d["zustand"]],
          "kalkulator_faktor": d["faktor"],
+         "faktoren": {"a_x3": d["f_x3"], "b_ctxNoHE": d["f_nohe"], "c_flach_S": d["f_haus"]},
+         "guenstigster": d["guenstigster"],
          "gegenzustand_faktor": d["alternative_faktor"],
          "hausregel_flach_faktor_S": d["hausregel_faktor"],
-         "der_spielregel_naeher": d["naeher"],
          "regelzitat": ("construction.md §Weight Penalty 3: 'High-Energy-Systeme (ab ~50 kW, "
            "z.B. Laser): ... Zusaetzlich: Dv / 3 und 3x Gewicht.' shipyard-designer SKILL.md "
            "v5.22-HE Schritt 2: 'powerUsed < 50 kW -> the game rule does NOT apply ... pick the "
            "state closest to the rule, record the difference as [S] ... declare the mismatch as "
            "RULES-GAP to the player.' Schritt 4: 'Never present the calculator's x3 as the "
            "high-energy penalty — it is a payload guard coupled to np, nothing more.'"),
-         "RULES_GAP": ("Die Spielregel kennt unterhalb 50 kW GAR KEINE Strafe, der Kalkulator "
-           "bietet nur zwei Zustaende. Gewaehlt ist der naehere; die Differenz zur Spielregel "
-           "ist eine Setzung [S]. Drei Optionen liegen dem Tisch vor: (a) Kalkulator-"
-           "Voreinstellung x3, (b) ctxNoHE cm x np, (c) Hausregel flacher Basiswert [S]."),
+         "HE_30": ("Hausentscheidung des Tisches: unterhalb 50 kW darf der GUENSTIGSTE Zustand "
+           "gewaehlt werden — das ist (c), der flache Basiswert, denn cm ist stets kleiner "
+           "gleich cm x 3 und cm x np. Zustand (b) ctxNoHE ist ausschliesslich Schiffen "
+           "vorbehalten, die spaeter erst gebaut werden UND nur als Tochterschiffe dienen."),
          "marke": "[S]"},
        "nutzlastHerkunft": " + ".join(f"{b[1]} ({b[0]}, {b[2]:.0f} kg)" for b in e["basis"]),
        "massBreakdown_kg": {"nutzlast":r4(d["pay_final"]),"bus":r4(d["bus"]),

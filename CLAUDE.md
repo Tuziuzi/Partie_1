@@ -50,8 +50,11 @@ Daraus folgt hart:
   3× Gewicht**. Der *Kalkulator*-×3 ist etwas anderes — „a payload guard coupled to
   np, nothing more", er rührt das Δv nicht an. Erst `powerUsed` rechnen, dann
   entscheiden. Unter 50 kW greift die Spielregel nicht; der Kalkulator bietet dann
-  nur ×3 oder cm × np — den näheren wählen, die Differenz als **[S]** führen und dem
-  Tisch als RULES-GAP vorlegen.
+  nur ×3 oder cm × np. **HE-30 (Tischentscheidung):** unter 50 kW darf der
+  **günstigste** Zustand gewählt werden — das ist stets **(c) flacher Basiswert `cm`**,
+  weil cm ≤ cm×3 und cm ≤ cm×np. **Zustand (b) `ctxNoHE` ist ausschliesslich Schiffen
+  vorbehalten, die später erst gebaut werden UND nur als Tochterschiffe dienen.**
+  Die Differenz zur Spielregel bleibt als **[S]** geführt.
 - **Massenschluss und Ziolkowski müssen halten**, und die gebuchte Startmasse
   darf nie kleiner sein als die konstruierte Nassmasse.
 
