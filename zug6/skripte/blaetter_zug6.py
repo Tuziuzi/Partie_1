@@ -7,7 +7,9 @@ Kette (jede Stufe ist ein benannter Hausfix oder Hausbaustein):
   1  zh01_html_kasse_fix.py             B-36  --konto-t/--tranche-t im HTML-Weg
      mit --c9                           B-39  Raumfahrtquote (Selbsterkennung greift nicht)
   2  blatt_innenlage_reiter.py          B-31  Reiter 5 »Innenlage« (A-6/A-7)
-  3  blatt_freitext_reiter.py                 Reiter 6 »Freitext«
+  3  blatt_werft_reiter.py                    Reiter 6 »Werft« (PW-01, BZ-01
+                                             Rev. B, Forschung Rev. D)
+  4  blatt_freitext_reiter.py                 Reiter 7 »Freitext«
 
 Kontowerte aus zh01.py konto, Zug 6 (Journal Z5): CHN 2659,0 / 398,9 ·
 EU 1670,6 / 250,6 · IND 764,0 / 114,6.
@@ -75,6 +77,7 @@ def main():
         if not os.path.exists(roh):
             raise SystemExit(f"   Erzeuger hat {roh} nicht geschrieben.")
         for bau in ("zug6/skripte/blatt_innenlage_reiter.py",
+                    "zug6/skripte/blatt_werft_reiter.py",
                     "zug5/skripte/blatt_freitext_reiter.py"):
             r = lauf(["python3", os.path.join(W, bau), roh])
             for l in r.stdout.splitlines():
