@@ -1,0 +1,1312 @@
+{
+ "schema": "UEBERGABE",
+ "version": "1.0",
+ "kampagne": "SCHWARZE SEE",
+ "erzeugt_am": "2026-10-27",
+ "erzeugt_von": "Sitzung 985490a7 (Claude Code), Zweig claude/zug-5-china-v2-scoring-usb2mg",
+ "_lies_mich_zuerst": [
+  "Zug 5 (2030) ist scharf gebucht. Der naechste zu spielende Zug ist ZUG 6, Jahr 2031.",
+  "stand/ ist GITIGNORIERT und lebt nur im Container. Wer einen frischen Container hat, hat keinen Arbeitsstand — siehe wiederherstellung.",
+  "Jede Zahl kommt aus einem Skript. CLAUDE.md §3 ist bindend, auch fuer die Zahlen in dieser Datei.",
+  "Befehlsblaetter sind vertraulich gegenueber Mitspielern, einschliesslich des Freitextes (CLAUDE.md §5)."
+ ],
+ "stand": {
+  "delta_v": {
+   "zug_gebucht": 5,
+   "naechster_zug": 6,
+   "jahr": 2031,
+   "phase": "setup",
+   "scoring_zonen": {
+    "LEO": "CHN",
+    "MEO": "CHN",
+    "HEO": "CHN",
+    "SSO": "CHN",
+    "GEO_GSO": "CHN",
+    "earthSurface": "USA"
+   },
+   "streaks": {
+    "USA": 0,
+    "CHN": 0,
+    "EU": 0,
+    "IND": 0,
+    "RUS": 0,
+    "REST": 0
+   },
+   "warsWon": {
+    "USA": 0,
+    "CHN": 1,
+    "EU": 0,
+    "IND": 0,
+    "RUS": 0,
+    "REST": 0
+   },
+   "hinweis_turnNumber": "state.turnNumber steht auf 5 bei currentYear 2031 — kosmetisch, aber vor der Zug-6-Aufloesung nachzuziehen."
+  },
+  "erde01": {
+   "zug": 5,
+   "datum_ingame": "2030-12-31",
+   "aera": "I",
+   "zugdauer_a": 1,
+   "K_welt": 0.7285,
+   "co2_ppm": 436.0,
+   "T_ist_C": 1.4131,
+   "eh01_jahr": 2029,
+   "zug_seed": 20300101,
+   "stufen_seeds": {
+    "validierung": 20300102,
+    "aufloesung": 20300103,
+    "sensorfilter": 20300104,
+    "regime_bias": 20300105,
+    "rendering": 20300106,
+    "kipppunkte": 20300107,
+    "coup": 20300108,
+    "attribution": 20300109,
+    "schicksal": 20300110,
+    "regime_bias_usa": 20300200,
+    "regime_bias_china": 20300201,
+    "regime_bias_eu": 20300202,
+    "regime_bias_indien": 20300203,
+    "regime_bias_russland": 20300204,
+    "regime_bias_rest": 20300205
+   }
+  }
+ },
+ "fraktionen": {
+  "USA": {
+   "block_erde01": "usa",
+   "regimetyp": "demokratie_reich",
+   "bevoelkerung_mio": 345.0,
+   "wohlstandsindex": 3.7316,
+   "repression": 0.05,
+   "repression_beleg": "regler_2027; domaenen_zug3 und zug4 bestaetigen 0,05",
+   "start": {
+    "kapazitaet_national_t_a": 2000.0,
+    "privat_t_a": 1000.0,
+    "staatlich_verfuegbar_t_a": 1000.0,
+    "restraum_vortrag_t": 2000.0,
+    "regulierung": "PW-01:RG1"
+   },
+   "werft": {
+    "durchsatz_t_a": 200.0,
+    "lager_t": 500.0,
+    "deckel_D_t_a": 1000.0
+   },
+   "korruption_A6": {
+    "K": 0.18,
+    "niveau_abschlag_pct_NICHT_gebucht": 15.3,
+    "gefechtswert_daheim": 0.919,
+    "gefechtswert_expedition": 0.8785,
+    "verlustaufschlag": 1.054,
+    "beschaffungsschwund_anteil": 0.063,
+    "f_korruption_coup": 1.108,
+    "wahre_zustimmung_pp": -1.44,
+    "kaskade_z_zuschlag": 0.045,
+    "patronage_posten": 0,
+    "bekaempfung_stufe": 0
+   },
+   "terror_A7": {
+    "T": 0.2375,
+    "f_regime": 1.0,
+    "d_repression": 0.0175,
+    "ausschluss": 0.0,
+    "gegenterror_stufe": 0,
+    "wachstumskanal": "NULL",
+    "vorfaelle_je_mio_bei_1": 0.002899
+   },
+   "coup_track_vorschau": {
+    "rezession": {
+     "p_ohne_A6": 0.00294,
+     "p_mit_A6": 0.00326,
+     "p_basis": 0.002,
+     "f_rezession": 1.47,
+     "f_korruption": 1.108,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    },
+    "ohne_rezession": {
+     "p_ohne_A6": 0.002,
+     "p_mit_A6": 0.00222,
+     "p_basis": 0.002,
+     "f_rezession": 1.0,
+     "f_korruption": 1.108,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    }
+   },
+   "kaskade_b2_vorschau": {
+    "b": 0.05,
+    "z_alt": 1.0,
+    "z_neu": 1.045,
+    "p_alt": 0.0,
+    "p_neu": 0.0
+   },
+   "forschung": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "ration": {
+     "jahr": null,
+     "stufe": null,
+     "verbraucht_durch": null,
+     "_hinweis": "eine Ration je Fraktion und Jahr, nicht ansparbar, nicht uebertragbar (research.md Rev. D §1.1)"
+    }
+   }
+  },
+  "EU": {
+   "block_erde01": "eu",
+   "regimetyp": "demokratie_reich",
+   "bevoelkerung_mio": 449.0,
+   "wohlstandsindex": 1.6437,
+   "repression": 0.2,
+   "repression_beleg": "regler_2026 (0,08 -> 0,20); zug3 und zug4 bestaetigen 0,20",
+   "start": {
+    "kapazitaet_national_t_a": 45.0,
+    "privat_t_a": 9.0,
+    "staatlich_verfuegbar_t_a": 36.0,
+    "restraum_vortrag_t": 45.0,
+    "regulierung": "PW-01:RG1"
+   },
+   "werft": {
+    "durchsatz_t_a": 5.0,
+    "lager_t": 11.0,
+    "deckel_D_t_a": 22.5
+   },
+   "korruption_A6": {
+    "K": 0.18,
+    "niveau_abschlag_pct_NICHT_gebucht": 15.3,
+    "gefechtswert_daheim": 0.919,
+    "gefechtswert_expedition": 0.8785,
+    "verlustaufschlag": 1.054,
+    "beschaffungsschwund_anteil": 0.063,
+    "f_korruption_coup": 1.108,
+    "wahre_zustimmung_pp": -1.44,
+    "kaskade_z_zuschlag": 0.045,
+    "patronage_posten": 0,
+    "bekaempfung_stufe": 0
+   },
+   "terror_A7": {
+    "T": 0.2676,
+    "f_regime": 1.0,
+    "d_repression": 0.07,
+    "ausschluss": 0.0,
+    "gegenterror_stufe": 0,
+    "wachstumskanal": "NULL",
+    "vorfaelle_je_mio_bei_1": 0.002227
+   },
+   "coup_track_vorschau": {
+    "rezession": {
+     "p_ohne_A6": 0.00294,
+     "p_mit_A6": 0.00326,
+     "p_basis": 0.002,
+     "f_rezession": 1.47,
+     "f_korruption": 1.108,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    },
+    "ohne_rezession": {
+     "p_ohne_A6": 0.002,
+     "p_mit_A6": 0.00222,
+     "p_basis": 0.002,
+     "f_rezession": 1.0,
+     "f_korruption": 1.108,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    }
+   },
+   "kaskade_b2_vorschau": {
+    "b": 0.2,
+    "z_alt": 1.103,
+    "z_neu": 1.148,
+    "p_alt": 0.00827,
+    "p_neu": 0.00861
+   },
+   "forschung": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "ration": {
+     "jahr": null,
+     "stufe": null,
+     "verbraucht_durch": null,
+     "_hinweis": "eine Ration je Fraktion und Jahr, nicht ansparbar, nicht uebertragbar (research.md Rev. D §1.1)"
+    }
+   }
+  },
+  "IND": {
+   "block_erde01": "indien",
+   "regimetyp": "demokratie_arm",
+   "bevoelkerung_mio": 1450.0,
+   "wohlstandsindex": 0.3959,
+   "repression": 0.6,
+   "repression_beleg": "domaenen_zug4: 'Indien hebt die Repression von 0,4 auf 0,6'",
+   "start": {
+    "kapazitaet_national_t_a": 40.0,
+    "privat_t_a": 4.0,
+    "staatlich_verfuegbar_t_a": 36.0,
+    "restraum_vortrag_t": 40.0,
+    "regulierung": "PW-01:RG1"
+   },
+   "werft": {
+    "durchsatz_t_a": 4.0,
+    "lager_t": 10.0,
+    "deckel_D_t_a": 20.0
+   },
+   "korruption_A6": {
+    "K": 0.45,
+    "niveau_abschlag_pct_NICHT_gebucht": -0.0,
+    "gefechtswert_daheim": 0.7975,
+    "gefechtswert_expedition": 0.6963,
+    "verlustaufschlag": 1.135,
+    "beschaffungsschwund_anteil": 0.1575,
+    "f_korruption_coup": 1.27,
+    "wahre_zustimmung_pp": -3.6,
+    "kaskade_z_zuschlag": 0.1125,
+    "patronage_posten": 0,
+    "bekaempfung_stufe": 0
+   },
+   "terror_A7": {
+    "T": 0.4403,
+    "f_regime": 1.25,
+    "d_repression": 0.21,
+    "ausschluss": 0.0,
+    "gegenterror_stufe": 0,
+    "wachstumskanal": "NULL",
+    "vorfaelle_je_mio_bei_1": 0.00069
+   },
+   "coup_track_vorschau": {
+    "rezession": {
+     "p_ohne_A6": 0.0294,
+     "p_mit_A6": 0.03734,
+     "p_basis": 0.02,
+     "f_rezession": 1.47,
+     "f_korruption": 1.27,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    },
+    "ohne_rezession": {
+     "p_ohne_A6": 0.02,
+     "p_mit_A6": 0.0254,
+     "p_basis": 0.02,
+     "f_rezession": 1.0,
+     "f_korruption": 1.27,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    }
+   },
+   "kaskade_b2_vorschau": {
+    "b": 0.6,
+    "z_alt": 1.0,
+    "z_neu": 1.1125,
+    "p_alt": 0.0675,
+    "p_neu": 0.07509
+   },
+   "forschung": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "ration": {
+     "jahr": null,
+     "stufe": null,
+     "verbraucht_durch": null,
+     "_hinweis": "eine Ration je Fraktion und Jahr, nicht ansparbar, nicht uebertragbar (research.md Rev. D §1.1)"
+    }
+   }
+  },
+  "CHN": {
+   "block_erde01": "china",
+   "regimetyp": "einparteien",
+   "bevoelkerung_mio": 1416.0,
+   "wohlstandsindex": 1.6215,
+   "repression": 0.8,
+   "repression_beleg": "regler_2026 (0,72 -> 0,80); zug3 und zug4 bestaetigen 0,80",
+   "start": {
+    "kapazitaet_national_t_a": 400.0,
+    "privat_t_a": 60.0,
+    "staatlich_verfuegbar_t_a": 340.0,
+    "restraum_vortrag_t": 330.8,
+    "regulierung": "PW-01:RG1"
+   },
+   "werft": {
+    "durchsatz_t_a": 40.0,
+    "lager_t": 44.0,
+    "deckel_D_t_a": 200.0
+   },
+   "korruption_A6": {
+    "K": 0.5,
+    "niveau_abschlag_pct_NICHT_gebucht": -3.683,
+    "gefechtswert_daheim": 0.775,
+    "gefechtswert_expedition": 0.6625,
+    "verlustaufschlag": 1.15,
+    "beschaffungsschwund_anteil": 0.175,
+    "f_korruption_coup": 0.825,
+    "wahre_zustimmung_pp": -4.0,
+    "kaskade_z_zuschlag": 0.125,
+    "patronage_posten": 0,
+    "bekaempfung_stufe": 0
+   },
+   "terror_A7": {
+    "T": 0.0,
+    "f_regime": 0.55,
+    "d_repression": -0.16,
+    "ausschluss": 0.0,
+    "gegenterror_stufe": 0,
+    "wachstumskanal": "NULL",
+    "vorfaelle_je_mio_bei_1": 0.000706
+   },
+   "coup_track_vorschau": {
+    "rezession": {
+     "p_ohne_A6": 0.01764,
+     "p_mit_A6": 0.01455,
+     "p_basis": 0.012,
+     "f_rezession": 1.47,
+     "f_korruption": 0.825,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    },
+    "ohne_rezession": {
+     "p_ohne_A6": 0.012,
+     "p_mit_A6": 0.0099,
+     "p_basis": 0.012,
+     "f_rezession": 1.0,
+     "f_korruption": 0.825,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    }
+   },
+   "kaskade_b2_vorschau": {
+    "b": 0.8,
+    "z_alt": 1.0,
+    "z_neu": 1.125,
+    "p_alt": 0.0975,
+    "p_neu": 0.10969
+   },
+   "forschung": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "ration": {
+     "jahr": null,
+     "stufe": null,
+     "verbraucht_durch": null,
+     "_hinweis": "eine Ration je Fraktion und Jahr, nicht ansparbar, nicht uebertragbar (research.md Rev. D §1.1)"
+    }
+   }
+  },
+  "RUS": {
+   "block_erde01": "russland",
+   "regimetyp": "personalistisch",
+   "bevoelkerung_mio": 144.0,
+   "wohlstandsindex": 2.8472,
+   "repression": 0.5,
+   "repression_beleg": "ABGELEITET aus dem gebuchten B-2-Wert 5,25 % (domaenen_zug4) ueber p = (rep - 0,15) * 0,15; an sieben Buchungen bestaetigt",
+   "start": {
+    "kapazitaet_national_t_a": 100.0,
+    "privat_t_a": 5.0,
+    "staatlich_verfuegbar_t_a": 95.0,
+    "restraum_vortrag_t": 100.0,
+    "regulierung": "PW-01:RG1"
+   },
+   "werft": {
+    "durchsatz_t_a": 10.0,
+    "lager_t": 25.0,
+    "deckel_D_t_a": 50.0
+   },
+   "korruption_A6": {
+    "K": 0.72,
+    "niveau_abschlag_pct_NICHT_gebucht": -19.89,
+    "gefechtswert_daheim": 0.676,
+    "gefechtswert_expedition": 0.514,
+    "verlustaufschlag": 1.216,
+    "beschaffungsschwund_anteil": 0.252,
+    "f_korruption_coup": 0.748,
+    "wahre_zustimmung_pp": -5.76,
+    "kaskade_z_zuschlag": 0.18,
+    "patronage_posten": 0,
+    "bekaempfung_stufe": 0
+   },
+   "terror_A7": {
+    "T": 0.1,
+    "f_regime": 0.95,
+    "d_repression": -0.1,
+    "ausschluss": 0.0,
+    "gegenterror_stufe": 0,
+    "wachstumskanal": "NULL",
+    "vorfaelle_je_mio_bei_1": 0.006944
+   },
+   "coup_track_vorschau": {
+    "rezession": {
+     "p_ohne_A6": 0.0441,
+     "p_mit_A6": 0.03299,
+     "p_basis": 0.03,
+     "f_rezession": 1.47,
+     "f_korruption": 0.748,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    },
+    "ohne_rezession": {
+     "p_ohne_A6": 0.03,
+     "p_mit_A6": 0.02244,
+     "p_basis": 0.03,
+     "f_rezession": 1.0,
+     "f_korruption": 0.748,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    }
+   },
+   "kaskade_b2_vorschau": {
+    "b": 0.5,
+    "z_alt": 1.0,
+    "z_neu": 1.18,
+    "p_alt": 0.0525,
+    "p_neu": 0.06195
+   },
+   "forschung": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "ration": {
+     "jahr": null,
+     "stufe": null,
+     "verbraucht_durch": null,
+     "_hinweis": "eine Ration je Fraktion und Jahr, nicht ansparbar, nicht uebertragbar (research.md Rev. D §1.1)"
+    }
+   }
+  },
+  "REST": {
+   "block_erde01": "rest",
+   "regimetyp": "hybrid",
+   "bevoelkerung_mio": 4396.0,
+   "wohlstandsindex": 0.6585,
+   "repression": 0.38,
+   "repression_beleg": "staaten_2026.json; NPC-Aggregat, in fuenf Zuegen nie bewegt",
+   "start": {
+    "kapazitaet_national_t_a": 64.5,
+    "privat_t_a": 19.35,
+    "staatlich_verfuegbar_t_a": 45.15,
+    "restraum_vortrag_t": 64.5,
+    "regulierung": "PW-01:RG1"
+   },
+   "werft": {
+    "durchsatz_t_a": 0,
+    "lager_t": 0,
+    "deckel_D_t_a": 32.25
+   },
+   "korruption_A6": {
+    "K": 0.55,
+    "niveau_abschlag_pct_NICHT_gebucht": -7.367,
+    "gefechtswert_daheim": 0.7525,
+    "gefechtswert_expedition": 0.6287,
+    "verlustaufschlag": 1.165,
+    "beschaffungsschwund_anteil": 0.1925,
+    "f_korruption_coup": 0.8075,
+    "wahre_zustimmung_pp": -4.4,
+    "kaskade_z_zuschlag": 0.1375,
+    "patronage_posten": 0,
+    "bekaempfung_stufe": 0
+   },
+   "terror_A7": {
+    "T": 0.1952,
+    "f_regime": 1.45,
+    "d_repression": -0.076,
+    "ausschluss": 0.0,
+    "gegenterror_stufe": 0,
+    "wachstumskanal": "NULL",
+    "vorfaelle_je_mio_bei_1": 0.000227
+   },
+   "coup_track_vorschau": {
+    "rezession": {
+     "p_ohne_A6": 0.06615,
+     "p_mit_A6": 0.05342,
+     "p_basis": 0.045,
+     "f_rezession": 1.47,
+     "f_korruption": 0.8075,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    },
+    "ohne_rezession": {
+     "p_ohne_A6": 0.045,
+     "p_mit_A6": 0.03634,
+     "p_basis": 0.045,
+     "f_rezession": 1.0,
+     "f_korruption": 0.8075,
+     "f_patronage": 1.0,
+     "hinweis": "Wurf verworfen. Der scharfe A-2-Wurf gehoert in die Zug-6-Aufloesung mit dem Zug-6-Seed."
+    }
+   },
+   "kaskade_b2_vorschau": {
+    "b": 0.38,
+    "z_alt": 1.0,
+    "z_neu": 1.1375,
+    "p_alt": 0.0345,
+    "p_neu": 0.03924
+   },
+   "forschung": {
+    "completedL1": [],
+    "completedL2": [],
+    "completedL3": [],
+    "ration": {
+     "jahr": null,
+     "stufe": null,
+     "verbraucht_durch": null,
+     "_hinweis": "eine Ration je Fraktion und Jahr, nicht ansparbar, nicht uebertragbar (research.md Rev. D §1.1)"
+    }
+   }
+  }
+ },
+ "entwuerfe": {
+  "CHN_aufklaerer": {
+   "fraktion": "CHN",
+   "designMode": "B",
+   "steuerung": "ferngelenkt",
+   "gebaut": true,
+   "tochterschiff": false,
+   "realSystem": null,
+   "realLaunchMass_kg": null,
+   "k2": {
+    "basis_kg": 1000.0,
+    "np": 2,
+    "cm": 2.0,
+    "hochenergie_faktor": 1.0,
+    "faktor_gesamt": 2.0,
+    "ctxNoHE": false,
+    "disc": 1.0,
+    "env": 0.0,
+    "nutzlast_final_kg": 2000.0,
+    "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env), bei Hochenergie zusaetzlich *3 UND dv/3 (construction.md §Weight Penalty 3, Schwelle ~50 kW). HE-29: unterhalb der Schwelle existiert die Strafe nicht, cm bleibt np. Die Kalkulatorfahne ctxNoHE wird NICHT beansprucht — sie ist eine Kontextklasse mit eigener Preiskurve (cm * np), kein Rabatt.",
+    "spielregel_hochenergie_greift": false
+   },
+   "highEnergy": {
+    "powerUsed_kW": 11.0,
+    "schwelle_kW": 50.0,
+    "spielregel_greift": false,
+    "dv_geteilt_durch_3": false,
+    "gewicht_verdreifacht_spielregel": false,
+    "zustand": "c",
+    "zustand_klartext": "(c) Hausregel flacher Basiswert [S]",
+    "kalkulator_faktor": 2.0,
+    "faktoren": {
+     "a_x3": 6.0,
+     "b_ctxNoHE": 4.0,
+     "c_flach_S": 2.0
+    },
+    "guenstigster": "c",
+    "gegenzustand_faktor": 4.0,
+    "hausregel_flach_faktor_S": 2.0,
+    "regelzitat": "construction.md §Weight Penalty 3: 'High-Energy-Systeme (ab ~50 kW, z.B. Laser): ... Zusaetzlich: Dv / 3 und 3x Gewicht.' shipyard-designer SKILL.md v5.22-HE Schritt 2: 'powerUsed < 50 kW -> the game rule does NOT apply ... pick the state closest to the rule, record the difference as [S] ... declare the mismatch as RULES-GAP to the player.' Schritt 4: 'Never present the calculator's x3 as the high-energy penalty — it is a payload guard coupled to np, nothing more.'",
+    "HE_30": "Hausentscheidung des Tisches: unterhalb 50 kW darf der GUENSTIGSTE Zustand gewaehlt werden — das ist (c), der flache Basiswert, denn cm ist stets kleiner gleich cm x 3 und cm x np. Zustand (b) ctxNoHE ist ausschliesslich Schiffen vorbehalten, die spaeter erst gebaut werden UND nur als Tochterschiffe dienen.",
+    "marke": "[S]",
+    "powerUsed_W": 11000,
+    "regelbestaetigung_1809": "construction.md §Weight Penalty 3 traegt seit dem Rechner-Abgleich vom 07.09.2026 den Satz: 'Pruefgroesse fuer diese Regel ist powerUsed (W, Spitzenlast) im Export: < 50.000 -> KEINE STRAFE; >= 50.000 -> Dv / 3 und 3x Gewicht, sofern nicht geheilt.' Damit ist HE-30 Zustand (c) — flacher Basiswert, kein Faktor — nicht mehr blosse Tischsetzung, sondern deckungsgleich mit der Spielregel selbst. Die Marke [S] bleibt, weil der Rechner den Zustand technisch nicht anbietet."
+   },
+   "vorteile": [
+    {
+     "name": "Strahlungs-Haertung",
+     "spielwirkung": "x10 Strahlungsbelastung tragbar (construction.md Tax-Tabelle, Stufe 1)",
+     "begruendung": "LEO 600 km, mehrjaehrige Auslegung, Suedatlantische Anomalie und Polarpassagen. Auch Indiens SPADEX in LEO traegt ihn."
+    },
+    {
+     "name": "Thermischer Betrieb",
+     "spielwirkung": "Betrieb ueber der Basis von -200 C (Tax-Tabelle T1)",
+     "begruendung": "35 min Kernschatten je Umlauf gegen volle Sonne, rund 15 Zyklen am Tag. Die Basis (-200 C) deckt das nicht ab."
+    }
+   ],
+   "nachteile": [
+    {
+     "name": "Hoher EM-Abdruck",
+     "spielwirkung": "+1 auf gegnerische Aufklaerung gegen dieses Schiff",
+     "begruendung": "Eine Grossapertur, die 'bis GEO alles aufdeckt', ist ein aktiver Hochleistungs-Emitter. payload_catalog.md §Suite coupling nennt die Buchung dieses Nachteils neben einem aktiven Sensor ausdruecklich als empfohlene Praxis."
+    },
+    {
+     "name": "Doktrinaer gebunden",
+     "spielwirkung": "-1 Initiative oder Begleitschutz noetig",
+     "begruendung": "Fester Aufklaerungsorbit, bodengefuehrte Auftragssteuerung, kein eigenstaendiges Manoever — deckt sich mit dem gebuchten Manoeverbudget 0,0 km/s."
+    },
+    {
+     "name": "Single-Use",
+     "spielwirkung": "einmal einsatzfaehig; nicht betankbar, nicht wartbar",
+     "begruendung": "Nicht betankbar, nicht wartbar, nicht bergbar — eine Aussetzung."
+    }
+   ]
+  },
+  "CHN_scorer": {
+   "fraktion": "CHN",
+   "designMode": "B",
+   "steuerung": "ferngelenkt",
+   "gebaut": true,
+   "tochterschiff": false,
+   "realSystem": null,
+   "realLaunchMass_kg": null,
+   "k2": {
+    "basis_kg": 50.0,
+    "np": 5,
+    "cm": 5.0,
+    "hochenergie_faktor": 1.0,
+    "faktor_gesamt": 5.0,
+    "ctxNoHE": false,
+    "disc": 1.0,
+    "env": 0.0,
+    "nutzlast_final_kg": 250.0,
+    "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env), bei Hochenergie zusaetzlich *3 UND dv/3 (construction.md §Weight Penalty 3, Schwelle ~50 kW). HE-29: unterhalb der Schwelle existiert die Strafe nicht, cm bleibt np. Die Kalkulatorfahne ctxNoHE wird NICHT beansprucht — sie ist eine Kontextklasse mit eigener Preiskurve (cm * np), kein Rabatt.",
+    "spielregel_hochenergie_greift": false
+   },
+   "highEnergy": {
+    "powerUsed_kW": 3.6,
+    "schwelle_kW": 50.0,
+    "spielregel_greift": false,
+    "dv_geteilt_durch_3": false,
+    "gewicht_verdreifacht_spielregel": false,
+    "zustand": "c",
+    "zustand_klartext": "(c) Hausregel flacher Basiswert [S]",
+    "kalkulator_faktor": 5.0,
+    "faktoren": {
+     "a_x3": 15.0,
+     "b_ctxNoHE": 25.0,
+     "c_flach_S": 5.0
+    },
+    "guenstigster": "c",
+    "gegenzustand_faktor": 15.0,
+    "hausregel_flach_faktor_S": 5.0,
+    "regelzitat": "construction.md §Weight Penalty 3: 'High-Energy-Systeme (ab ~50 kW, z.B. Laser): ... Zusaetzlich: Dv / 3 und 3x Gewicht.' shipyard-designer SKILL.md v5.22-HE Schritt 2: 'powerUsed < 50 kW -> the game rule does NOT apply ... pick the state closest to the rule, record the difference as [S] ... declare the mismatch as RULES-GAP to the player.' Schritt 4: 'Never present the calculator's x3 as the high-energy penalty — it is a payload guard coupled to np, nothing more.'",
+    "HE_30": "Hausentscheidung des Tisches: unterhalb 50 kW darf der GUENSTIGSTE Zustand gewaehlt werden — das ist (c), der flache Basiswert, denn cm ist stets kleiner gleich cm x 3 und cm x np. Zustand (b) ctxNoHE ist ausschliesslich Schiffen vorbehalten, die spaeter erst gebaut werden UND nur als Tochterschiffe dienen.",
+    "marke": "[S]",
+    "powerUsed_W": 3600,
+    "regelbestaetigung_1809": "construction.md §Weight Penalty 3 traegt seit dem Rechner-Abgleich vom 07.09.2026 den Satz: 'Pruefgroesse fuer diese Regel ist powerUsed (W, Spitzenlast) im Export: < 50.000 -> KEINE STRAFE; >= 50.000 -> Dv / 3 und 3x Gewicht, sofern nicht geheilt.' Damit ist HE-30 Zustand (c) — flacher Basiswert, kein Faktor — nicht mehr blosse Tischsetzung, sondern deckungsgleich mit der Spielregel selbst. Die Marke [S] bleibt, weil der Rechner den Zustand technisch nicht anbietet."
+   },
+   "vorteile": [
+    {
+     "name": "Strahlungs-Haertung",
+     "spielwirkung": "x10 Strahlungsbelastung tragbar (construction.md Tax-Tabelle, Stufe 1)",
+     "begruendung": "Die fuenf Scorer stehen in LEO 600, MEO 20 000, HEO 39 000, SSO 700 und GEO 35 786 km. MEO liegt im Kern des aeusseren Strahlungsguertels, HEO und GEO im Feld solarer Teilchenereignisse. 27 von 32 realen Systemen im OW-01-Katalog tragen diesen Vorteil, Chinas eigene GEO-Systeme TJS und Shijian-21/25 ebenfalls."
+    },
+    {
+     "name": "Thermischer Betrieb",
+     "spielwirkung": "Betrieb ueber der Basis von -200 C (Tax-Tabelle T1)",
+     "begruendung": "Bis zu 72 min Kernschatten gegen volle Sonne, jeden Tag ueber die Einsatzdauer. Die Basis der Tax-Tabelle (-200 C) deckt das nicht ab."
+    }
+   ],
+   "nachteile": []
+  },
+  "CHN_geo_relais": {
+   "fraktion": "CHN",
+   "designMode": "B",
+   "steuerung": "ferngelenkt",
+   "gebaut": true,
+   "tochterschiff": false,
+   "realSystem": null,
+   "realLaunchMass_kg": null,
+   "k2": {
+    "basis_kg": 150.0,
+    "np": 6,
+    "cm": 6.0,
+    "hochenergie_faktor": 1.0,
+    "faktor_gesamt": 6.0,
+    "ctxNoHE": false,
+    "disc": 1.0,
+    "env": 0.0,
+    "nutzlast_final_kg": 900.0,
+    "formel": "np = 3 + adv - disadv; cm: np>=2 -> np, np==1 -> 2, np<=0 -> 1; final = basis * cm * disc * (1+env), bei Hochenergie zusaetzlich *3 UND dv/3 (construction.md §Weight Penalty 3, Schwelle ~50 kW). HE-29: unterhalb der Schwelle existiert die Strafe nicht, cm bleibt np. Die Kalkulatorfahne ctxNoHE wird NICHT beansprucht — sie ist eine Kontextklasse mit eigener Preiskurve (cm * np), kein Rabatt.",
+    "spielregel_hochenergie_greift": false
+   },
+   "highEnergy": {
+    "powerUsed_kW": 17.7,
+    "schwelle_kW": 50.0,
+    "spielregel_greift": false,
+    "dv_geteilt_durch_3": false,
+    "gewicht_verdreifacht_spielregel": false,
+    "zustand": "c",
+    "zustand_klartext": "(c) Hausregel flacher Basiswert [S]",
+    "kalkulator_faktor": 6.0,
+    "faktoren": {
+     "a_x3": 18.0,
+     "b_ctxNoHE": 36.0,
+     "c_flach_S": 6.0
+    },
+    "guenstigster": "c",
+    "gegenzustand_faktor": 18.0,
+    "hausregel_flach_faktor_S": 6.0,
+    "regelzitat": "construction.md §Weight Penalty 3: 'High-Energy-Systeme (ab ~50 kW, z.B. Laser): ... Zusaetzlich: Dv / 3 und 3x Gewicht.' shipyard-designer SKILL.md v5.22-HE Schritt 2: 'powerUsed < 50 kW -> the game rule does NOT apply ... pick the state closest to the rule, record the difference as [S] ... declare the mismatch as RULES-GAP to the player.' Schritt 4: 'Never present the calculator's x3 as the high-energy penalty — it is a payload guard coupled to np, nothing more.'",
+    "HE_30": "Hausentscheidung des Tisches: unterhalb 50 kW darf der GUENSTIGSTE Zustand gewaehlt werden — das ist (c), der flache Basiswert, denn cm ist stets kleiner gleich cm x 3 und cm x np. Zustand (b) ctxNoHE ist ausschliesslich Schiffen vorbehalten, die spaeter erst gebaut werden UND nur als Tochterschiffe dienen.",
+    "marke": "[S]",
+    "powerUsed_W": 17700,
+    "regelbestaetigung_1809": "construction.md §Weight Penalty 3 traegt seit dem Rechner-Abgleich vom 07.09.2026 den Satz: 'Pruefgroesse fuer diese Regel ist powerUsed (W, Spitzenlast) im Export: < 50.000 -> KEINE STRAFE; >= 50.000 -> Dv / 3 und 3x Gewicht, sofern nicht geheilt.' Damit ist HE-30 Zustand (c) — flacher Basiswert, kein Faktor — nicht mehr blosse Tischsetzung, sondern deckungsgleich mit der Spielregel selbst. Die Marke [S] bleibt, weil der Rechner den Zustand technisch nicht anbietet."
+   },
+   "vorteile": [
+    {
+     "name": "Strahlungs-Haertung",
+     "spielwirkung": "x10 Strahlungsbelastung tragbar (construction.md Tax-Tabelle, Stufe 1)",
+     "begruendung": "GEO im aeusseren Guertel, 15 Jahre Auslegungsdauer."
+    },
+    {
+     "name": "Thermischer Betrieb",
+     "spielwirkung": "Betrieb ueber der Basis von -200 C (Tax-Tabelle T1)",
+     "begruendung": "72 min Kernschatten gegen volle Sonne."
+    },
+    {
+     "name": "Magnetfeld-Toleranz",
+     "spielwirkung": "Aufladung/Entladung im GEO-Plasma beherrscht",
+     "begruendung": "Aufladung und Entladung im GEO-Plasma — das klassische Ausfallmuster geostationaerer Nachrichtensatelliten."
+    }
+   ],
+   "nachteile": []
+  },
+  "IND_SPADEX": {
+   "fraktion": "IND",
+   "designMode": "A",
+   "steuerung": "autonom",
+   "gebaut": null,
+   "tochterschiff": null,
+   "realSystem": "SPADEX SDX-01/02 (ISRO)",
+   "realLaunchMass_kg": 220,
+   "k2": null,
+   "highEnergy": null,
+   "vorteile": null,
+   "nachteile": null
+  }
+ },
+ "wiederherstellung": {
+  "lage": "Der Container vom 27.10. war leer: stand/ ist gitignoriert. Die Wiederherstellung unten wurde an diesem Tag GEFAHREN und lieferte zahlengleiche Ergebnisse — sie ist geprueft, nicht behauptet.",
+  "archiv": {
+   "nimm_dieses": "SCHWARZE_SEE_spielstand_zug6_nachgebucht.zip",
+   "inhalt": "251 Dateien, Stand 27.10.2026 — enthaelt A-6/A-7, PW-01 und Forschung Rev. D bereits gebucht",
+   "alt": "SCHWARZE_SEE_spielstand_zug6.zip — 236 Dateien, Stand 18.09. ohne diese drei Buchungen"
+  },
+  "schritte": [
+   "1. SCHWARZE_SEE_spielstand_zug6_nachgebucht.zip nach stand/ entpacken. Damit ist der Stand komplett; die Schritte 2-4 sind dann NICHT noetig.",
+   "2. NUR falls das alte ZIP genommen wird: python3 zug6/skripte/a6_a7_buchung.py --schreiben",
+   "3. NUR dann: python3 zug6/skripte/pw01_setup_zug6.py --schreiben",
+   "4. NUR dann: python3 zug6/skripte/research_revD_migration.py --schreiben",
+   "5. Gatter: python3 pruefer/schiffspruefer.py  — muss BESTANDEN melden",
+   "6. Blaetter neu, falls das Skillbundle sich bewegt hat: python3 zug6/skripte/blaetter_zug6.py"
+  ],
+  "determinismus": "Die drei Buchungsskripte wuerfeln nicht und lesen keine Uhr. Sie wurden am 27.10. gegen den 18.09.-Stand gefahren und lieferten dieselben Zahlen wie am 18./19.09.: K 0,18/0,18/0,45/0,50/0,72/0,55 · T 0,2375/0,2676/0,4403/0,0000/0,1000/0,1952 · privat 1000,0/60,0/9,0/4,0/5,0/19,4 t/a.",
+  "warnung_skillpfad": "Die Skripte tragen den Skillpfad mit fester UUID (/root/.claude/skills/synced/2c0e114f-.../). Zieht das Bundle eine neue UUID, muessen die Konstanten SK in a6_a7_buchung.py, a6_a7_html.py, blatt_innenlage_reiter.py und pw01_setup_zug6.py nachgezogen werden."
+ },
+ "blaetter_zug6": {
+  "ort": "zug6/blaetter/",
+  "dateien": {
+   "Befehlsblatt_ANDI_CHINA_Zug6.html": {
+    "bytes": 269106,
+    "sha256_16": "dfae4f002e812703"
+   },
+   "Befehlsblatt_JAKOB_INDIEN_Zug6.html": {
+    "bytes": 258510,
+    "sha256_16": "37fbbfa3c7cb02cf"
+   },
+   "Befehlsblatt_ROMAN_EU_Zug6.html": {
+    "bytes": 262817,
+    "sha256_16": "ef77a6218462c6bf"
+   }
+  },
+  "reiter": [
+   "1 Politik",
+   "2 Energie",
+   "3 Boden",
+   "4 Rechnen",
+   "5 Innenlage (Hausreiter, A-6/A-7)",
+   "6 Werft (Hausreiter, PW-01/BZ-01/Forschung)",
+   "7 Freitext (Hausreiter)"
+  ],
+  "erzeugen": "python3 zug6/skripte/blaetter_zug6.py",
+  "zurueckleben": "Knopf 'Zug kopieren' im Blatt erzeugt JSON; gelesen mit zeughaus-gm/scripts/zh01_blattlesen.py (Blatt 3) und erde01-gm/scripts/blattlesen.py (Blatt 1/2/4).",
+  "hausfixe_noch_noetig": {
+   "B-36": "zh01_blatt.py --html ignoriert --konto-t/--tranche-t; umgangen in zug5/skripte/zh01_html_kasse_fix.py. Am 27.10. erneut nachgestellt: Kasse 629,8 statt 764,0.",
+   "B-37": "dw01.py liest economy.resources.compute, die Kampagne fuehrt computeConfig; umgangen in zug5/skripte/gamestate_computepfad_adapter.py. Ohne Adapter bleibt Blatt 4 leer.",
+   "B-39": "C-9-Selbsterkennung liest houseRules statt state.houseRules; umgangen mit dem Flag --c9. Ohne das Flag druckt das Blatt zweimal 'nicht auf diesem Blatt'."
+  },
+  "stand_27_10": "Am 27.10. mit dem Bundle vom 25.10. neu erzeugt. Gegenueber dem 19.09. kamen je Blatt 50 Felder dazu, alle aus dem E-5-Bodensegment, dazu e_batterie, opziel und ruestung_frei. Nichts ist weggefallen."
+ },
+ "offene_punkte": {
+  "_anzahl": 46,
+  "_warnung_nummernkollision": "Zug 5 und Zug 6 vergeben die Befundnummern B-30 bis B-34 doppelt fuer VERSCHIEDENE Sachen. Immer mit der Journal-ID zitieren (Z5-011 statt B-28), nie mit der blossen Befundnummer.",
+  "zug5": [
+   {
+    "id": "Z5-002",
+    "ref": "RG-Z5-03",
+    "typ": "regelluecke",
+    "betrifft": "KB-02 E-1, Reichweite",
+    "status": "offen, Rueckfrage an den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-002"
+   },
+   {
+    "id": "Z5-004",
+    "ref": "RG-Z5-04",
+    "typ": "regelluecke",
+    "betrifft": "scoring.md §Bodenkampf-Budget-Scoring / combat.md",
+    "status": "offen, blockiert die Force-Projection-Wertung",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-004"
+   },
+   {
+    "id": "Z5-005",
+    "ref": "RG-Z5-05",
+    "typ": "regelluecke",
+    "betrifft": "scoring.md §Earth Surface Best-of-Three",
+    "status": "offen",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-005"
+   },
+   {
+    "id": "Z5-006",
+    "ref": "RG-Z5-06",
+    "typ": "regelluecke",
+    "betrifft": "scoring.md §Serienzaehler vs §Bodenkampf-Budget-Scoring",
+    "status": "offen, in Zug 5 nicht entscheidungserheblich",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-006"
+   },
+   {
+    "id": "Z5-007",
+    "ref": "B-27",
+    "typ": "befund",
+    "betrifft": "BL-01 bodenlage.py",
+    "status": "offen, Befund an den Skill",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-007"
+   },
+   {
+    "id": "Z5-009",
+    "ref": "RG-Z5-07",
+    "typ": "regelluecke",
+    "betrifft": "SV-01 §3 Treuhand-Schranken",
+    "status": "offen, gehoert in SV-01 §3 ergaenzt",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-009"
+   },
+   {
+    "id": "Z5-010",
+    "ref": "RG-Z5-08",
+    "typ": "regelluecke",
+    "betrifft": "ERDE-01 intel.md D-2",
+    "status": "offen",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-010"
+   },
+   {
+    "id": "Z5-011",
+    "ref": "B-28",
+    "typ": "befund",
+    "betrifft": "ZH-01 zh01_blattlesen.py / zh01_blatt.py",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-011"
+   },
+   {
+    "id": "Z5-012",
+    "ref": "B-29",
+    "typ": "befund",
+    "betrifft": "erde01-gm:references/hybrid.md",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-012"
+   },
+   {
+    "id": "Z5-013",
+    "ref": "B-30",
+    "typ": "befund",
+    "betrifft": "erde01-gm:scripts/befehlsblatt.py",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-013"
+   },
+   {
+    "id": "Z5-014",
+    "ref": "RG-Z5-09",
+    "typ": "regelluecke",
+    "betrifft": "ERDE-01 militaer_handoff.md E-2.1 / Indien",
+    "status": "offen, Rueckfrage an Jakob",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-014"
+   },
+   {
+    "id": "Z5-018",
+    "ref": "B-31",
+    "typ": "befund",
+    "betrifft": "Seed-Registry",
+    "status": "offen",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-018"
+   },
+   {
+    "id": "Z5-025",
+    "ref": "RG-Z5-10",
+    "typ": "regelluecke",
+    "betrifft": "ZH-01 Blatt 3 §16 Anteile",
+    "status": "offen, Rueckfrage an Roman",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-025"
+   },
+   {
+    "id": "Z5-028",
+    "ref": "B-32",
+    "typ": "befund",
+    "betrifft": "erde01-gm:scripts/erde01_engine.py",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-028"
+   },
+   {
+    "id": "Z5-029",
+    "ref": "B-33",
+    "typ": "befund",
+    "betrifft": "work/sv01/ops_zug*.json — Replaypflicht",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-029"
+   },
+   {
+    "id": "Z5-033",
+    "ref": "B-34",
+    "typ": "befund",
+    "betrifft": "ZH-01 Z-1.4 / Romans Blatt 3",
+    "status": "offen, Rueckfrage an Roman",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-033"
+   },
+   {
+    "id": "Z5-034",
+    "ref": "RG-Z5-11",
+    "typ": "regelluecke",
+    "betrifft": "Umfang von 'alle Slots'",
+    "status": "offen, Rueckfrage an Jakob",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-034"
+   },
+   {
+    "id": "Z5-039",
+    "ref": "RG-Z5-12",
+    "typ": "regelluecke",
+    "betrifft": "L1-Katalog und Kuestenschutz",
+    "status": "offen, als Hausentscheidung gebucht",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-039"
+   },
+   {
+    "id": "Z5-040",
+    "ref": "B-35",
+    "typ": "befund",
+    "betrifft": "ERDE-01 G-2 Anpassungsregel",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-040"
+   },
+   {
+    "id": "Z5-041",
+    "ref": "B-36",
+    "typ": "befund",
+    "betrifft": "zeughaus-gm:scripts/zh01_blatt.py (Fassung 06.09.2026)",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-041"
+   },
+   {
+    "id": "Z5-042",
+    "ref": "B-37",
+    "typ": "befund",
+    "betrifft": "denkwerk-compute:scripts/dw01.py (Fassung 06.09.2026)",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-042"
+   },
+   {
+    "id": "Z5-047",
+    "ref": "B-39",
+    "typ": "befund",
+    "betrifft": "zeughaus-gm:scripts/zh01_blatt.py — C-9-Selbsterkennung",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-047"
+   },
+   {
+    "id": "Z5-048",
+    "ref": "B-38",
+    "typ": "befund",
+    "betrifft": "zeughaus-gm:scripts/zh01_blattlesen.py — Kopierblock",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-048"
+   },
+   {
+    "id": "Z5-051",
+    "ref": "B-40",
+    "typ": "befund",
+    "betrifft": "Rueckweg der Blaetter 1 und 2",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-051"
+   },
+   {
+    "id": "Z5-053",
+    "ref": "B-41",
+    "typ": "befund",
+    "betrifft": "Falle: '0 %' steht in der Leerwertliste",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-053"
+   },
+   {
+    "id": "Z5-054",
+    "ref": "B-42",
+    "typ": "befund",
+    "betrifft": "raumquote reist mit, wird aber nicht gelesen",
+    "status": "offen, Befund an die Skillpflege",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-054"
+   },
+   {
+    "id": "Z5-059",
+    "ref": "K-24",
+    "typ": "befund",
+    "betrifft": "Stub des Scorers geht rechnerisch nicht auf",
+    "status": "offen fuer den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-059"
+   },
+   {
+    "id": "Z5-061",
+    "ref": "RG-Z5-12",
+    "typ": "regelluecke",
+    "betrifft": "Kein Vorteils-Preset fuer passive Aufklaerung",
+    "status": "offen fuer den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-061"
+   },
+   {
+    "id": "Z5-062",
+    "ref": "K-26",
+    "typ": "befund",
+    "betrifft": "Delta-v-Verbrauch der fuenf Scorer aus Zug 5 nicht abgeschrieben",
+    "status": "offen fuer den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-062"
+   },
+   {
+    "id": "Z5-068",
+    "ref": "K-27",
+    "typ": "vorbehalt",
+    "betrifft": "Modellierungsvorbehalt: Rahmen und Sensor als Nutzlastposten",
+    "status": "offen fuer den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-068"
+   },
+   {
+    "id": "Z5-070",
+    "ref": "K-28",
+    "typ": "befund",
+    "betrifft": "Werftdurchsatz wurde nie abgebucht — systematisch, alle Fraktionen, alle Zuege",
+    "status": "offen fuer den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-070"
+   },
+   {
+    "id": "Z5-072",
+    "ref": "K-29",
+    "typ": "befund",
+    "betrifft": "Unerklaerter Lagerabgang China 2026/2027",
+    "status": "offen fuer den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-072"
+   },
+   {
+    "id": "Z5-089",
+    "ref": "K-39",
+    "typ": "befund",
+    "betrifft": "Feldzeichen ohne Bahnhaltungsreserve",
+    "status": "offen fuer den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-089"
+   },
+   {
+    "id": "Z5-090",
+    "ref": "K-40",
+    "typ": "befund",
+    "betrifft": "Zug 6: Nachbau der Scorer kostet nur noch ein Drittel — der Serienzaehler wirkt",
+    "status": "offen fuer den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-090"
+   },
+   {
+    "id": "Z5-093",
+    "ref": "RG-Z5-13",
+    "typ": "regelluecke",
+    "betrifft": "RULES-GAP an den Tisch: welcher Kalkulatorzustand unter 50 kW",
+    "status": "offen fuer den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-093"
+   },
+   {
+    "id": "Z5-099",
+    "ref": "RG-Z5-14",
+    "typ": "regelluecke",
+    "betrifft": "ERDE-01 A-6 KORRUPTION und A-7 TERROR sind neu und in der Partie ungebucht",
+    "status": "offen fuer den Tisch",
+    "journal": "zug5",
+    "volltext": "zug5#Z5-099"
+   }
+  ],
+  "zug6": [
+   {
+    "id": "Z6-005",
+    "ref": "RG-A6-NIVEAU",
+    "typ": "regelluecke",
+    "betrifft": "Niveauabschlag berechnet, aber NICHT auf die BIP-Reihe gebucht",
+    "status": "offen fuer den Tisch",
+    "journal": "zug6",
+    "volltext": "zug6#Z6-005"
+   },
+   {
+    "id": "Z6-006",
+    "ref": "RG-A6-VORZEICHEN",
+    "typ": "regelluecke",
+    "betrifft": "GRUENDLER aktiv, SAHA bereit — der Regelort legt es ausdruecklich vor",
+    "status": "offen fuer den Tisch",
+    "journal": "zug6",
+    "volltext": "zug6#Z6-006"
+   },
+   {
+    "id": "Z6-007",
+    "ref": "RG-A7-BIP",
+    "typ": "regelluecke",
+    "betrifft": "bip_index ist auf 0..1 nicht definiert",
+    "status": "offen fuer den Tisch",
+    "journal": "zug6",
+    "volltext": "zug6#Z6-007"
+   },
+   {
+    "id": "Z6-008",
+    "ref": "RG-A7-BODEN",
+    "typ": "regelluecke",
+    "betrifft": "China faellt bei T auf den Boden — die Formel kann negativ werden",
+    "status": "offen fuer den Tisch",
+    "journal": "zug6",
+    "volltext": "zug6#Z6-008"
+   },
+   {
+    "id": "Z6-011",
+    "ref": "B-30",
+    "typ": "befund",
+    "betrifft": "Zug 5 hat keine B-2-Kaskadenwuerfe gebucht",
+    "status": "offen fuer den Tisch",
+    "journal": "zug6",
+    "volltext": "zug6#Z6-011"
+   },
+   {
+    "id": "Z6-012",
+    "ref": "B-31",
+    "typ": "befund",
+    "betrifft": "Ausschluss, Gegenterror, Einschluss, Patronage und Antikorruption stehen auf null, weil Blatt 4 sie erst ab Zug 6 fuehrt",
+    "status": "offen fuer den Tisch",
+    "journal": "zug6",
+    "volltext": "zug6#Z6-012"
+   },
+   {
+    "id": "Z6-013",
+    "ref": "B-32",
+    "typ": "befund",
+    "betrifft": "REST fuehrt bis heute keinen A-2-Coup-Track",
+    "status": "offen fuer den Tisch",
+    "journal": "zug6",
+    "volltext": "zug6#Z6-013"
+   },
+   {
+    "id": "Z6-016",
+    "ref": "B-33",
+    "typ": "befund",
+    "betrifft": "Das FO-01-Forschungskonto steht seit Zug 3 still",
+    "status": "offen fuer den Tisch",
+    "journal": "zug6",
+    "volltext": "zug6#Z6-016"
+   },
+   {
+    "id": "Z6-018",
+    "ref": "RG-FO-2030",
+    "typ": "regelluecke",
+    "betrifft": "Forschung Rev. D: 2030 trug eine einmalige L1-Ration — gewuerfelt hat sie niemand",
+    "status": "offen fuer den Tisch",
+    "journal": "zug6",
+    "volltext": "zug6#Z6-018"
+   },
+   {
+    "id": "Z6-020",
+    "ref": "B-34",
+    "typ": "befund",
+    "betrifft": "BZ-01 Rev. B bestaetigt vier Werftkonten und widerspricht zweien",
+    "status": "offen fuer den Tisch",
+    "journal": "zug6",
+    "volltext": "zug6#Z6-020"
+   }
+  ]
+ },
+ "was_zuerst": [
+  {
+   "rang": 1,
+   "sache": "Skillbundle pruefen",
+   "warum": "Das Bundle bewegt sich woechentlich. Am 27.10. trugen die blattrelevanten Module den 25.10. Pruefe die CHANGELOG-Koepfe von zeughaus-gm, erde01-gm, deltav-game-master, werkbuch-bauzeiten und pw01-privatwerk, BEVOR du buchst.",
+   "wie": "head -1 auf jede CHANGELOG.md im Skillordner"
+  },
+  {
+   "rang": 2,
+   "sache": "Vier Tischentscheidungen einholen",
+   "warum": "Sie blockieren die Zug-6-Aufloesung inhaltlich.",
+   "wie": [
+    "Z6-018 RG-FO-2030: Rev. D gab 2030 eine einmalige L1-Ration an jede Fraktion, die unter der alten Regel niemand gewuerfelt hat. Verfaellt sie, oder wird sie nachgeholt?",
+    "Z6-006 RG-A6-VORZEICHEN: GRUENDLER aktiv, SAHA bereit — entgegengesetztes Vorzeichen fuer Autokratien.",
+    "Z6-005 RG-A6-NIVEAU: Niveauabschlag auf die BIP-Reihe buchen oder nicht.",
+    "Z6-011: Zug 5 hat keinen B-2-Kaskadenwurf protokolliert."
+   ]
+  },
+  {
+   "rang": 3,
+   "sache": "turnNumber nachziehen",
+   "warum": "state.turnNumber 5 bei currentYear 2031.",
+   "wie": "vor der Aufloesung auf 6 setzen"
+  },
+  {
+   "rang": 4,
+   "sache": "Blaetter ausgeben und zurueckholen",
+   "warum": "Ohne Blatt 4/Innenlage/Werft sind A-6, A-7, PW-01 und BZ-01 Rev. B unspielbar.",
+   "wie": "zug6/blaetter/*.html an Jakob (IND), Andi (CHN), Roman (EU)"
+  }
+ ],
+ "arbeitsregeln": {
+  "quelle": "CLAUDE.md im Repo — bindend, vor jeder Sitzung lesen",
+  "gatter_vor_jeder_buchung": "python3 pruefer/schiffspruefer.py",
+  "weitere_pruefer": [
+   "zh01.py pruefe",
+   "erde01-gm/scripts/wn01_validator.py"
+  ],
+  "regelinstanzen": {
+   "bauzeiten": "werkbuch-bauzeiten/scripts/bz01_calc.py",
+   "massemodell": "orbitalwerk/scripts/nachbau.py",
+   "bodenkonto": "zeughaus-gm/scripts/zh01.py",
+   "serie": "deltav-game-master/scripts/scoring_streak.py (--jahr ist ab Rev. D PFLICHT)",
+   "erde01": "erde01-gm/scripts/erde01_engine.py",
+   "privatsektor": "pw01-privatwerk/scripts/pw01_calc.py"
+  },
+  "vertraulichkeit": "Befehlsblaetter sind vertraulich gegenueber Mitspielern, einschliesslich des Freitextes. SITREPs sind asymmetrisch. Die Veroeffentlichungspflicht der Demokratien betrifft die WERTE, nie die Absicht."
+ },
+ "tisch": {
+  "gastgeber_und_gm_bediener": "Jakob",
+  "spieler": {
+   "IND": "Jakob",
+   "CHN": "Andi",
+   "EU": "Roman"
+  },
+  "npc": [
+   "USA",
+   "RUS",
+   "REST"
+  ]
+ },
+ "repo": {
+  "zweig": "claude/zug-5-china-v2-scoring-usb2mg",
+  "fernziel": "https://github.com/Tuziuzi/Partie_1",
+  "kopf": "aece46c Blaetter Zug 6 mit dem Bundle vom 25.10. neu erzeugt — 50 neue E-5-Felder",
+  "gitignoriert": [
+   "stand/",
+   "__pycache__/",
+   "*.pyc"
+  ],
+  "sessionstart_hook": ".claude/settings.json faehrt das Gatter bei startup|resume|clear"
+ }
+}
