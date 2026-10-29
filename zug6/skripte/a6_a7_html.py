@@ -232,26 +232,31 @@ B.append('</table></div><p><b>V4 verlangt Fähigkeit <i>und</i> einen Bestätigu
 
 # --------------------------------------------------------------- RULES-GAPs
 gaps = [
-    ("RG-A6-VORZEICHEN", "Das Vorzeichen in Autokratien — GRUENDLER oder SAHA",
+    ("RG-A6-VORZEICHEN &rarr; ENTSCHIEDEN 28.10.2026",
+     "Das Vorzeichen in Autokratien — SAHA ist aktiv",
      "QK-01 Gründler/Potrafke 2019 und QK-06 Saha/Sen 2020 widersprechen sich im "
-     "<b>Vorzeichen</b> für Autokratien. <b>GRUENDLER</b> (aktiv) ×1,3 — der Effekt ist "
-     "dort stärker. <b>SAHA</b> (bereit) ×(−0,5) — Korruption <i>hebt</i> dort das "
-     "Wachstum (Ostasien-Paradox, 100+ Staaten 1984–2016). Betroffen: China, Russland, "
-     "REST. Solange ΔK = 0, macht die Wahl keinen Unterschied; sie schlägt durch, sobald "
-     "ein Autokrat Korruption bekämpft oder Patronage kauft — unter SAHA würde eine "
-     "Antikorruptionskampagne in China das Wachstum <i>senken</i>. "
-     "Der Regelort legt das ausdrücklich dem Tisch vor, wie PENNY und BETTER ANGELS."),
-    ("RG-A6-NIVEAU", "Niveauabschlag gerechnet, nicht auf die BIP-Reihe gebucht",
-     "Der Bestand ergibt: USA und EU <b>+15,30&nbsp;%</b> · Indien 0,00&nbsp;% · China "
-     "<b>−3,683&nbsp;%</b> · Russland <b>−19,89&nbsp;%</b> · REST −7,367&nbsp;%. "
-     "<b>Nicht gebucht</b>, aus zwei Gründen. <i>Erstens:</i> die BIP-Reihe startet 2026 "
-     "aus realen Daten und trägt das Korruptionsniveau der Blöcke bereits — ein zweites "
-     "Mal buchen wäre genau die Doppelbuchung, vor der CLAUDE.md&nbsp;§2 warnt. "
-     "<i>Zweitens:</i> das vom Regelort genannte Zielfeld <code>index_real</code> ist in "
-     "diesem Code eine EH-01-Energiekostengrösse (<code>index_real = kosten / kosten0</code>), "
-     "keine BIP-Reihe; der Stand führt es nicht. Die Zahlen stehen vollständig im Stand. "
-     "Wer sie bucht, muss sie <b>in beide Richtungen</b> buchen — bei USA und EU wäre es "
-     "ein Zuschlag."),
+     "<b>Vorzeichen</b> für Autokratien. <b>Der Tisch hat am 28.10.2026 SAHA "
+     "aktiviert</b> (×−0,5, QK-06, Ostasien-Paradox, 100+ Staaten 1984–2016); "
+     "GRUENDLER (×1,3) bleibt als Alternativregel bereit. Betroffen: China, Russland, "
+     "REST. Solange ΔK = 0, ändert das nur den Niveauabschlag; es schlägt voll durch, "
+     "sobald ein Autokrat Korruption bekämpft oder Patronage kauft — <b>unter SAHA "
+     "senkt eine Antikorruptionskampagne in China das Wachstum</b>, sie hebt es nicht. "
+     "Der Schalter liegt im Skill-Asset und wird kampagnenseitig von "
+     "<code>zug6/skripte/erde01_hausregeln.py</code> gesetzt: der Motor bietet dafür "
+     "weder Zustandsfeld noch CLI-Flag (Befund Z6-023)."),
+    ("RG-A6-NIVEAU &rarr; ENTSCHIEDEN 28.10.2026",
+     "Niveauabschlag auf die BIP-Reihe gebucht, in beide Richtungen",
+     "Unter SAHA ergibt der Bestand: USA und EU <b>+15,300&nbsp;%</b> · Indien "
+     "<b>0,000&nbsp;%</b> (K = K_ref 0,45) · China <b>+1,417&nbsp;%</b> · Russland "
+     "<b>+7,650&nbsp;%</b> · REST <b>+2,833&nbsp;%</b>. <b>Gebucht</b> als Einmalbuchung "
+     "nach A-6.2 (Niveau, keine Jahresrate), symmetrisch. Zwei Asymmetrien wurden dem "
+     "Tisch vor der Buchung vorgelegt und in Kauf genommen. <i>Erstens:</i> unter SAHA "
+     "ist der Abschlag für Autokratien eine <b>Prämie</b> — niemand verliert, und Indien "
+     "ist der einzige Block ohne jede Wirkung. <i>Zweitens:</i> eine BIP-Reihe führt der "
+     "Stand nur für china, eu und indien; <b>USA, Russland und REST bleiben unberührt</b>, "
+     "weil ihnen das Feld fehlt (KB-02 W-1a Fn. 1; dieselbe Asymmetrie wie RG-Z5-03). "
+     "Gebucht wurde also: eu 19,9505&nbsp;&rarr;&nbsp;23,0029 · china "
+     "17,9206&nbsp;&rarr;&nbsp;18,1745 · indien 5,2743 unverändert."),
     ("RG-A7-BIP", "bip_index ist auf 0…1 nicht definiert",
      "A-7.1 rechnet <code>(0,9 + 0,2·bip_index)</code>, sagt aber nicht, wie der Wohlstand "
      "eines Blocks auf 0…1 abgebildet wird. Der Stand führt den Wohlstandsindex von 0,396 "
