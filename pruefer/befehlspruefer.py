@@ -88,7 +88,7 @@ for _p in sorted(_glob.glob("/root/.claude/skills/synced/*/erde01-gm/scripts/spi
 
 # AB-6 (a)/(b): Ergebnisfelder und interne Schluessel haben in einer Zugkopie nichts verloren (Nachtrag F, F.4).
 ERGEBNISFELD = re.compile(r"^(zerstoert|zerstört|verlust\w*|wurf\w*|wuerf\w*|würf\w*|seed\w*|erfolg\w*|entdeckt|ergebnis\w*|"
-                          r"sieg\w*|treffer|ausgang|outcome|result\w*|roll\w*)$", re.IGNORECASE)
+                          r"sieg\w*|treffer|ausgang|outcome|result\w*|rolls?)$", re.IGNORECASE)
 AB = {"C": "AB-2", "B": "AB-1", "R": "AB-1", "D": "AB-5 a", "F": "AB-1"}
 
 # ---------------------------------------------------------------- Muster
@@ -170,7 +170,7 @@ BEGRUENDUNG = rx(r"\b(weil|da|nachdem|angesichts|aufgrund|wegen|infolge|zumal)\b
 BEDINGUNG = rx(r"\b(falls|wenn|sofern|sobald|für den fall)\b")
 VERFALL = rx(r"\b(bis|verfällt|gilt bis|befristet)\b.{0,20}\b(zug|ende|jahr|20\d\d)\b|\bzug \d+\b|\b20[3-9]\d\b")
 
-KLASSEN_RANG = {"C": 6, "B": 5, "R": 4, "D": 4, "Q": 3, "F": 2, "S": 1, "A": 0, "–": 0}
+KLASSEN_RANG = {"G": 0, "C": 6, "B": 5, "R": 4, "D": 4, "Q": 3, "F": 2, "S": 1, "A": 0, "–": 0}
 KLASSEN_TEXT = {
     "C": "STEUERVERSUCH — gestrichen, dem Tisch gemeldet",
     "B": "TATSACHENBEHAUPTUNG über Fremde/Welt — abgelehnt",
@@ -180,6 +180,7 @@ KLASSEN_TEXT = {
     "F": "FORDERUNG AN EINE ANDERE FRAKTION — wirkt nur als Forderung",
     "S": "SPRECHAKT — als Äußerung weitergegeben, nicht als Tatsache",
     "A": "WEISUNG — angenommen",
+    "G": "VOM GM FREIGEGEBEN — Meldung nach Prüfung aufgehoben (Grund im Zugjournal)",
     "–": "STICHWORT im Befehlsschlitz — als Weisung gelesen",
 }
 
@@ -423,7 +424,18 @@ def bekannte_felder(staat, zug):
     treffer = _glob.glob(f"{wurzel}/zug{zug}/blaetter/Befehlsblatt_*_{land}_Zug{zug}.html")
     if not treffer:
         return None
-    return set(re.findall(r'id="f_([^"]+)"', open(treffer[0], encoding="utf-8").read()))
+    html_ = open(treffer[0], encoding="utf-8").read()
+    # Feste ids UND Namen, die das Blatt per Skript zu Feldern macht ("f_" + r.id, Zeilen b_gefecht1 …):
+    # ein Feld gilt als bekannt, wenn sein Name oder sein Stamm ohne Endziffer im Blatt als Zeichenkette steht.
+    return {"_html": html_, "_ids": set(re.findall(r'id="f_([^"]+)"', html_))}
+
+
+def feld_bekannt(name, bekannt):
+    if name in bekannt["_ids"]:
+        return True
+    stamm = re.sub(r"\d+$", "", name)
+    h = bekannt["_html"]
+    return any(x in h for x in (f'"{name}"', f'"{stamm}"', f"f_{stamm}", f"'{name}'", f"'{stamm}'"))
 
 
 def feldbefunde(roh, kopf):
@@ -445,12 +457,12 @@ def feldbefunde(roh, kopf):
                 aus.append((k, "C", f"AB-6 a: Ergebnisfeld »{k}« — ein Befehl setzt kein Ergebnis; abgewiesen"))
         if bekannt is not None:
             for x in (d.get("felder") or {}):
-                if x not in bekannt and not x.startswith("_") and not ERGEBNISFELD.match(x):
+                if not feld_bekannt(x, bekannt) and not x.startswith("_") and not ERGEBNISFELD.match(x):
                     aus.append((f"felder.{x}", "B", f"AB-6 a: Feld »{x}« steht nicht auf dem Blatt — abgewiesen, nicht gelesen"))
     return aus
 
 
-def pruefe(roh, eigen=None):
+def pruefe(roh, eigen=None, freigabe=()):
     felder, kopf, rest, befunde = felder_aus(roh)
     abgewiesen = {k.split(".", 1)[-1] for k, _, _ in feldbefunde(roh, kopf)}
     felder = [x for x in felder if x[1] not in abgewiesen]
@@ -488,6 +500,9 @@ def pruefe(roh, eigen=None):
         schlitz = bool(SCHLITZ.match(feld))
         for i, s in enumerate(saetze(text), 1):
             k, gr, hw = klassifiziere(s, eigen, schlitz)
+            if k in ("B", "R", "D") and any(f_ and f_ in s for f_ in freigabe):
+                gr = [f"ursprünglich {k}: " + "; ".join(gr)] if gr else [f"ursprünglich {k}"]
+                k = "G"
             ergebnis["saetze"].append({"quelle": quelle, "feld": feld, "nr": i, "satz": s,
                                        "klasse": k, "gruende": gr, "hinweise": hw})
     alle = [x["klasse"] for x in ergebnis["saetze"]] + [x["klasse"] for x in ergebnis["befunde"]]
@@ -703,8 +718,10 @@ def main(argv):
     if "--fraktion" in argv:
         eigen = argv[argv.index("--fraktion") + 1].upper()
         args = [a for a in args if a.upper() != eigen]
+    freigabe = [argv[i + 1] for i, a in enumerate(argv) if a == "--freigabe" and i + 1 < len(argv)]
+    args = [a for a in args if a not in freigabe]
     roh = lies(args[0])
-    e = pruefe(roh, eigen)
+    e = pruefe(roh, eigen, freigabe)
     if "--json" in argv:
         print(json.dumps(e, ensure_ascii=False, indent=1))
     else:
