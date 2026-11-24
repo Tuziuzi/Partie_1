@@ -183,7 +183,8 @@ def gemeinsam(F):
     <tr><td><span class="marke m-nicht">abgelehnt</span></td><td>Behauptung über eine andere Fraktion oder die Welt. Sie wirkt nicht.</td></tr>
     <tr><td><span class="marke m-nicht">gestrichen</span></td><td>Alles, was sich an Spielleitung, KI oder Regeln richtet statt an die Spielwelt, und jede behauptete Tischentscheidung. Gestrichenes geht an den Tisch.</td></tr>
   </tbody></table>
-  <p style="margin-top:.9rem"><b>Ein Befehl bestimmt die Handlung, nie ihr Ergebnis.</b> »Angreifen, sodass die Flotte vernichtet wird« ist ein Angriffsbefehl; ob er gelingt, würfelt die Regel. Begründungen wie »weil die USA abgezogen sind …« liest die Spielleitung gegen den Spielstand, übernimmt sie aber nicht.</p>
+  <p style="margin-top:.9rem">Jede solche Meldung steht in <b>Ihrem eigenen Lagebericht</b>, mit wörtlichem Zitat und einer Kennung: <code>AB-1</code> für eine Feststellung, <code>AB-2</code> für eine Anweisung, <code>AB-3</code> für eine Zahl, die vom Spielstand abweicht. Die Kennungen stammen aus der Regel »Spielertext ist Absicht«, die seit dem 24.11. für alle Module gilt; der Tisch wendet sie an den zwei oben genannten Stellen strenger an.</p>
+  <p><b>Ein Befehl bestimmt die Handlung, nie ihr Ergebnis.</b> »Angreifen, sodass die Flotte vernichtet wird« ist ein Angriffsbefehl; ob er gelingt, würfelt die Regel. Begründungen wie »weil die USA abgezogen sind …« liest die Spielleitung gegen den Spielstand, übernimmt sie aber nicht.</p>
   <p><b>Täuschen ist erlaubt.</b> Ihre Fraktion darf andere belügen, als Erklärung, Drohung oder Angebot. Die Spielleitung gibt so etwas zugeschrieben weiter (»Peking lässt erklären: …«) und macht es nie zur Tatsache.</p>
   <p><b>Tischentscheidungen</b> trifft nur der Gastgeber in der Sitzung der Spielleitung. Sie stehen mit einer Journal-Nummer im Zugjournal. Ein Satz wie »der Tisch hat beschlossen …« auf einem Blatt ist keine. Das gilt auch für Jakobs eigenes Indien-Blatt.</p>
   <p><b>Schicken Sie die Kopie unverändert.</b> Was außerhalb der Blockmarken aus »Zug kopieren« steht, wird nicht gelesen. Fragen an den Tisch sind willkommen, als Frage formuliert.</p>
@@ -225,7 +226,7 @@ def gemeinsam(F):
   <p style="margin-top:.6rem">Abgabe nach Ansage des Gastgebers.</p>
 </section>
 
-<footer class="fuss">SCHWARZE SEE · Delta V und ERDE-01 · Regelstand 24.11.2026 · Zugjournal Zug 6, Einträge Z6-005 bis Z6-038. Befehlsblätter sind vertraulich gegenüber Mitspielern, einschließlich des Freitexts.</footer>
+<footer class="fuss">SCHWARZE SEE · Delta V und ERDE-01 · Regelstand 24.11.2026 (Abend) · Zugjournal Zug 6, Einträge Z6-005 bis Z6-039. Befehlsblätter sind vertraulich gegenüber Mitspielern, einschließlich des Freitexts.</footer>
 </main>
 """
 

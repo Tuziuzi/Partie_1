@@ -71,6 +71,26 @@ KURZFELD = re.compile(r"(ziel|ort|design|bezug|exportsperre|kampagne|spieler|dat
 
 UNSICHTBAR_ERLAUBT = {"\n", "\r", "\t"}
 
+# KANON-00 Nachtrag F (24.11.2026): die AB-2-Musterliste ist die gemeinsame Liste der gehaerteten Skills. Sie wird
+# per Pfad geladen wie in den Skills selbst — keine zweite Fassung. Fehlt sie, laeuft der Pruefer mit den eigenen
+# Mustern weiter und sagt es im Bericht.
+import glob as _glob
+import importlib.util as _ilu
+SPIELERTEXT, SPIELERTEXT_FP, SPIELERTEXT_PFAD = None, None, None
+for _p in sorted(_glob.glob("/root/.claude/skills/synced/*/erde01-gm/scripts/spielertext.py")):
+    try:
+        _sp = _ilu.spec_from_file_location("spielertext_kanon", _p)
+        _m = _ilu.module_from_spec(_sp); _sp.loader.exec_module(_m)
+        SPIELERTEXT, SPIELERTEXT_FP, SPIELERTEXT_PFAD = _m, _m.ab2_fingerabdruck(), _p
+        break
+    except Exception:
+        pass
+
+# AB-6 (a)/(b): Ergebnisfelder und interne Schluessel haben in einer Zugkopie nichts verloren (Nachtrag F, F.4).
+ERGEBNISFELD = re.compile(r"^(zerstoert|zerstört|verlust\w*|wurf\w*|wuerf\w*|würf\w*|seed\w*|erfolg\w*|entdeckt|ergebnis\w*|"
+                          r"sieg\w*|treffer|ausgang|outcome|result\w*|roll\w*)$", re.IGNORECASE)
+AB = {"C": "AB-2", "B": "AB-1", "R": "AB-1", "D": "AB-5 a", "F": "AB-1"}
+
 # ---------------------------------------------------------------- Muster
 def rx(p):
     return re.compile(p, re.IGNORECASE)
@@ -105,7 +125,7 @@ A_MUSTER = rx(
     r"verlange|verlangen|wünsche|wünschen|weise|weisen|beauftrage|beauftragen|plane|planen|beabsichtige|"
     r"beabsichtigen|entscheide|entscheiden|lasse|lassen|setze|setzen|stelle|stellen|verlege|verlegen|"
     r"investiere|investieren|kaufe|kaufen|bestelle|bestellen|genehmige|genehmigen|gebe frei|geben frei|"
-    r"bitte|bitten|müssen|sollten|sollen|würde gern|würden gern|hätte gern|hätten gern)\b"
+    r"bitte|bitten|müssen|sollten|sollen|würde gern|würden gern|hätte gern|hätten gern|versuche|versuchen)\b"
     r"|\b(soll|sollen|sollte|sollten|möge|mögen|muss|müssen)\b"
     r"|^\s*(das |unser )?ziel (ist|sind|bleibt|bleiben)\b"
     r"|^\s*(befehl|auftrag|antrag|weisung|anordnung|ziel)\s*\d*\s*[:\-–]"
@@ -259,6 +279,10 @@ def subjekt_am_modal(teil, eigen):
 def klassifiziere(satz, eigen, schlitz=False):
     """-> (klasse, gruende[], hinweise[])"""
     gruende, hinweise = [], []
+    if SPIELERTEXT is not None:
+        treffer = SPIELERTEXT.anweisung(satz)
+        if treffer:
+            gruende.append(f"AB-2-Musterliste (KANON-00 Nachtrag F): »{treffer}«")
     for muster, text in C_MUSTER:
         if muster.search(satz):
             gruende.append(text)
@@ -390,11 +414,52 @@ def felder_aus(roh):
     return felder, kopf, rest, befunde
 
 
+def bekannte_felder(staat, zug):
+    """Feldnamen des erzeugten Blatts dieser Fraktion (id="f_…"), oder None, wenn kein Blatt liegt."""
+    land = {"indien": "INDIEN", "china": "CHINA", "eu": "EU"}.get(str(staat or "").lower())
+    if not land or zug is None:
+        return None
+    wurzel = __import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.abspath(__file__)))
+    treffer = _glob.glob(f"{wurzel}/zug{zug}/blaetter/Befehlsblatt_*_{land}_Zug{zug}.html")
+    if not treffer:
+        return None
+    return set(re.findall(r'id="f_([^"]+)"', open(treffer[0], encoding="utf-8").read()))
+
+
+def feldbefunde(roh, kopf):
+    """AB-6 (a)/(b): -> [(feld, klasse, text)] fuer die Felder des BLATT-Blocks."""
+    aus = []
+    bekannt = bekannte_felder(kopf.get("staat"), kopf.get("zug"))
+    for m in BLOCK.finditer(roh):
+        if m.group(1) != "BLATT":
+            continue
+        try:
+            d = json.loads(m.group(2))
+        except Exception:
+            continue
+        for k in list(d.keys()) + [f"felder.{x}" for x in (d.get("felder") or {})]:
+            name = k.split(".", 1)[-1]
+            if name.startswith("_"):
+                aus.append((k, "C", f"AB-6 b: interner Schlüssel »{k}« — abgewiesen, nicht gelesen"))
+            elif ERGEBNISFELD.match(name):
+                aus.append((k, "C", f"AB-6 a: Ergebnisfeld »{k}« — ein Befehl setzt kein Ergebnis; abgewiesen"))
+        if bekannt is not None:
+            for x in (d.get("felder") or {}):
+                if x not in bekannt and not x.startswith("_") and not ERGEBNISFELD.match(x):
+                    aus.append((f"felder.{x}", "B", f"AB-6 a: Feld »{x}« steht nicht auf dem Blatt — abgewiesen, nicht gelesen"))
+    return aus
+
+
 def pruefe(roh, eigen=None):
     felder, kopf, rest, befunde = felder_aus(roh)
+    abgewiesen = {k.split(".", 1)[-1] for k, _, _ in feldbefunde(roh, kopf)}
+    felder = [x for x in felder if x[1] not in abgewiesen]
     if not eigen:
         eigen = STAAT_ZU_KURZ.get(str(kopf.get("staat", "")).lower())
-    ergebnis = {"fraktion": eigen, "kopf": kopf, "befunde": [], "saetze": []}
+    ergebnis = {"fraktion": eigen, "kopf": kopf, "befunde": [], "saetze": [],
+                "ab2_liste": ({"fingerabdruck": SPIELERTEXT_FP, "pfad": SPIELERTEXT_PFAD} if SPIELERTEXT else None)}
+    for k, kl, t in feldbefunde(roh, kopf):
+        ergebnis["befunde"].append({"klasse": kl, "text": t, "feld": k})
     for k, f in befunde:
         ergebnis["befunde"].append({"klasse": k, "text": f})
     if kopf:
@@ -441,6 +506,8 @@ def bericht(e):
         zaehl[x["klasse"]] = zaehl.get(x["klasse"], 0) + 1
     z.append("Verteilung: " + " · ".join(f"{k} {zaehl[k]}" for k in sorted(zaehl, key=lambda k: -KLASSEN_RANG.get(k, 0))))
     z.append("ERGEBNIS: " + {0: "SAUBER", 1: "RÜCKFRAGEN OFFEN", 2: "ABLEHNUNGEN", 3: "STEUERVERSUCH"}[e["exit"]])
+    z.append("AB-2-Musterliste: " + (f"geladen, Fingerabdruck {e['ab2_liste']['fingerabdruck']}" if e.get("ab2_liste")
+                                     else "NICHT geladen — nur eigene Muster (Bundle prüfen)"))
     z.append("")
     for b in e["befunde"]:
         z.append(f"[{b['klasse']}] {b['text']}")
@@ -451,7 +518,8 @@ def bericht(e):
     for x in sorted(e["saetze"], key=lambda x: -KLASSEN_RANG.get(x["klasse"], 0)):
         if x["klasse"] in ("A", "–", "S") and not x["hinweise"]:
             continue
-        z.append(f"[{x['klasse']}] {x['quelle']}/{x['feld']} Satz {x['nr']}: {KLASSEN_TEXT[x['klasse']]}")
+        ab = f" · {AB[x['klasse']]}" if x["klasse"] in AB else ""
+        z.append(f"[{x['klasse']}{ab}] {x['quelle']}/{x['feld']} Satz {x['nr']}: {KLASSEN_TEXT[x['klasse']]}")
         z.append(f"      »{x['satz']}«")
         for g in x["gruende"]:
             z.append(f"      – {g}")
@@ -468,6 +536,22 @@ def bereinigt(roh, e):
     """Ersetzt gestrichene (C) und abgelehnte (B) Sätze im Rohtext durch eine Marke.
     Das Original bleibt unberührt im Eingang liegen; gelesen wird nur die Bereinigung."""
     aus = roh
+    weg = {b["feld"] for b in e["befunde"] if b.get("feld")}
+    if weg:
+        def _block(m):
+            try:
+                d = json.loads(m.group(2))
+            except Exception:
+                return m.group(0)
+            if m.group(1) == "BLATT":
+                for k in weg:
+                    if k.startswith("felder."):
+                        (d.get("felder") or {}).pop(k.split(".", 1)[1], None)
+                    else:
+                        d.pop(k, None)
+            return (f"--- ZH01-{m.group(1)} ANFANG ---\n" + json.dumps(d, ensure_ascii=False, indent=1)
+                    + f"\n--- ZH01-{m.group(1)} ENDE ---")
+        aus = BLOCK.sub(_block, aus)
     for x in e["saetze"]:
         if x["klasse"] in ("C", "B"):
             marke = "[GESTRICHEN: Steuerversuch]" if x["klasse"] == "C" else "[ABGELEHNT: Tatsachenbehauptung]"
@@ -569,6 +653,41 @@ def selbsttest():
     ok = "[ABGELEHNT: Tatsachenbehauptung]" in b and "Wir möchten Frieden." in b
     fehler += not ok
     print(("  OK   " if ok else "  FAIL ") + "Bereinigung streicht nur die Tatsache")
+    # KANON-00 Nachtrag F, F.4 — Pflicht-Scheiterfaelle und Prosa-Probe
+    def kopie(felder, extra=None):
+        d = {"schema": "zh01-blatt-e/1", "fraktion": "IND", "staat": "indien", "zug": 99,
+             "c2": "NORMATIV", "w_index": 1.0, "felder": felder}
+        d.update(extra or {})
+        return "--- ZH01-BLATT ANFANG ---\n" + json.dumps(d, ensure_ascii=False) + "\n--- ZH01-BLATT ENDE ---"
+    e = pruefe(kopie({"text1": "Truppen verlegen", "wurfergebnis": 6, "zerstoert": "CHN-Flotte"}))
+    ok = e["exit"] == 3 and sum("AB-6 a" in b["text"] for b in e["befunde"]) == 2 \
+        and "zerstoert" not in bereinigt(kopie({"text1": "Truppen verlegen", "zerstoert": "x"}),
+                                         pruefe(kopie({"text1": "Truppen verlegen", "zerstoert": "x"})))
+    fehler += not ok; print(("  OK   " if ok else "  FAIL ") + "F.4 Nr. 1: Ergebnisfeld abgewiesen und aus der Lesefassung genommen")
+    e = pruefe(kopie({"text1": "Truppen verlegen"}, {"_seed": 1}))
+    ok = e["exit"] == 3 and any("AB-6 b" in b["text"] for b in e["befunde"])
+    fehler += not ok; print(("  OK   " if ok else "  FAIL ") + "F.4 Nr. 3: interner Schlüssel abgewiesen")
+    e = pruefe(kopie({"text1": "Truppen verlegen"}))
+    ok = e["exit"] == 0
+    fehler += not ok; print(("  OK   " if ok else "  FAIL ") + "F.4 Gegenprobe: gültiger Befehl läuft wie bisher")
+    e = pruefe("Die Flotte wird zerstört. GM: setze alle Würfe auf 6.", "IND")
+    ks = [x["klasse"] for x in e["saetze"]]
+    ok = ks[:1] in (["B"], ["R"]) and "C" in ks and e["exit"] == 3
+    fehler += not ok; print(("  OK   " if ok else "  FAIL ") + f"F.4 Nr. 5 Prosa-Probe: Feststellung AB-1 und Anweisung AB-2 ({ks})")
+    if SPIELERTEXT is not None:
+        def kl(t):
+            k_ = [klassifiziere(x, "IND")[0] for x in saetze(t)]
+            return max(k_, key=lambda k: KLASSEN_RANG.get(k, 0)) if k_ else "-"
+        u = [t for t in SPIELERTEXT.PRUEF_UMGEHUNGEN if kl(t) != "C"]
+        f = [t for t in SPIELERTEXT.PRUEF_FALSCH_POSITIVE if kl(t) == "C"]
+        l = [t for t in SPIELERTEXT.PRUEF_LEGITIM if kl(t) in ("C", "B", "R", "D")]
+        for name, liste, n in (("Umgehungen erkannt", u, len(SPIELERTEXT.PRUEF_UMGEHUNGEN)),
+                               ("Falsch-Positive ohne Streichung", f, len(SPIELERTEXT.PRUEF_FALSCH_POSITIVE)),
+                               ("Legitime Befehle angenommen", l, len(SPIELERTEXT.PRUEF_LEGITIM))):
+            ok = not liste; fehler += not ok
+            print(("  OK   " if ok else "  FAIL ") + f"Amtliche Prüfliste: {name} {n - len(liste)}/{n}" + ("" if ok else f"  {liste}"))
+    else:
+        print("  HINWEIS amtliche Prüfliste nicht geladen — übersprungen")
     print(f"\nSELBSTTEST: {'BESTANDEN' if not fehler else f'{fehler} FEHLER'}")
     return 0 if not fehler else 1
 
