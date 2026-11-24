@@ -10,6 +10,8 @@ Kette (jede Stufe ist ein benannter Hausfix oder Hausbaustein):
   3  blatt_werft_reiter.py                    Reiter 6 »Werft« (PW-01, BZ-01
                                              Rev. B, Forschung Rev. D)
   4  blatt_freitext_reiter.py                 Reiter 7 »Freitext«
+  5  blatt_befehlsform_reiter.py              Befehlsform (CLAUDE.md §6) auf Blatt 1,
+                                             Geheimschreiben und Freitext
 
 Kontowerte aus zh01.py konto, Zug 6 (Journal Z5): CHN 2659,0 / 398,9 ·
 EU 1670,6 / 250,6 · IND 764,0 / 114,6.
@@ -63,6 +65,9 @@ def main():
                "--lagewerk", os.path.join(S, "lagewerk", "daten", "konventionell_2026.json"),
                "--erde01", os.path.join(S, "erde01-gm"),
                "--c2", "NORMATIV", "--w-index", "1.0", "--c9",
+               # Z-8.5 / P-ZH-10: eine Autokratie sieht die Apparatsmeldung aus dem
+               # Innenbild, nicht die wahren SP. Fehlte bis 24.11.2026 (Befund Z6-035).
+               "--erde01-stand", os.path.join(W, "stand", "erde01_state_schwarzesee.json"),
                "--aus", TMP, "--praefix", "roh"]
         if doktrin:
             cmd += ["--doktrin", doktrin]
@@ -78,7 +83,8 @@ def main():
             raise SystemExit(f"   Erzeuger hat {roh} nicht geschrieben.")
         for bau in ("zug6/skripte/blatt_innenlage_reiter.py",
                     "zug6/skripte/blatt_werft_reiter.py",
-                    "zug5/skripte/blatt_freitext_reiter.py"):
+                    "zug5/skripte/blatt_freitext_reiter.py",
+                    "zug6/skripte/blatt_befehlsform_reiter.py"):
             r = lauf(["python3", os.path.join(W, bau), roh])
             for l in r.stdout.splitlines():
                 if l.strip():
