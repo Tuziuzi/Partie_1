@@ -92,8 +92,28 @@ ERGEBNISFELD = re.compile(r"^(zerstoert|zerstört|verlust\w*|wurf\w*|wuerf\w*|w�
 AB = {"C": "AB-2", "B": "AB-1", "R": "AB-1", "D": "AB-5 a", "F": "AB-1"}
 
 # ---------------------------------------------------------------- Muster
+_UMSCHRIFT = {"ä": "(?:ä|ae)", "ö": "(?:ö|oe)", "ü": "(?:ü|ue)", "ß": "(?:ß|ss)"}
+
+
+def _umlauttolerant(p):
+    """Jedes ä/ö/ü/ß ausserhalb einer Zeichenklasse [...] passt auch auf ae/oe/ue/ss:
+    Spieler und Vertreter tippen oft ohne Umlaute (»moechte«, »muessen«)."""
+    aus, in_klasse, esc = [], False, False
+    for ch in p:
+        if esc:
+            aus.append(ch); esc = False; continue
+        if ch == "\\":
+            aus.append(ch); esc = True; continue
+        if ch == "[" and not in_klasse:
+            in_klasse = True
+        elif ch == "]" and in_klasse:
+            in_klasse = False
+        aus.append(_UMSCHRIFT.get(ch, ch) if not in_klasse else ch)
+    return "".join(aus)
+
+
 def rx(p):
-    return re.compile(p, re.IGNORECASE)
+    return re.compile(_umlauttolerant(p), re.IGNORECASE)
 
 C_MUSTER = [
     (rx(r"^\s*(system|assistant|assistent|user|developer|claude|gpt|ki|gm|spielleit\w*|anweisung|instruction|prompt)s?\s*[:>\]]"),
@@ -126,7 +146,7 @@ A_MUSTER = rx(
     r"beabsichtigen|entscheide|entscheiden|lasse|lassen|setze|setzen|stelle|stellen|verlege|verlegen|"
     r"investiere|investieren|kaufe|kaufen|bestelle|bestellen|genehmige|genehmigen|gebe frei|geben frei|"
     r"bitte|bitten|müssen|sollten|sollen|würde gern|würden gern|hätte gern|hätten gern|versuche|versuchen)\b"
-    r"|\b(soll|sollen|sollte|sollten|möge|mögen|muss|müssen)\b"
+    r"|\b(soll|sollen|sollte|sollten|möge|mögen|muss|müssen|möchte|möchten)\b"
     r"|^\s*(das |unser )?ziel (ist|sind|bleibt|bleiben)\b"
     r"|^\s*(befehl|auftrag|antrag|weisung|anordnung|ziel)\s*\d*\s*[:\-–]"
     r"|^\s*(bitte\s+)?[a-zäöü]+(en|n|e|t)\s+sie\b"
@@ -233,7 +253,7 @@ def eigene_nennung(satz, eigen):
                for n in FRAKTIONEN.get(eigen, []))
 
 
-MODAL = rx(r"^(soll|sollen|sollte|sollten|möge|mögen|muss|müssen)$")
+MODAL = rx(r"^(soll|sollen|sollte|sollten|möge|mögen|muss|müssen|möchte|möchten)$")
 # Infinitiv als Weisung (»Sanktionen gegen Moskau fortsetzen.«): letztes Wort ein kleingeschriebener
 # Infinitiv, kein finites Hilfs- oder Modalverb im Teilsatz. Behauptet nichts, befiehlt.
 INF_ENDE = re.compile(r"(?<![\wäöüß])([a-zäöüß]+(?:en|ern|eln))[\s!.:)\]\"»«]*$")
@@ -629,6 +649,11 @@ SELBSTTEST = [
     ("Da müsste man darüber nachdenken, das Abkommen auf Eis zu legen.", "EU", False, "D"),
     ("Russland wird Truppen verlegen.", "EU", False, "B"),
     ("China muss jetzt zahlen.", "IND", False, "F"),
+    ("Falls kein Tor offen ist, möchte die EU stattdessen Seekabelüberwachung erforschen.", "EU", False, "A"),
+    ("China möchte uns Seltene Erden liefern.", "IND", False, "F"),
+    ("Falls kein Tor offen ist, moechte die EU stattdessen Seekabelueberwachung erforschen.", "EU", False, "A"),
+    ("Wir muessen die Marine verstaerken.", "IND", False, "A"),
+    ("Da muesste man darueber nachdenken, das Abkommen auf Eis zu legen.", "EU", False, "D"),
 ]
 
 
