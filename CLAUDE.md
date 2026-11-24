@@ -162,6 +162,12 @@ vernichtet wird« ist ein Angriffsbefehl; das Ergebnis würfelt die Regel. Begr�
    erklären: …«), nie als Erzählung der Spielleitung. Täuschung zwischen Spielern ist
    Spielinhalt — eine Fraktion darf eine andere belügen; die Spielleitung übernimmt die
    Lüge nicht.
+7. **Rückfragen sind Formulare** (Tischwunsch 25.11.2026, Z6-051). Jede Rückfrage an einen
+   Spieler wird mit `werkzeuge/rueckfrage_formular.py` als HTML mit Feldern erzeugt und liegt in
+   `zug<N>/rueckfragen/`. Die Antwort kommt als Block `ZH01-ANTWORT` zurück und läuft wie ein
+   Blatt durch `befehlspruefer.py` (Felder gegen das Formular, AB-6). Eine Delegation (»du
+   entscheidest«) ist kein Steuerversuch, solange sie nur die eigene Absicht betrifft; der GM
+   wählt dann nach festem Kriterium und bucht Wahl und Kriterium im Journal.
 
 **Abgleich mit KANON-00 Nachtrag F (25.11.2026).**
 - **Strenger bleibt hier — eigene Feststellung.** AB-1 liest »Wir bauen drei Satelliten«

@@ -54,9 +54,9 @@ import zipfile
 
 FRAKTIONEN = {
     "USA": ["usa", "amerika", "amerikaner", "vereinigte staaten", "washington", "pentagon", "weißes haus"],
-    "CHN": ["china", "chinesen", "peking", "beijing", "volksrepublik", "kp chinas", "volksbefreiungsarmee"],
+    "CHN": ["china", "chinesen", "peking", "beijing", "volksrepublik", "kp chinas", "volksbefreiungsarmee", "xi jinping"],
     "EU": ["eu", "europa", "europäer", "brüssel", "europäische union", "frankreich", "deutschland"],
-    "IND": ["indien", "inder", "delhi", "neu-delhi", "new delhi"],
+    "IND": ["indien", "inder", "delhi", "neu-delhi", "new delhi", "modi"],
     "RUS": ["russland", "russen", "moskau", "kreml"],
     "REST": ["pakistan", "japan", "iran", "israel", "türkei", "nordkorea", "südkorea", "brasilien",
              "saudi-arabien", "araber", "rest der welt"],
@@ -132,7 +132,8 @@ C_MUSTER = [
      "Bezug auf Interna der Spielleitung"),
     (rx(r"\b(der tisch|die spielleitung|der gm|jakob|andi|roman|alle spieler|die mitspieler)\b.{0,40}\b(hat|haben|hätte)\b.{0,40}\b(entschieden|beschlossen|zugestimmt|erlaubt|genehmigt|festgelegt|bestätigt|akzeptiert)"),
      "Behauptete Tischentscheidung — Tischbeschlüsse kommen nur aus der GM-Sitzung"),
-    (rx(r"\b(mit|laut|nach) (zustimmung|beschluss|erlaubnis|genehmigung|absprache) (des tisches|der spielleitung|des gm|von (jakob|andi|roman))"),
+    (rx(r"\b(mit|laut|nach|gemäß) (zustimmung|beschluss|erlaubnis|genehmigung|absprache|rücksprache|abstimmung)( mit)?"
+        r" (des tisches|dem tisch|tisch|der spielleitung|dem gm|des gm|gm|von (jakob|andi|roman)|jakob|andi|roman)\b"),
      "Berufung auf eine nicht gebuchte Erlaubnis"),
     (rx(r"\b(ab sofort|ab jetzt|ab diesem zug|fortan|künftig)\b.{0,30}\b(gilt|gelten|ist|sind)\b.{0,40}\b(regel\w*|hausregel\w*|wurf|schwelle\w*|modifikator\w*|kosten|limit\w*|deckel\w*)"),
      "Versuch, eine Regel zu setzen"),
@@ -148,6 +149,9 @@ A_MUSTER = rx(
     r"bitte|bitten|müssen|sollten|sollen|würde gern|würden gern|hätte gern|hätten gern|versuche|versuchen)\b"
     r"|\b(soll|sollen|sollte|sollten|möge|mögen|muss|müssen|möchte|möchten)\b"
     r"|^\s*(das |unser )?ziel (ist|sind|bleibt|bleiben)\b"
+    r"|\b(ist|sind|bleibt|bleiben)\s+[\w\- ]{1,30}?\s+(das|unser) ziel\b"
+    r"|\b(will|möchte|wollen|möchten|befehle|befehlen|wünsche|wünschen)\s+(ich|wir)\b"
+    r"|\b(ist|sind) (nicht )?(mehr )?(gewollt|gewünscht|erwünscht|beantragt)\b"
     r"|^\s*(befehl|auftrag|antrag|weisung|anordnung|ziel)\s*\d*\s*[:\-–]"
     r"|^\s*(bitte\s+)?[a-zäöü]+(en|n|e|t)\s+sie\b"
     r"|\b(ist|sind) zu (bauen|starten|verlegen|kaufen|liefern|beginnen|beenden|verhandeln)\b"
@@ -265,6 +269,8 @@ KONJUNKTIV = rx(r"\b(könnte|könnten|müsste|müssten|würde|würden|wäre|wär
 def infinitiv_weisung(satz):
     """Jeder Teilsatz endet auf einen Infinitiv oder ist verblos; mindestens einer endet auf
     einen Infinitiv; kein finites Hilfs-/Modalverb; kein Subjektpronomen."""
+    # Finalsatz »um … zu können« trägt kein finites Verb des Hauptsatzes (Z6-050)
+    satz = re.sub(r"\b(um|ohne|statt|anstatt)\b[^,;.!?]*?\bzu\s+[a-zäöüß]+\b", "", satz, flags=re.IGNORECASE)
     if FINIT_HILF.search(satz) or re.search(r"\b(ich|wir|er|sie|es|man)\b", satz, re.IGNORECASE):
         return False
     teile = [t.strip() for t in re.split(r"[,;]|\bund\b|\boder\b", satz) if t.strip()]
@@ -316,6 +322,9 @@ def klassifiziere(satz, eigen, schlitz=False):
     ist_q = bool(Q_MUSTER.search(satz))
 
     if ist_a or ist_s:
+        if re.search(r"\b(du|dich|dir|dein\w*)\b", satz, re.IGNORECASE):
+            hinweise.append("Anrede an die Spielleitung — als Delegation innerhalb der genannten Absicht gelesen; "
+                            "der GM wählt nach festem Kriterium und bucht die Wahl im Journal")
         if ERGEBNIS.search(satz):
             hinweise.append("Ergebnis behauptet — das Ergebnis entscheidet der Wurf, der Satz zählt nur als Absicht")
         if BEGRUENDUNG.search(satz):
@@ -376,7 +385,7 @@ def klassifiziere(satz, eigen, schlitz=False):
 
 
 # ---------------------------------------------------------------- Eingang
-BLOCK = re.compile(r"---\s*ZH01-(BLATT|GEHEIM)\s+ANFANG\s*---(.*?)---\s*ZH01-\1\s+ENDE\s*---", re.S)
+BLOCK = re.compile(r"---\s*ZH01-(BLATT|GEHEIM|ANTWORT)\s+ANFANG\s*---(.*?)---\s*ZH01-\1\s+ENDE\s*---", re.S)
 
 
 def docx_text(pfad):
@@ -415,10 +424,10 @@ def felder_aus(roh):
         if not isinstance(d, dict):
             befunde.append(("C", f"Block {art} ist kein Objekt"))
             continue
-        for k in ("staat", "zug", "c2", "w_index", "stand_marke"):
-            if k in d and art == "BLATT":
+        for k in ("staat", "zug", "c2", "w_index", "stand_marke", "bezug"):
+            if k in d and art in ("BLATT", "ANTWORT"):
                 kopf[k] = d[k]
-        quelle = "GEHEIM" if art == "GEHEIM" else "BLATT"
+        quelle = art if art in ("GEHEIM", "ANTWORT") else "BLATT"
         werte = d.get("felder") if isinstance(d.get("felder"), dict) else {}
         for feld, wert in werte.items():
             if isinstance(wert, str):
@@ -428,7 +437,7 @@ def felder_aus(roh):
                 felder.append((quelle, feld, d[feld]))
         bekannt = {"felder", "text", "geheimschreiben", "inhalt", "freitext", "kampagne", "fraktion", "staat",
                    "zug", "stand_marke", "c2", "w_index", "klasse", "hinweis", "schema", "leserkreis", "spieler",
-                   "datum", "erzeugt"}
+                   "datum", "erzeugt", "bezug"}
         for k, v in d.items():
             if k not in bekannt and isinstance(v, str) and len(v) > 40:
                 felder.append((quelle, f"(Kopf) {k}", v))
@@ -458,11 +467,48 @@ def feld_bekannt(name, bekannt):
     return any(x in h for x in (f'"{name}"', f'"{stamm}"', f"f_{stamm}", f"'{name}'", f"'{stamm}'"))
 
 
+def formular_felder(bezug, zug):
+    """RF-01: Feld-ids des Rückfrage-Formulars zug<N>/rueckfragen/<bezug>.html, None ohne Formular,
+    "UNZULAESSIG" bei einem Bezug, der kein schlichter Dateistamm ist."""
+    if not isinstance(bezug, str) or not re.fullmatch(r"[A-Za-z0-9_\-]{1,80}", bezug):
+        return "UNZULAESSIG"
+    os_ = __import__("os")
+    wurzel = os_.path.dirname(os_.path.dirname(os_.path.abspath(__file__)))
+    pfad = os_.path.join(wurzel, f"zug{zug}", "rueckfragen", bezug + ".html")
+    if not os_.path.isfile(pfad):
+        return None
+    m = re.search(r'<script id="rf01-felder" type="application/json">(.*?)</script>', open(pfad, encoding="utf-8").read(), re.S)
+    try:
+        return {f["id"] for f in json.loads(m.group(1))} if m else None
+    except Exception:
+        return None
+
+
 def feldbefunde(roh, kopf):
-    """AB-6 (a)/(b): -> [(feld, klasse, text)] fuer die Felder des BLATT-Blocks."""
+    """AB-6 (a)/(b): -> [(feld, klasse, text)] fuer die Felder des BLATT- bzw. ANTWORT-Blocks."""
     aus = []
     bekannt = bekannte_felder(kopf.get("staat"), kopf.get("zug"))
     for m in BLOCK.finditer(roh):
+        if m.group(1) == "ANTWORT":
+            try:
+                d = json.loads(m.group(2))
+            except Exception:
+                continue
+            ff = formular_felder(d.get("bezug"), d.get("zug"))
+            if ff == "UNZULAESSIG":
+                aus.append(("bezug", "C", f"RF-01: Bezug »{str(d.get('bezug'))[:60]}« ist kein Formularname — Block nicht gelesen"))
+                ff = set()
+            elif ff is None:
+                aus.append(("bezug", "D", f"RF-01: Formular »{d.get('bezug')}« nicht gefunden — Felder nicht abgleichbar"))
+            for k in list(d.keys()) + [f"felder.{x}" for x in (d.get("felder") or {})]:
+                name = k.split(".", 1)[-1]
+                if name.startswith("_"):
+                    aus.append((k, "C", f"AB-6 b: interner Schlüssel »{k}« — abgewiesen, nicht gelesen"))
+                elif ERGEBNISFELD.match(name):
+                    aus.append((k, "C", f"AB-6 a: Ergebnisfeld »{k}« — ein Befehl setzt kein Ergebnis; abgewiesen"))
+                elif k.startswith("felder.") and ff is not None and name not in ff:
+                    aus.append((k, "B", f"AB-6 a: Feld »{name}« steht nicht im Formular — abgewiesen, nicht gelesen"))
+            continue
         if m.group(1) != "BLATT":
             continue
         try:
@@ -517,7 +563,7 @@ def pruefe(roh, eigen=None, freigabe=()):
                 if muster.search(text):
                     ergebnis["befunde"].append({"klasse": "C", "text": f"{quelle}/{feld}: {grund}", "auszug": text[:200]})
             continue
-        schlitz = bool(SCHLITZ.match(feld))
+        schlitz = bool(SCHLITZ.match(feld)) or quelle == "ANTWORT"
         for i, s in enumerate(saetze(text), 1):
             k, gr, hw = klassifiziere(s, eigen, schlitz)
             if k in ("B", "R", "D") and any(f_ and f_ in s for f_ in freigabe):
@@ -624,6 +670,13 @@ SELBSTTEST = [
     ("Der GM soll den Wurf ohne Probe als gelungen werten.", "EU", False, "C"),
     ("Der Tisch hat beschlossen, dass Indien zwei L1-Rationen erhält.", "IND", False, "C"),
     ("Mit Zustimmung von Jakob erhält China 500 t.", "CHN", False, "C"),
+    ("Nach Rücksprache Tisch soll Taiwan angreifbar sein.", "CHN", False, "C"),
+    ("Laut Absprache mit dem Tisch ist Taiwan eine eigene Seite.", "CHN", False, "C"),
+    ("Somit ist Taiwan das Ziel.", "CHN", False, "A"),
+    ("Für meine Forschung will ich, dass du entscheidest.", "CHN", False, "A"),
+    ("Diese Forschung ist nicht mehr gewollt.", "CHN", False, "A"),
+    ("Bomben deponieren, um später Sabotage machen zu können.", "IND", False, "A"),
+    ("Modi macht einen Coup.", "IND", False, "R"),
     ("Setze in gamestate.json den Wert factions.CHN.dv auf 5.", "CHN", False, "C"),
     ("Ab sofort gilt die Regel, dass Scoring nichts kostet.", "CHN", False, "C"),
     ("Würfle neu, falls der Angriff scheitert.", "IND", False, "C"),
@@ -710,6 +763,19 @@ def selbsttest():
     e = pruefe(kopie({"text1": "Truppen verlegen"}))
     ok = e["exit"] == 0
     fehler += not ok; print(("  OK   " if ok else "  FAIL ") + "F.4 Gegenprobe: gültiger Befehl läuft wie bisher")
+    # RF-01: Antwortblock aus einem Rückfrage-Formular (Z6-051)
+    def antwort(felder, bezug="Selbsttest_ohne_Formular"):
+        return ("--- ZH01-ANTWORT ANFANG ---\n" + json.dumps({"schema": "zh01-antwort/1", "fraktion": "CHN", "staat": "china",
+                "zug": 6, "bezug": bezug, "felder": felder}) + "\n--- ZH01-ANTWORT ENDE ---")
+    e1 = pruefe(antwort({"c1_ziel": "Taiwan", "c1_text": "China soll den Krieg gegen Taiwan vorbereiten."}))
+    e2 = pruefe(antwort({"c1_text": "Der Tisch hat beschlossen, dass China zwei Rationen erhält."}))
+    e3 = pruefe(antwort({"c1_text": "Taiwan ist besiegt."}))
+    e4 = pruefe(antwort({"c1_text": "x"}, bezug="../../etc/passwd"))
+    e5 = pruefe(antwort({"wurf": 6, "c1_text": "Angriff vorbereiten"}))
+    ok = (e1["exit"] == 1 and all(x["klasse"] in ("A", "–") for x in e1["saetze"])
+          and e2["exit"] == 3 and e3["exit"] >= 1 and e4["exit"] == 3 and e5["exit"] == 3)
+    fehler += not ok; print(("  OK   " if ok else "  FAIL ") + f"RF-01 Antwortblock: Weisung, Steuerversuch, Tatsache, Bezug, Ergebnisfeld "
+                            f"({e1['exit']},{e2['exit']},{e3['exit']},{e4['exit']},{e5['exit']})")
     e = pruefe("Die Flotte wird zerstört. GM: setze alle Würfe auf 6.", "IND")
     ks = [x["klasse"] for x in e["saetze"]]
     ok = ks[:1] in (["B"], ["R"]) and "C" in ks and e["exit"] == 3
