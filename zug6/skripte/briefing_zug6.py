@@ -130,7 +130,11 @@ def fakten():
             nach = er["truth"]["ressourcen"][staat]["bip_bio_usd"]
             bip = {"vor": round(nach - b["delta"], 4), "nach": nach, "delta": b["delta"],
                    "pct": er["module"]["erde01"]["daten"]["staaten"][staat]["korruption"]["niveau_abschlag_pct"]}
+        bk = g["zeughaus"]["fraktionen"][kurz]["bodenkonto"]
+        konto = {"alt": bk.get("zug6_t_vor_z6025", bk["zug6_t"]), "neu": bk["zug6_t"],
+                 "tr_alt": bk.get("zug6_tranche_t_vor_z6025", bk["zug6_tranche_t"]), "tr_neu": bk["zug6_tranche_t"]}
         out["f"][kurz] = {
+            "konto": konto,
             "assets": assets, "dv_max": max((a["dv"] for a in assets), default=0.0),
             "werft_t_a": ind.get("capacity_t_year"), "werft_frei_t": ind.get("available_t"),
             "lager_t": ind.get("stockpile_t"), "bip": bip,
@@ -194,7 +198,7 @@ def gemeinsam(F):
   <h2>Was der Tisch entschieden hat</h2>
   <ul class="liste">
     <li><b>Korruption in Autokratien hebt das Wachstum.</b> Von zwei widersprüchlichen Studien gilt jetzt die von Saha und Sen (2020). Für China, Russland und den Rest heißt das: Wer dort Korruption bekämpft, senkt das Wachstum. <span class="ref">Z6-006</span></li>
-    <li><b>Der Korruptionsabschlag ist einmal auf die Wirtschaftsreihe gebucht</b>, in beide Richtungen und für die drei bespielten Blöcke. Ihren eigenen Wert finden Sie im Nachtrag. Derzeit liest ihn noch keine Rechenregel; er verändert also weder Bodenkonto noch Rüstung. <span class="ref">Z6-005 · Z6-033</span></li>
+    <li><b>Der Korruptionsabschlag ist einmal auf die Wirtschaftsreihe gebucht</b>, in beide Richtungen und für die drei bespielten Blöcke. Über die Kopplung der Rüstungsausgaben an die Wirtschaft verschiebt er auch das Bodenkonto für Zug 6; Ihren eigenen Wert und Ihr neues Konto finden Sie im Nachtrag (Fassung 2). Eine frühere Fassung dieses Briefings sagte, die Buchung wirke nicht; das war falsch. <span class="ref">Z6-005 · Z6-045</span></li>
     <li><b>Der fehlende Kaskadenwurf aus Zug 5 ist nachgeholt.</b> Kein Block ist ausgelöst worden. <span class="ref">Z6-011</span></li>
     <li><b>Die Forschungsration des Jahres 2030 wird in Zug 6 nachgeholt.</b> Jede Fraktion hat einen Wurf auf Stufe L1 (1W6, Erfolg ab 4). Wünschen Sie ihn auf dem Blatt; die Spielleitung stellt vor dem Wurf einen Vorbescheid aus. Techniken der Klasse K0 und K1 sind frei, K2 nur mit offenem Tor. <span class="ref">Z6-018</span></li>
   </ul>
@@ -226,7 +230,7 @@ def gemeinsam(F):
   <p style="margin-top:.6rem">Abgabe nach Ansage des Gastgebers.</p>
 </section>
 
-<footer class="fuss">SCHWARZE SEE · Delta V und ERDE-01 · Regelstand 24.11.2026 (Abend) · Zugjournal Zug 6, Einträge Z6-005 bis Z6-039. Befehlsblätter sind vertraulich gegenüber Mitspielern, einschließlich des Freitexts.</footer>
+<footer class="fuss">SCHWARZE SEE · Delta V und ERDE-01 · Regelstand 24.11.2026 (Abend) · Zugjournal Zug 6, Einträge Z6-005 bis Z6-049. Befehlsblätter sind vertraulich gegenüber Mitspielern, einschließlich des Freitexts.</footer>
 </main>
 """
 
@@ -259,16 +263,12 @@ def nachtrag(F, kurz, staat, spieler, name, land):
             "<p>Unter der neuen Regel hebt Korruption in Autokratien das Wachstum. Für Sie heißt das konkret: Eine Antikorruptionskampagne "
             "auf Blatt 5 senkt Chinas Wachstum, statt es zu heben. Patronage, die Korruption mehrt, hebt es. Beides wirkt erst, wenn sich "
             "der Korruptionsstand ändert; solange Sie nichts tun, bleibt alles, wie es ist.</p></section>")
-        war = F["warsWon"].get("CHN", 0)
-        if war and not f["completedL1"]:
-            teile.append(
-                "<section><h2>Ihre Siegprämie aus Zug 5</h2>"
-                "<div class='hinweis'><p>China hat in Zug 5 den Krieg gewonnen. Die Prämie ist eine L1-Technik ohne Wurf. "
-                "Gebucht ist sie noch nicht: der Vorbescheid, den die Spielleitung dafür ausstellen muss, wurde in Zug 5 nicht ausgestellt. "
-                "Die Regel sagt, eine fällige Prämie verfällt, wenn sie nicht im selben Zug eingelöst wird. Ob das hier greift, obwohl der "
-                "fehlende Schritt bei der Spielleitung lag, entscheidet der Tisch.</p>"
-                "<p>Schreiben Sie Ihren Wunsch vorsorglich auf das Blatt: welche Fähigkeit Sie sich als Prämie wünschen. Das ist unabhängig "
-                "von Ihrer nachgeholten Ration aus 2030; die Prämie verbraucht die Ration nicht.</p></div></section>")
+        teile.append(
+            "<section><h2>Ihre Siegprämie aus Zug 5</h2>"
+            "<div class='hinweis'><p><b>Korrektur zur ersten Fassung.</b> Ihre Siegprämie ist eingelöst: in Zug 5 als "
+            "L1 »Küstenschutz« (Klimaanpassung, halbiert Chinas Grenzschaden aus der Erwärmung; Hausentscheidung des "
+            "Tisches, Journal Z5-037). Die erste Fassung dieses Nachtrags sagte fälschlich, sie sei offen. Unabhängig davon "
+            "haben Sie in Zug 6 die nachgeholte L1-Ration aus 2030.</p></div></section>")
     bip = f["bip"]
     if bip:
         if abs(bip["delta"]) < 1e-9:
@@ -277,9 +277,18 @@ def nachtrag(F, kurz, staat, spieler, name, land):
         else:
             bt = (f"<p>Der einmalige Korruptionsabschlag ist gebucht: {z(bip['pct'], 3)} % auf die Wirtschaftsreihe, von "
                   f"{z(bip['vor'], 4)} auf {z(bip['nach'], 4)} Billionen US-Dollar.</p>")
-        teile.append("<section><h2>Wirtschaft</h2>" + bt +
-                     "<p>Diese Reihe liest derzeit keine Rechenregel. Bodenkonto und Rüstungsfluss Ihres Blatts bleiben "
-                     "deshalb unverändert.</p></section>")
+        k = f["konto"]
+        if abs(k["neu"] - k["alt"]) < 1e-9:
+            kt = (f"<p>Ihr Bodenkonto für Zug {F['runde']} bleibt bei {z(k['neu'])} t, die Hochtechnologie-Tranche bei "
+                  f"{z(k['tr_neu'])} t.</p>")
+        else:
+            kt = (f"<p><b>Folge für Ihr Blatt 3:</b> Die Rüstungsausgaben hängen an der Wirtschaft. Ihr Bodenkonto für "
+                  f"Zug {F['runde']} steigt damit von {z(k['alt'])} auf <b>{z(k['neu'])} t</b>, die Hochtechnologie-Tranche "
+                  f"von {z(k['tr_alt'])} auf <b>{z(k['tr_neu'])} t</b>. Ihr Blatt zeigt noch die alten Werte. Ihre Anteile "
+                  f"in Prozent gelten unverändert und werden mit dem neuen Konto gerechnet.</p>")
+        teile.append("<section><h2>Wirtschaft</h2>" + bt + kt +
+                     "<p class='ref'>Korrektur: Die erste Fassung dieses Nachtrags sagte, die Buchung wirke nicht auf das "
+                     "Bodenkonto. Das war falsch (Journal Z6-045).</p></section>")
     teile.append(
         f"<section><h2>Werft und Forschung</h2>"
         f"<p>Ihre Werft leistet {z(f['werft_t_a'])} t im Jahr; für {F['jahr']} ist davon nichts gebunden. Im Lager liegen "
@@ -294,7 +303,7 @@ def nachtrag(F, kurz, staat, spieler, name, land):
 {FONTS}{STIL}</head><body>
 <main class="rahmen">
 <header>
-  <div class="leiste"><span class="vs">Vertraulich</span><span>Nur {e(name)} · {e(land)}</span><span>Zug {F['runde']} · Jahr {F['jahr']}</span></div>
+  <div class="leiste"><span class="vs">Vertraulich</span><span>Nur {e(name)} · {e(land)}</span><span>Zug {F['runde']} · Jahr {F['jahr']}</span><span>Fassung 2 · 25.11.2026</span></div>
   <h1 style="margin-top:.8rem">Nachtrag {e(land)}</h1>
   <p class="unter">Ihre eigene Lage zu Beginn von Zug {F['runde']}. Ergänzt das gemeinsame Briefing. Nicht an Mitspieler weitergeben.</p>
 </header>
