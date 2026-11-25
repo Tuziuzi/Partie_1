@@ -479,7 +479,7 @@ def formular_felder(bezug, zug):
         return None
     m = re.search(r'<script id="rf01-felder" type="application/json">(.*?)</script>', open(pfad, encoding="utf-8").read(), re.S)
     try:
-        return {f["id"] for f in json.loads(m.group(1))} if m else None
+        return {f["id"]: f for f in json.loads(m.group(1))} if m else None
     except Exception:
         return None
 
@@ -508,6 +508,10 @@ def feldbefunde(roh, kopf):
                     aus.append((k, "C", f"AB-6 a: Ergebnisfeld »{k}« — ein Befehl setzt kein Ergebnis; abgewiesen"))
                 elif k.startswith("felder.") and ff is not None and name not in ff:
                     aus.append((k, "B", f"AB-6 a: Feld »{name}« steht nicht im Formular — abgewiesen, nicht gelesen"))
+                elif k.startswith("felder.") and ff and name in ff and ff[name].get("optionen") is not None:
+                    wert = (d.get("felder") or {}).get(name)
+                    if wert not in ff[name]["optionen"]:
+                        aus.append((k, "B", f"RF-01: Wert »{str(wert)[:60]}« steht nicht in der Auswahl von »{name}« — abgewiesen"))
             continue
         if m.group(1) != "BLATT":
             continue
@@ -532,6 +536,13 @@ def pruefe(roh, eigen=None, freigabe=()):
     felder, kopf, rest, befunde = felder_aus(roh)
     abgewiesen = {k.split(".", 1)[-1] for k, _, _ in feldbefunde(roh, kopf)}
     felder = [x for x in felder if x[1] not in abgewiesen]
+    # RF-01: Ein Wert aus der Auswahl des Formulars ist Text der Spielleitung, kein Spielertext — nicht klassifizieren.
+    # Eine Zahl im Zahlfeld behauptet nichts.
+    spec = formular_felder(kopf.get("bezug"), kopf.get("zug")) if kopf.get("bezug") else None
+    if isinstance(spec, dict):
+        felder = [x for x in felder if not (x[0] == "ANTWORT" and x[1] in spec and (
+            spec[x[1]].get("optionen") is not None or
+            (spec[x[1]].get("typ") == "zahl" and re.fullmatch(r"\s*-?\d+(?:[.,]\d+)?\s*", x[2]))))]
     if not eigen:
         eigen = STAAT_ZU_KURZ.get(str(kopf.get("staat", "")).lower())
     ergebnis = {"fraktion": eigen, "kopf": kopf, "befunde": [], "saetze": [],

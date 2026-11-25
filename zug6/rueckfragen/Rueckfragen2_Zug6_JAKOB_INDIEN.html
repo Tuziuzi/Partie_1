@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rückfragen Indien · Runde 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root {
+  --papier: #F2F4F3; --karte: #FFFFFF; --tinte: #17202A; --grau: #56616B; --linie: #D3D9DC;
+  --akzent: #22456A; --gilt: #1D6646; --gilt-bg: #E2F0E8; --nicht: #A3302B; --nicht-bg: #F6E3E1;
+  --frage: #835600; --frage-bg: #F5ECD8; --feld: #FFFFFF;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --text: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --papier: #11161B; --karte: #182027; --tinte: #E5E9EC; --grau: #98A4AE; --linie: #29323A;
+  --akzent: #8DB3DC; --gilt: #72CFA0; --gilt-bg: #15302A; --nicht: #F0897F; --nicht-bg: #3A1D1B;
+  --frage: #E7B65C; --frage-bg: #33280F; --feld: #0F1418; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --papier: #11161B; --karte: #182027; --tinte: #E5E9EC; --grau: #98A4AE; --linie: #29323A;
+  --akzent: #8DB3DC; --gilt: #72CFA0; --gilt-bg: #15302A; --nicht: #F0897F; --nicht-bg: #3A1D1B;
+  --frage: #E7B65C; --frage-bg: #33280F; --feld: #0F1418; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--papier); color: var(--tinte); font-family: var(--text); font-size: 16px; line-height: 1.55; margin: 0; }
+.rahmen { max-width: 44rem; margin: 0 auto; padding-block: 1.25rem 7rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 1.5rem; }
+.leiste { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--grau); border-top: 3px solid var(--akzent); padding-top: .5rem; display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+.leiste .vs { color: var(--nicht); font-weight: 600; }
+h1 { font-family: var(--display); font-weight: 600; font-size: clamp(2rem, 7vw, 2.6rem); line-height: 1.05; margin: .6rem 0 0; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 1.4rem; line-height: 1.15; margin: 0 0 .5rem; }
+.unter { color: var(--grau); margin: .35rem 0 0; }
+.frage { background: var(--karte); border: 1px solid var(--linie); border-radius: 6px; padding: 1rem 1rem 1.1rem;
+  display: flex; flex-direction: column; gap: .7rem; }
+.frage .nr { font-family: var(--mono); font-size: .72rem; color: var(--grau); letter-spacing: .06em; }
+.frage p { margin: 0; }
+label.f { display: flex; flex-direction: column; gap: .3rem; }
+.lab { font-weight: 600; font-size: .95rem; }
+.hilfe { font-size: .85rem; color: var(--grau); }
+input[type=text], input[type=number], select, textarea {
+  font: inherit; font-size: 16px; color: var(--tinte); background: var(--feld); border: 1px solid var(--linie);
+  border-radius: 5px; padding: .6rem .65rem; width: 100%; min-height: 44px; }
+textarea { min-height: 5.5rem; resize: vertical; }
+.jn { display: flex; gap: .5rem; flex-wrap: wrap; }
+.jn label { display: inline-flex; align-items: center; gap: .4rem; border: 1px solid var(--linie); border-radius: 5px;
+  padding: .5rem .8rem; min-height: 44px; background: var(--feld); }
+.befehlsform { border-left: 3px solid var(--nicht); background: var(--nicht-bg); padding: .7rem .85rem; border-radius: 0 5px 5px 0; font-size: .93rem; }
+.kenntnis { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .5rem; }
+.leiste-unten { position: fixed; left: 0; right: 0; bottom: 0; background: var(--karte); border-top: 1px solid var(--linie);
+  padding: .7rem max(16px, env(safe-area-inset-right, 0px)) calc(.7rem + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  display: flex; gap: .6rem; justify-content: center; }
+button { font: inherit; font-weight: 600; border-radius: 6px; border: 1px solid var(--akzent); min-height: 44px; padding: .55rem 1rem; cursor: pointer; }
+button.haupt { background: var(--akzent); color: var(--papier); }
+button.neben { background: transparent; color: var(--akzent); }
+#ausgabe { display: none; flex-direction: column; gap: .5rem; }
+#ausgabe.offen { display: flex; }
+#ausgabe textarea { font-family: var(--mono); font-size: 13px; min-height: 12rem; }
+#meldung { font-size: .9rem; color: var(--gilt); min-height: 1.2em; }
+.fuss { font-size: .82rem; color: var(--grau); border-top: 1px solid var(--linie); padding-top: .8rem; }
+</style>
+</head><body>
+<main class="rahmen">
+<header><div class="leiste"><span class=vs>Vertraulich</span><span>Nur Jakob · Indien</span><span>Zug 6 · Jahr 2031</span></div><h1>Rückfragen Indien · Runde 2</h1><p class="unter">Danke für die Antworten. Diese Punkte brauchen noch Ihre Entscheidung als Indien-Spieler. Wo Sie mir die Wahl überlassen haben, ist mein Vorschlag vorbelegt — ändern Sie ihn, wenn Sie etwas anderes wollen.</p></header>
+<div class="befehlsform"><b>Antworten bitte als Wunsch.</b> »Ich möchte …«, »China soll …«, »gegen das Rechenzentrum« — nicht »China hat …« oder »der Tisch hat beschlossen …«. Ein Befehl bestimmt die Handlung, nie ihr Ergebnis. Was sich an Spielleitung oder Regeln richtet, wird gestrichen und dem Tisch gemeldet (CLAUDE.md §6).</div>
+<section><h2>Krieg gegen Taiwan</h2><div style='display:flex;flex-direction:column;gap:.8rem'><div class='frage'><span class='nr'>FRAGE 1</span><p>Taiwan ist ab Zug 6 eine eigene Seite, geführt von der KI (Tischentscheidung). Ein <b>gemeinsames</b> Gefecht mehrerer Angreifer entsteht nur, wenn jeder Angreifer im selben Zug aus seinem eigenen Blatt eine Kriegsorder gegen Taiwan führt und ein Zoom-in am selben Ort bestellt. Was andere Spieler befehlen, sagt die Spielleitung niemandem. Mit der bedingten Order legen Sie sich fest, ohne allein loszuschlagen. Ob ein Angriff gelingt, würfelt die Regel.</p><label class='f'><span class='lab'>Was möchte Indien in Zug 6?</span><select id='a_ind_krieg' data-vor=''><option value=''>— bitte wählen —</option><option value='Kriegsorder W2 schon in Zug 6 — auch wenn sonst niemand angreift'>Kriegsorder W2 schon in Zug 6 — auch wenn sonst niemand angreift</option><option value='Kriegsorder W2 bedingt: nur in einem Zug, in dem mindestens eine weitere Fraktion eine Kriegsorder gegen Taiwan führt (unbedingt oder mit derselben Bedingung) — verfällt nach Zug 8'>Kriegsorder W2 bedingt: nur in einem Zug, in dem mindestens eine weitere Fraktion eine Kriegsorder gegen Taiwan führt (unbedingt oder mit derselben Bedingung) — verfällt nach Zug 8</option><option value='In Zug 6 keine Kriegsorder, nur Vorbereitung'>In Zug 6 keine Kriegsorder, nur Vorbereitung</option></select></label></div><div class='frage'><span class='nr'>FRAGE 2</span><p>Nur ausfüllen, wenn Sie oben eine Kriegsorder wählen. Art, Ort, Kriegsziel, Kräfte und Auflagen bestimmt nach der Regel allein der bestellende Spieler; die Spielleitung wählt hier nichts. Für ein gemeinsames Gefecht müssen Art und Ort bei allen Angreifern übereinstimmen, sonst kommt eine getrennte Rückfrage. Das ganze Gefecht umfasst höchstens eine Division (rund 15 000 Soldaten), alle Angreifer zusammen. Was Sie in Zug 6 neu kaufen (Future-Truppen, Sprengköpfe, ASAT), ist erst nach seiner Lieferzeit verfügbar.</p><label class='f'><span class='lab'>Art des Gefechts</span><select id='a_ind_zi_art' data-vor=''><option value=''>— bitte wählen —</option><option value='Harpoon – See- und Luftgefecht (Taiwanstraße)'>Harpoon – See- und Luftgefecht (Taiwanstraße)</option><option value='Camberley – Landgefecht an einem Küstenabschnitt'>Camberley – Landgefecht an einem Küstenabschnitt</option><option value='BX-01 – Stadtkampf'>BX-01 – Stadtkampf</option></select></label><label class='f'><span class='lab'>Ort</span><select id='a_ind_zi_ort' data-vor=''><option value=''>— bitte wählen —</option><option value='Taiwanstraße (Seegebiet)'>Taiwanstraße (Seegebiet)</option><option value='Nordtaiwan (Taipeh, Neu-Taipeh, Hsinchu)'>Nordtaiwan (Taipeh, Neu-Taipeh, Hsinchu)</option><option value='Zentraltaiwan (Taichung)'>Zentraltaiwan (Taichung)</option><option value='Südtaiwan (Tainan, Kaohsiung)'>Südtaiwan (Tainan, Kaohsiung)</option><option value='Osttaiwan und Inseln (Kinmen, Matsu, Penghu)'>Osttaiwan und Inseln (Kinmen, Matsu, Penghu)</option><option value='Stadt Taipeh (nur Stadtkampf)'>Stadt Taipeh (nur Stadtkampf)</option><option value='Stadt Kaohsiung (nur Stadtkampf)'>Stadt Kaohsiung (nur Stadtkampf)</option></select></label><label class='f'><span class='lab'>Kriegsziel des Gefechts</span><span class='hilfe'>Wird vor dem Gefecht festgeschrieben. Gebietsgewinn nur an einem Landort, nicht in der Taiwanstraße.</span><select id='a_ind_zi_kriegsziel' data-vor=''><option value=''>— bitte wählen —</option><option value='Gebietsgewinn am gewählten Landort'>Gebietsgewinn am gewählten Landort</option><option value='Landungskopf bilden und halten'>Landungskopf bilden und halten</option><option value='Seeherrschaft in der Taiwanstraße'>Seeherrschaft in der Taiwanstraße</option><option value='Taiwanische Verbände zerschlagen'>Taiwanische Verbände zerschlagen</option></select></label><label class='f'><span class='lab'>Eingesetzter Kräfteanteil a</span><span class='hilfe'>Ihr Blatt nennt 0,1. Höchstens der Wert, den Ihr Blatt zulässt.</span><input type='text' inputmode='decimal' id='a_ind_kontingent_a' value='0,1' data-vor='0,1' placeholder='Zahl'></label><label class='f'><span class='lab'>Heer: Soldaten im Gefecht</span><input type='text' inputmode='decimal' id='a_ind_heer_mann' value='' data-vor='' placeholder='Zahl'></label><label class='f'><span class='lab'>Kampfpanzer</span><input type='text' inputmode='decimal' id='a_ind_kampfpanzer' value='' data-vor='' placeholder='Zahl'></label><label class='f'><span class='lab'>Kampfflugzeuge</span><input type='text' inputmode='decimal' id='a_ind_kampfflugzeuge' value='' data-vor='' placeholder='Zahl'></label><label class='f'><span class='lab'>Große Kampfschiffe</span><input type='text' inputmode='decimal' id='a_ind_kampfschiffe' value='' data-vor='' placeholder='Zahl'></label><label class='f'><span class='lab'>U-Boote</span><input type='text' inputmode='decimal' id='a_ind_uboote' value='' data-vor='' placeholder='Zahl'></label><label class='f'><span class='lab'>Auflagen</span><textarea id='a_ind_zi_auflagen' data-vor='' placeholder='z. B. »Zivilisten schonen, keine Kernwaffen, Rückzug ab 30 % Verlust«'></textarea></label><div class='f'><span class='lab'>Falls am selben Ort sonst niemand mitkämpft: Gefecht allein führen?</span><span class='hilfe'>Nein = der Krieg läuft in diesem Zug ohne Gefecht weiter (abstrakt). Ein Einzelgefecht hat die normale Torprüfung; die Ausnahme der Tischentscheidung gilt nur für das gemeinsame Gefecht.</span><div class='jn' role='radiogroup' aria-label='Falls am selben Ort sonst niemand mitkämpft: Gefecht allein führen?'><label><input type='radio' name='a_ind_zi_allein' value='ja'> ja</label><label><input type='radio' name='a_ind_zi_allein' value='nein'> nein</label></div></div></div><div class='frage'><span class='nr'>FRAGE 3</span><p><b>State of the Art, 11 Punkte (110 t).</b> Ihre Aufteilung geht in ganzen Punkten: 4 Heer, 4 Luft, 3 See gegen Taiwan. Sie wirkt nur in einem Zug, in dem Indien mit Taiwan in einem bewaffneten Konflikt steht, und nicht zusätzlich im Zoom-in. Ohne Krieg in Zug 6 kaufen Sie die 110 t ohne Wirkung in diesem Zug.</p><label class='f'><span class='lab'>State of the Art</span><select id='a_ind_sota' data-vor='kaufen: 4 Heer, 4 Luft, 3 See gegen Taiwan'><option value=''>— bitte wählen —</option><option value='kaufen: 4 Heer, 4 Luft, 3 See gegen Taiwan' selected>kaufen: 4 Heer, 4 Luft, 3 See gegen Taiwan</option><option value='in Zug 6 nicht kaufen'>in Zug 6 nicht kaufen</option></select></label></div></div></section><section><h2>Weg zur Autokratie</h2><div style='display:flex;flex-direction:column;gap:.8rem'><div class='frage'><span class='nr'>FRAGE 4</span><p>Ihr Satz »Modi macht einen Coup« steht im Indikativ, deshalb frage ich nach, was Indien will. Einen Putsch der eigenen Regierung in einem Zug kennen die Regeln nicht. Gebaut ist die schrittweise <b>Aushöhlung</b>: Notstand, Wahlmanipulation oder beides, auf Wunsch je Zug ein Schritt gegen die Gerichte (der schnellere, aber öffentliche Weg). Sie beginnt nach der vollen ERDE-01-Aufstellung, also frühestens ab Zug 7. Bis zur ersten Regimeschwelle dauert es ohne Gerichtsschritte etwa zehn Züge, mit Gerichtsschritten in jedem Zug etwa vier bis sechs. Der Notstand kostet 0,05 % BIP je Zug. Ein Regimewechsel als Ergebnis kann nicht beantragt werden. Ihren Wunsch »Notstand« habe ich vorbelegt.</p><label class='f'><span class='lab'>Aushöhlungsstrategie ab Zug 7</span><select id='a_ind_aushoehlung' data-vor='notstand'><option value=''>— bitte wählen —</option><option value='notstand' selected>notstand</option><option value='wahl'>wahl</option><option value='beide'>beide</option><option value='keine'>keine</option></select></label><label class='f'><span class='lab'>Notstandsrecht</span><select id='a_ind_notstandsrecht' data-vor='ein'><option value=''>— bitte wählen —</option><option value='ein' selected>ein</option><option value='aus'>aus</option></select></label><label class='f'><span class='lab'>Schritt gegen die Gerichte</span><select id='a_ind_gerichte' data-vor='keiner'><option value=''>— bitte wählen —</option><option value='keiner' selected>keiner</option><option value='Gerichte besetzen'>Gerichte besetzen</option><option value='Gerichte entmachten'>Gerichte entmachten</option></select></label><label class='f'><span class='lab'>Etwas Neuartiges darüber hinaus? (Antrag auf Vorbescheid)</span><span class='hilfe'>Leer = kein Antrag. Wird geprüft und wirkt frühestens mit dem Blatt von Zug 7.</span><textarea id='a_ind_vorbescheid' data-vor='' placeholder='als Wunsch: »Indien möchte …«'></textarea></label></div></div></section><section><h2>Forschung, Raumfahrt, verdeckte Arbeit</h2><div style='display:flex;flex-direction:column;gap:.8rem'><div class='frage'><span class='nr'>FRAGE 5</span><p><b>Starship-Trägerklasse</b> (nachgeholte L1-Ration 2030). Einstufung: L1, Schlüsseltech »Trägerstufe +1«. Wurf 1W6, Erfolg ab 4. Ihr Zehnerpotenz-Deckel steigt von 5 auf 6. Wann der Trägerfaktor auf Ihre jährliche Startkapazität wirkt, regelt das Regelwerk noch nicht; bis das entschieden ist, wird keine Erhöhung gebucht. Bei Erfolg kostet der Ausbau 1,0 t Ihrer Industriekapazität (4,0 t/a). Ein Fehlwurf verbraucht die Ration; die nächste gibt es 2035.</p><label class='f'><span class='lab'>Nachgeholte L1-Ration</span><select id='a_ind_starship' data-vor='würfeln: Starship-Trägerklasse'><option value=''>— bitte wählen —</option><option value='würfeln: Starship-Trägerklasse' selected>würfeln: Starship-Trägerklasse</option><option value='Antrag zurückziehen'>Antrag zurückziehen</option></select></label><div class='f'><span class='lab'>Bei Erfolg 1,0 t für den Ausbau einplanen?</span><div class='jn' role='radiogroup' aria-label='Bei Erfolg 1,0 t für den Ausbau einplanen?'><label><input type='radio' name='a_ind_starship_ausbau' value='ja' checked> ja</label><label><input type='radio' name='a_ind_starship_ausbau' value='nein'> nein</label></div></div><label class='f'><span class='lab'>Nur bei Rückzug: anderer L1-Wunsch</span><input type='text' id='a_ind_ersatzantrag' value='' data-vor='' placeholder='als Wunsch: »… soll …«'></label></div><div class='frage'><span class='nr'>FRAGE 6</span><p><b>Raumfahrtquote.</b> Sie schrieben »runter«. Zurückgewiesen war 0,5 %, Ihr Stand ist 0,05 %. Ich lese »runter« als: auf die höchste erlaubte Stufe statt 0,5 %, also 0,29 % (Sprung um eine Stufe). Meinten Sie stattdessen eine Senkung unter 0,05 %, sinkt Ihre Startkapazität sofort.</p><label class='f'><span class='lab'>Raumfahrtquote Zug 6 in % des BIP</span><span class='hilfe'>Erlaubt: bis unter 0,30 %. Vorbelegt ist mein Vorschlag.</span><input type='text' inputmode='decimal' id='a_ind_raumquote' value='0,29' data-vor='0,29' placeholder='Zahl'></label></div><div class='frage'><span class='nr'>FRAGE 7</span><p><b>»Bomben deponieren, um später Sabotage machen zu können«</b> (gegen die EU). Für deponierte Sprengladungen gibt es keinen Regelort. Am nächsten kommt die <b>Infiltration einer Lieferkette</b>: Sie bereitet über drei Züge eine spätere Sabotage vor, braucht keinen Operationsplatz und hat in Zug 6 einen Entdeckungswurf. Ihre Sabotage gegen Taiwan belegt einen Ihrer zwei Plätze.</p><label class='f'><span class='lab'>Vorbereitung gegen die EU</span><select id='a_ind_infiltration' data-vor='als Infiltration einer Lieferkette führen'><option value=''>— bitte wählen —</option><option value='als Infiltration einer Lieferkette führen' selected>als Infiltration einer Lieferkette führen</option><option value='fallen lassen'>fallen lassen</option></select></label></div></div></section><section><h2>Zur Kenntnis, keine Antwort nötig</h2><ol class='kenntnis'><li><b>Sabotage gegen Taiwan</b> (Umfang 5, falsche Flagge): Taiwan hat keine benannte E-5-Anlage. Ziel sind Taiwans Rechenzentren (Datenvergiftung). Die falsche Flagge senkt die Entdeckungschance; ein Zuschreibungsziel gibt es nicht. Gewürfelt wird bei der Auflösung.</li><li><b>Cyberangriff auf die EU</b> (Blatt 4) findet nicht statt: gleiche Cyberstufe.</li><li><b>Trainingslauf</b> entfällt: keine Punkte auf dem Trainingskonto. Ihre Zuteilung bleibt F 3, T 0.</li><li><b>Nukleardoktrin:</b> Der Aufstieg aus Zug 4 war ohne Krieg nicht zulässig und ist nichtig (wie in Zug 2). Es gilt »Ersteinsatz begrenzt«; Ihr Blatt bestätigt das ohne Kosten.</li><li><b>Kriegsverbot:</b> Das EU-Kriegsverbot band Indien nur durch einen Setup-Fehler. Indiens Vorlage wird nach Kanon berichtigt; Ihr Regime bleibt Demokratie.</li><li><b>UN-Sanktion gegen die EU</b> wird zugelassen und einmal gebucht, ohne Veto und ohne Kosten für Indien.</li><li>Ihr Bodenkonto bleibt bei 764,0 t, die Tranche bei 114,6 t.</li></ol></section>
+<section id="ausgabe"><h2>Ihr Antwortblock</h2>
+<p class="hilfe">Diesen Block unverändert an die Spielleitung schicken. Er enthält nur die ausgefüllten Felder.</p>
+<textarea id="ausgabe_text" readonly></textarea><div id="meldung" role="status"></div></section>
+<footer class="fuss">SCHWARZE SEE · Zug 6 · Formular RF-01 · Journal Z6-050 bis Z6-056. Unten »Antworten kopieren« tippen und den Block an die Spielleitung schicken.</footer>
+</main>
+<div class="leiste-unten"><button class="neben" id="knopf_leeren" type="button">Leeren</button>
+<button class="haupt" id="knopf_kopieren" type="button">Antworten kopieren</button></div>
+<script id="rf01-kopf" type="application/json">{"schema": "zh01-antwort/1", "kampagne": "ERDE-01", "fraktion": "IND", "staat": "indien", "zug": 6, "bezug": "Rueckfragen2_Zug6_JAKOB_INDIEN", "spieler": "Jakob"}</script>
+<script id="rf01-felder" type="application/json">[{"id": "ind_krieg", "typ": "auswahl", "label": "Was möchte Indien in Zug 6?", "optionen": ["Kriegsorder W2 schon in Zug 6 — auch wenn sonst niemand angreift", "Kriegsorder W2 bedingt: nur in einem Zug, in dem mindestens eine weitere Fraktion eine Kriegsorder gegen Taiwan führt (unbedingt oder mit derselben Bedingung) — verfällt nach Zug 8", "In Zug 6 keine Kriegsorder, nur Vorbereitung"]}, {"id": "ind_zi_art", "typ": "auswahl", "label": "Art des Gefechts", "optionen": ["Harpoon – See- und Luftgefecht (Taiwanstraße)", "Camberley – Landgefecht an einem Küstenabschnitt", "BX-01 – Stadtkampf"]}, {"id": "ind_zi_ort", "typ": "auswahl", "label": "Ort", "optionen": ["Taiwanstraße (Seegebiet)", "Nordtaiwan (Taipeh, Neu-Taipeh, Hsinchu)", "Zentraltaiwan (Taichung)", "Südtaiwan (Tainan, Kaohsiung)", "Osttaiwan und Inseln (Kinmen, Matsu, Penghu)", "Stadt Taipeh (nur Stadtkampf)", "Stadt Kaohsiung (nur Stadtkampf)"]}, {"id": "ind_zi_kriegsziel", "typ": "auswahl", "label": "Kriegsziel des Gefechts", "optionen": ["Gebietsgewinn am gewählten Landort", "Landungskopf bilden und halten", "Seeherrschaft in der Taiwanstraße", "Taiwanische Verbände zerschlagen"]}, {"id": "ind_kontingent_a", "typ": "zahl", "label": "Eingesetzter Kräfteanteil a"}, {"id": "ind_heer_mann", "typ": "zahl", "label": "Heer: Soldaten im Gefecht"}, {"id": "ind_kampfpanzer", "typ": "zahl", "label": "Kampfpanzer"}, {"id": "ind_kampfflugzeuge", "typ": "zahl", "label": "Kampfflugzeuge"}, {"id": "ind_kampfschiffe", "typ": "zahl", "label": "Große Kampfschiffe"}, {"id": "ind_uboote", "typ": "zahl", "label": "U-Boote"}, {"id": "ind_zi_auflagen", "typ": "langtext", "label": "Auflagen"}, {"id": "ind_zi_allein", "typ": "ja_nein", "label": "Falls am selben Ort sonst niemand mitkämpft: Gefecht allein führen?", "optionen": ["ja", "nein"]}, {"id": "ind_sota", "typ": "auswahl", "label": "State of the Art", "optionen": ["kaufen: 4 Heer, 4 Luft, 3 See gegen Taiwan", "in Zug 6 nicht kaufen"]}, {"id": "ind_aushoehlung", "typ": "auswahl", "label": "Aushöhlungsstrategie ab Zug 7", "optionen": ["notstand", "wahl", "beide", "keine"]}, {"id": "ind_notstandsrecht", "typ": "auswahl", "label": "Notstandsrecht", "optionen": ["ein", "aus"]}, {"id": "ind_gerichte", "typ": "auswahl", "label": "Schritt gegen die Gerichte", "optionen": ["keiner", "Gerichte besetzen", "Gerichte entmachten"]}, {"id": "ind_vorbescheid", "typ": "langtext", "label": "Etwas Neuartiges darüber hinaus? (Antrag auf Vorbescheid)"}, {"id": "ind_starship", "typ": "auswahl", "label": "Nachgeholte L1-Ration", "optionen": ["würfeln: Starship-Trägerklasse", "Antrag zurückziehen"]}, {"id": "ind_starship_ausbau", "typ": "ja_nein", "label": "Bei Erfolg 1,0 t für den Ausbau einplanen?", "optionen": ["ja", "nein"]}, {"id": "ind_ersatzantrag", "typ": "text", "label": "Nur bei Rückzug: anderer L1-Wunsch"}, {"id": "ind_raumquote", "typ": "zahl", "label": "Raumfahrtquote Zug 6 in % des BIP"}, {"id": "ind_infiltration", "typ": "auswahl", "label": "Vorbereitung gegen die EU", "optionen": ["als Infiltration einer Lieferkette führen", "fallen lassen"]}]</script>
+
+<script>
+(function () {
+  var K = JSON.parse(document.getElementById("rf01-kopf").textContent);
+  var F = JSON.parse(document.getElementById("rf01-felder").textContent);
+  var SPEICHER = "rf01:" + K.bezug;
+  function $(s) { return document.querySelector(s); }
+  function wert(f) {
+    if (f.typ === "ja_nein") {
+      var r = document.querySelector('input[name="a_' + f.id + '"]:checked');
+      return r ? r.value : "";
+    }
+    var el = document.getElementById("a_" + f.id);
+    return el ? String(el.value || "").trim() : "";
+  }
+  function werte() {
+    var o = {};
+    F.forEach(function (f) { var v = wert(f); if (v !== "") o[f.id] = (f.typ === "zahl" && !isNaN(Number(v.replace(",", ".")))) ? Number(v.replace(",", ".")) : v; });
+    return o;
+  }
+  function block() {
+    var d = { schema: K.schema, kampagne: K.kampagne, fraktion: K.fraktion, staat: K.staat, zug: K.zug,
+              bezug: K.bezug, spieler: K.spieler, felder: werte() };
+    if (K.stand_marke) d.stand_marke = K.stand_marke;
+    return "--- ZH01-ANTWORT ANFANG ---\n" + JSON.stringify(d, null, 1) + "\n--- ZH01-ANTWORT ENDE ---";
+  }
+  function melde(t) { $("#meldung").textContent = t; }
+  function sichern() { try { localStorage.setItem(SPEICHER, JSON.stringify(werte())); } catch (e) {} }
+  function laden() {
+    var d = null; try { d = JSON.parse(localStorage.getItem(SPEICHER) || "null"); } catch (e) {}
+    if (!d) return;
+    F.forEach(function (f) {
+      if (!(f.id in d)) return;
+      if (f.typ === "ja_nein") { var r = document.querySelector('input[name="a_' + f.id + '"][value="' + d[f.id] + '"]'); if (r) r.checked = true; }
+      else { var el = document.getElementById("a_" + f.id); if (el) el.value = d[f.id]; }
+    });
+  }
+  function kopieren() {
+    var t = block(); var ta = $("#ausgabe_text"); ta.value = t; $("#ausgabe").classList.add("offen");
+    function fallback() { ta.focus(); ta.setSelectionRange(0, ta.value.length);
+      try { document.execCommand("copy"); melde("Kopiert — jetzt an die Spielleitung schicken."); }
+      catch (e) { melde("Bitte den Block markieren und von Hand kopieren."); } }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(function () { melde("Kopiert — jetzt an die Spielleitung schicken."); }, fallback);
+    } else fallback();
+    ta.scrollIntoView({ block: "center" });
+  }
+  function leeren() {
+    if (!confirm("Alle Antworten in diesem Formular löschen?")) return;
+    F.forEach(function (f) {
+      if (f.typ === "ja_nein") document.querySelectorAll('input[name="a_' + f.id + '"]').forEach(function (r) { r.checked = false; });
+      else { var el = document.getElementById("a_" + f.id); if (el) el.value = el.getAttribute("data-vor") || ""; }
+    });
+    try { localStorage.removeItem(SPEICHER); } catch (e) {}
+    melde("Geleert.");
+  }
+  document.addEventListener("input", sichern); document.addEventListener("change", sichern);
+  $("#knopf_kopieren").addEventListener("click", kopieren);
+  $("#knopf_leeren").addEventListener("click", leeren);
+  laden();
+})();
+</script>
+
+</body></html>

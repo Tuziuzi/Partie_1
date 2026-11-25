@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entscheidungen Zug 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: eine Lesespalte, Klassifizierungsleiste oben, Nummern nur wo die Reihenfolge echt ist */
+:root {
+  --papier: #F2F4F3; --karte: #FFFFFF; --tinte: #17202A; --grau: #56616B; --linie: #D3D9DC;
+  --akzent: #22456A; --gilt: #1D6646; --gilt-bg: #E2F0E8; --nicht: #A3302B; --nicht-bg: #F6E3E1;
+  --frage: #835600; --frage-bg: #F5ECD8;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --text: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --papier: #11161B; --karte: #182027; --tinte: #E5E9EC; --grau: #98A4AE; --linie: #29323A;
+  --akzent: #8DB3DC; --gilt: #72CFA0; --gilt-bg: #15302A; --nicht: #F0897F; --nicht-bg: #3A1D1B;
+  --frage: #E7B65C; --frage-bg: #33280F; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --papier: #11161B; --karte: #182027; --tinte: #E5E9EC; --grau: #98A4AE; --linie: #29323A;
+  --akzent: #8DB3DC; --gilt: #72CFA0; --gilt-bg: #15302A; --nicht: #F0897F; --nicht-bg: #3A1D1B;
+  --frage: #E7B65C; --frage-bg: #33280F; color-scheme: dark; }
+body { background: var(--papier); color: var(--tinte); font-family: var(--text); font-size: 16px; line-height: 1.55; margin: 0; }
+.rahmen { max-width: 44rem; margin: 0 auto; padding-block: 1.25rem 3rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 1.75rem; }
+.leiste { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--grau); border-top: 3px solid var(--akzent); padding-top: .5rem; display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+.leiste .vs { color: var(--nicht); font-weight: 600; }
+h1 { font-family: var(--display); font-weight: 600; font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.05;
+  margin: 0; letter-spacing: .01em; text-wrap: balance; }
+.unter { color: var(--grau); margin: .35rem 0 0; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 1.45rem; line-height: 1.15; margin: 0 0 .6rem;
+  letter-spacing: .02em; text-wrap: balance; }
+h3 { font-size: 1rem; margin: 0 0 .35rem; }
+p { margin: 0 0 .7rem; max-width: 65ch; }
+p:last-child { margin-bottom: 0; }
+section { display: flex; flex-direction: column; gap: .2rem; }
+.kern { background: var(--karte); border: 1px solid var(--linie); border-radius: 6px; padding: 1.1rem 1.1rem 1.2rem; }
+.paar { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: .5rem 0 .9rem; }
+@media (max-width: 560px) { .paar { grid-template-columns: 1fr; } }
+.spalte { border-radius: 5px; padding: .8rem .9rem; min-width: 0; }
+.spalte.gilt { background: var(--gilt-bg); }
+.spalte.nicht { background: var(--nicht-bg); }
+.spalte .kopf { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; margin-bottom: .4rem; }
+.gilt .kopf { color: var(--gilt); } .nicht .kopf { color: var(--nicht); }
+.spalte ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: .3rem; }
+.folgen { width: 100%; border-collapse: collapse; font-size: .93rem; }
+.folgen td { padding: .45rem .5rem; border-top: 1px solid var(--linie); vertical-align: top; }
+.folgen td:first-child { white-space: nowrap; font-weight: 600; width: 1%; }
+.marke { display: inline-block; font-family: var(--mono); font-size: .72rem; padding: .05rem .4rem; border-radius: 3px; letter-spacing: .04em; }
+.m-gilt { background: var(--gilt-bg); color: var(--gilt); } .m-nicht { background: var(--nicht-bg); color: var(--nicht); }
+.m-frage { background: var(--frage-bg); color: var(--frage); }
+.liste { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .55rem; }
+.ref { font-family: var(--mono); font-size: .78rem; color: var(--grau); white-space: nowrap; }
+.tabelle { overflow-x: auto; border: 1px solid var(--linie); border-radius: 6px; background: var(--karte); }
+.tabelle table { border-collapse: collapse; width: 100%; font-size: .92rem; font-variant-numeric: tabular-nums; }
+.tabelle th, .tabelle td { padding: .5rem .5rem; text-align: left; border-bottom: 1px solid var(--linie); white-space: nowrap; }
+.tabelle th { font-family: var(--mono); font-size: .7rem; letter-spacing: .07em; text-transform: uppercase; color: var(--grau); font-weight: 500; }
+.tabelle td.z { text-align: right; } .tabelle tr:last-child td { border-bottom: 0; }
+.hinweis { border-left: 3px solid var(--frage); background: var(--frage-bg); padding: .7rem .85rem; border-radius: 0 5px 5px 0; }
+.warnung { border-left: 3px solid var(--nicht); background: var(--nicht-bg); padding: .7rem .85rem; border-radius: 0 5px 5px 0; }
+.fuss { font-size: .82rem; color: var(--grau); border-top: 1px solid var(--linie); padding-top: .8rem; }
+code { font-family: var(--mono); font-size: .85em; }
+a { color: var(--akzent); }
+</style>
+</head><body>
+<main class="rahmen">
+<header>
+  <div class="leiste"><span class='vs'>Nur Gastgeber</span><span>Jakob als Spielleitung</span><span>Zug 6 · Jahr 2031</span></div>
+  <h1 style="margin-top:.8rem">Entscheidungen Zug 6</h1>
+  <p class="unter">Was aus deinen Tischentscheidungen folgt und was ich unter T4 entschieden habe. Nicht an Spieler weitergeben.</p>
+</header>
+<section><h2>Deine Tischentscheidungen vom 25.11. (Z6-052)</h2><ol class='liste'><li><b>T1</b> Taiwan wird eigene Fraktion, von der KI geführt (SV-01 A2).</li><li><b>T2</b> Ein gemeinsamer Angriff auf Taiwan wird als <i>ein</i> Zoom-in aufgelöst, Taiwan führt die KI. »Dass es klappt« gilt für das Verfahren; das Ergebnis würfelt die Regel.</li><li><b>T3</b> »2 gilt« lese ich als Abschnitt 2 der Tischfragen (die Bereinigungen). Nicht als Frage 2 (Kriegsverbot), sonst wäre Indiens Angriff blockiert. Korrigier mich, falls anders gemeint.</li><li><b>T4</b> Den Rest entscheidet die Spielleitung — unten.</li></ol></section><section><h2>Was ich unter T4 entschieden habe (Z6-053)</h2><ol class='liste'><li><b>Vollaufstellung ERDE-01:</b> nicht mitten in Zug 6, sondern als eigener Schritt zwischen Zug 6 und 7. Indiens Aushöhlung beginnt deshalb frühestens in Zug 7.</li><li><b>Kriegsverbot euLike:</b> bindet Indien nicht. Indiens Vorlage wird nach Kanon auf russiaLike berichtigt (wie schon die Abhängigkeit in Hausentscheidung 1); das Regime bleibt Demokratie.</li><li><b>Gemeinsames Gefecht:</b> je Angreifer eigene Seite und eigene Kriegsorder, gemeinsames Lager, Taiwan KI. Kräfteverhältnis R = Angreifer zusammen gegen Taiwan. Liegt R außerhalb 0,35–0,65, ersetzt T2 die Torprüfung nur für dieses gemeinsame Gefecht. Es findet im ersten Zug statt, in dem jeder Angreifer aus seinem eigenen Blatt eine Kriegsorder und ein Zoom-in am selben Ort führt. Art, Ort und Kräfte bestimmen die Spieler, nicht die Spielleitung. Höchstens eine Division für alle Angreifer zusammen.</li><li><b>Taiwan-Werte:</b> Bodenpunkte 6/6/5/6 aus dem Block Rest (Rest danach 94/94/95/94), Demokratie, kein Patron, keine Kernwaffen, keine E-5-Anlage, Rechenzentrum ja, keine nachgeholte Ration. Jede Zahl mit Schlüssel und Marke [S]. Die Aufnahme bleibt intern: kein Satz im Lagebericht, weil Taiwan in der Spielwelt immer eigenständig war.</li><li><b>Sanktionen:</b> Indiens UN-Sanktion zugelassen, einmal gebucht, kein Veto, keine Kosten für den Verhänger. Chinas Einzelsanktion zusätzlich einmal −0,39 %.</li><li><b>Indiens Doktrin aus Zug 4:</b> nichtig (Präzedenz Zug 2); es gilt »Ersteinsatz begrenzt«. Z5-014 geschlossen.</li><li><b>Teilen einer L1-Technik:</b> Zug 5 bleibt wie gebucht; künftig kein Technologietransfer außerhalb der Regel.</li><li><b>Seeds Zug 6:</b> Registry nach dem Hausschema ab 20310101; der Delta-V-Lauf bekommt einen neuen Seed, der alte wird nicht wiederverwendet.</li></ol></section><section><h2>Zwei Dinge, die du als Gastgeber wissen musst</h2><ol class='liste'><li><b>Steuerversuch gemeldet (§6 Nr. 4):</b> Andis Antwort zu Frage 1 berief sich auf eine »Rücksprache Tisch«. Als behauptete Tischentscheidung gestrichen. Ohne Wirkung, weil T1 Taiwan ohnehin zum Ziel macht. Ob daraus eine Sanktion folgt, entscheidet der Tisch.</li><li><b>Vorkenntnis der Spielleitung (Z6-055):</b> Bei der Regelprüfung haben Probeläufe mit den echten Würfelseeds gerechnet. Die Spielleitung kennt deshalb das Ergebnis einiger künftiger Würfe, unter anderem der überfälligen Wahlen, die bei der Vollaufstellung anstehen. Ich nenne sie dir nicht, weil du Indien spielst. Ob überfällige Würfe nachgeholt werden, entscheide ich nach der Präzedenz aus Zug 6 (die Kaskade aus Zug 5 wurde nachgewürfelt), nicht nach dem Ergebnis: Sie werden nachgeholt. Probeläufe laufen ab jetzt nur noch mit fremden Seeds.</li></ol></section>
+<footer class="fuss">SCHWARZE SEE · Zug 6 · Nur für den Gastgeber · Journal Z6-052, Z6-053, Z6-055.</footer>
+</main></body></html>

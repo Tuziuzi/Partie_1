@@ -199,7 +199,12 @@ def erzeuge(b):
                 if not f["id"].replace("_", "").isalnum() or f["id"].startswith("_"):
                     raise SystemExit(f"Feld-id unzulässig: {f['id']}")
                 ids.add(f["id"])
-                felder.append({"id": f["id"], "typ": f.get("typ", "text"), "label": f["label"]})
+                spec = {"id": f["id"], "typ": f.get("typ", "text"), "label": f["label"]}
+                if spec["typ"] == "auswahl":
+                    spec["optionen"] = list(f.get("optionen", []))
+                elif spec["typ"] == "ja_nein":
+                    spec["optionen"] = ["ja", "nein"]
+                felder.append(spec)
                 fh.append(feld_html(f))
             karten.append(f"<div class='frage'><span class='nr'>FRAGE {n}</span><p>{fr['frage']}</p>{''.join(fh)}</div>")
         teile.append(f"<section><h2>{e(ab['kopf'])}</h2><div style='display:flex;flex-direction:column;gap:.8rem'>"
